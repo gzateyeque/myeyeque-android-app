@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.eyeque.eyeque.DiagnosticsActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop = "15dp"
+        android:text="@string/diagnosticsHeaderTextString"
+        android:id="@+id/nameHeaderTextView"
+        android:textColor="@color/background_material_dark"
+        android:textSize="20dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop = "15dp"
+        android:id="@+id/nameHeaderDivView"
+        android:background="@android:color/darker_gray"/>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/nameScrollView"
+        android:layout_below="@+id/diagHeaderDivView"
+        android:layout_width="match_parent"
+        android:layout_height="450dp">
+
+        <LinearLayout
+            android:id="@+id/nameView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop = "10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:text="DEBUG Msg here"
+                android:id="@+id/diagnosticTextView"
+                android:textColor="@color/background_material_dark"
+                android:textSize="14dp"
+                android:layout_centerHorizontal="true" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/sendButton"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="SEND EMAIL TO EYEQUE SUPPORT"
+        android:textStyle="bold"
+        android:background="@android:color/holo_blue_dark"
+        android:textColor="#FFFFFF" />
+</LinearLayout>

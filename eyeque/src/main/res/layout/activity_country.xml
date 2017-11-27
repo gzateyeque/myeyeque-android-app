@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.eyeque.eyeque.CountryActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop = "15dp"
+        android:text="@string/countryHeaderTextString"
+        android:id="@+id/countryHeaderTextView"
+        android:textColor="@color/background_material_dark"
+        android:textSize="20dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop = "15dp"
+        android:id="@+id/countryHeaderDivView"
+        android:background="@android:color/darker_gray"/>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/countryScrollView"
+        android:layout_below="@+id/countryHeaderDivView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/countryView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop = "20dp"
+                    android:text="@string/countryTitleTextString"
+                    android:id="@+id/countryTitleTextView"
+                    android:textColor="#046EEA"
+                    android:textSize="20dp"
+                    android:layout_centerHorizontal="true" />
+
+                <EditText
+                    android:id="@+id/countryEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop = "5dp"
+                    android:layout_below="@+id/countryTitleTextView"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:focusableInTouchMode="true"
+                    android:textSize="30dp"
+                    android:layout_centerHorizontal="true" />
+
+                <Button
+                    android:id="@+id/changeCountryButton"
+                    android:layout_width="170dip"
+                    android:layout_height="40dip"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/countryEditText"
+                    android:text="@string/changeCountryTextString"
+                    android:textAllCaps="false"
+                    android:gravity="center"
+                    android:background="?attr/selectableItemBackground"
+                    android:textColor="#046EEA"
+                    android:textSize="15dp"
+                    android:textStyle="normal"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal" />
+
+                <Button
+                    android:id="@+id/countryNextButton"
+                    android:layout_width="170dip"
+                    android:layout_height="50dip"
+                    android:layout_marginTop="70dp"
+                    android:layout_below="@+id/changeCountryButton"
+                    android:text="@string/nextButtonTextString"
+                    android:textAllCaps="false"
+                    android:gravity="center"
+                    android:background="?attr/selectableItemBackground"
+                    android:textColor="#046EEA"
+                    android:textSize="25dp"
+                    android:textStyle="normal"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

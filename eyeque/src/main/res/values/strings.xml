@@ -1,0 +1,155 @@
+<resources>
+    <string name="app_name">EyeQue</string>
+    <string name="facebook_app_id">596991780466384</string>
+    <string name="startTestButtonTextString">Start Test</string>
+    <string name="startButtonTextString">Enter</string>
+
+    <!-- Strings for title in header -->
+    <string name="startTitleTextString">EyeQue Vision Test</string>
+    <string name="testHeaderTextString">In Test</string>
+    <string name="practiceHeaderTextString">Practice</string>
+    <string name="deviceCompatHeaderTextString">Device Compatability</string>
+    <string name="nameHeaderTextString">Setup (-/6)</string>
+    <string name="nameTitleTextString">What\&#39;s your name&#63;</string>
+    <string name="serialHeaderTextString">Setup (1/6)</string>
+    <string name="serialTitleTextString">Enter your miniscope\&#39;s serial number?</string>
+    <string name="serialNumberDescTextString">The miniscope serial number is located inside of the box of the Personal Vision Tracker. In order to complete the setup process and to unlock the myEyeQue PVT App, you will need that serial number. If you don\'t have a serial number, you can come back later to complete the setup process.</string>
+    <string name="serialOrderTextString">Don\&#39;t have a device? Order now</string>
+    <string name="genderHeaderTextString">Setup (2/6)</string>
+    <string name="genderTitleTextString">What\&#39;s your gender&#63;</string>
+    <string name="genderSlashTextString">&#47;</string>
+    <string name="dobHeaderTextString">Setup (3/6)</string>
+    <string name="dobTitleTextString">What\&#39;s your birth year&#63;</string>
+    <string name="wearEyeglassHeaderTextString">Setup (4/6)</string>
+    <string name="wearEyeglassTitleTextString">Do you wear distance eyeglasses or contacts&#63;</string>
+    <string name="readingGlassTitleTextString">Do you wear reading glasses&#63;</string>
+    <string name="readingGlassValueTitleTextString">What\'s your reading glasses value&#63;</string>
+    <string name="uploadPrescriptionTitleTextString">Do you want to upload your prescription&#63;</string>
+    <string name="countryTitleTextString">Select your region</string>
+    <string name="countryHeaderTextString">Setup (5/6)</string>
+    <string name="agreementHeaderTextString">Setup (6/6)</string>
+    <string name="regHeaderTextString">Thank you for registering</string>
+    <string name="forgotPswdHeaderTextString">Forgot Password</string>
+    <string name="smemailHeaderTextString">EyeQue Email Link</string>
+    <string name="accountHeaderTextString">Account</string>
+    <string name="diagnosticsHeaderTextString">Diagnostics</string>
+    <string name="subscriptionHeaderTextString">Subscription</string>
+    <string name="regCompHeaderTextString">Registration Complete</string>
+
+    <string name="powerTextString">Power: TBC</string>
+    <string name="angleTextString">Angle: 0&#xb0;"</string>
+    <string name="distTextString">Distance: 7.32</string>
+    <string name="eyeButtonTextString">Right Eye</string>
+    <string name="contButtonTextString">Next</string>
+    <string name="closerButtonTextString">-</string>
+    <string name="furtherButtonTextString">+</string>
+    <string name="exitTextString">Exit</string>
+    <string name="nextTextString">Next</string>
+    <string name="changeCountryTextString">Change Region</string>
+    <string name="title_activity_device">DeviceActivity</string>
+    <string name="title_activity_device_compat">DeviceCompatActivity</string>
+    <string name="title_activity_subject">DeviceActivity</string>
+    <string name="title_activity_nvadd_list">NvaddListActivity</string>
+    <string name="title_activity_result">ResultActivity</string>
+    <string name="title_activity_server">ServerActivity</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_reg">Sign Up</string>
+    <string name="title_activity_reg_comp">Registration Complete</string>
+    <string name="title_activity_sm_email_reg">Email Registration</string>
+    <string name="facebookGoogleTextString">Use Facebook or Google account</string>
+    <string name="forgotPaswordTextString">Forgot Your Password?</string>
+    <string name="agreementTextString">I have read and agree with the EyeQue Term of Service and Privacy Policy</string>
+    <string name="newsletterTextString">Keep me updated on EyeQue products, news and promotions</string>
+    <string name="title_activity_name">NameActivity</string>
+    <string name="title_activity_gender">GenderActivity</string>
+    <string name="title_activity_dob">YearActivity</string>
+    <string name="title_activity_serial">SerialActivity</string>
+    <string name="title_activity_country">CountryActivity</string>
+    <string name="title_activity_country_list">CountryListActivity</string>
+    <string name="title_activity_forgot_password">ForgotPswdActivity</string>
+    <string name="title_activity_agreement">AgreementActivity</string>
+    <string name="title_activity_top">EyeQue</string>
+    <string name="title_activity_test_condition">TestConditionActivity</string>
+    <string name="title_activity_attach_device">AttachDeviceActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_subscription">SubscriptionActivity</string>
+    <string name="title_activity_practice_generic">PracticeGenericActivity</string>
+
+    // Tab bar text
+    <string name="tabbarStringHome">Dashboard</string>
+    <string name="tabbarStringTest">Test</string>
+    <string name="tabbarStringSetting">Settings</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_firstname">First Name</string>
+    <string name="prompt_lastname">Last Name</string>
+    <string name="email_hint">Your email</string>
+    <string name="password_hint">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_register">Register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_empty_password">Password can\'t be empty</string>
+    <string name="error_invalid_firstname">Firstname can\'t be empty</string>
+    <string name="error_invalid_lastname">Lastname can\'t be empty</string>
+    <string name="error_invalid_password">Password needs at least 6 characters</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="nextButtonTextString">Next</string>
+    <string name="action_forgot_password">Reset my password</string>
+
+    <!-- Strings related to the Dashboard -->
+    <string name="eyeglassNumberText">EYEGLASS NUMBERS</string>
+    <string name="visionSummaryText">VISION SUMMARY</string>
+    <string name="trackingDataText">TRACKING DATA</string>
+
+    <!-- Strings related to the Account -->
+    <string name="regText">Don\'t have an account, register now</string>
+    <string name="firstNameText">First Name</string>
+    <string name="lastNameText">Last Name</string>
+    <string name="genderText">Gender</string>
+    <string name="maleText">Male</string>
+    <string name="femaleText">Female</string>
+    <string name="notSetText">No Preference</string>
+    <string name="birthYearText">Birth Year</string>
+    <string name="regionText">Region</string>
+    <string name="subscriptionStatusText">Status</string>
+    <string name="subscriptionExpirationDate">Expiration</string>
+    <string name="resendConfirmEmailTextString">Resend confirmation email</string>
+    <string name="regCompTextString">Congratulations; you have finished the first step in registering your device. In order to finish your registration, you will receive a confirmation email. Please go to the confirmation email and click the "Confirm Your Account" button. Once your email is confirmed, then you can log into your EyeQue account.</string>
+    <!-- Strings related to the Test  -->
+    <string name="avatarNewStart">#name,\n\nWelcome to EyeQue.\n\nReady to get started? Tap the test icon to watch the tutorial, take a practice test or begin your vision test.</string>
+    <string name="avatarFirstTest">Nice work #name.\n\nProgress: You have completed 1 vision test.\n\nYou need to take 2 more tests to obtain your EyeGlass Numbers.</string>
+    <string name="avatarSecondTest">#name,\n\nProgress: You have completed 2 vision tests.\n\nAlmost there! You need to take 1 more test to obtain your EyeGlass Numbers.</string>
+    <string name="avatarThirdTest">#name,\n\nProgress: You have completed 3 vision tests.\n\nCongratulations; below are your EyeGlass Numbers. You can take more vision tests to refine these numbers and improve the confidence level of your results.</string>
+    <string name="avatarOngoingTest">#name,\n\nProgress: You have completed #numOfTests vision tests.\n\nYour updated EyeGlass Numbers are below.</string>
+    <string name="avatarInSixMonthTest">#name,\n\nWelcome Back\n\nIt’s been 6 or more months since the beginning of your last vision testing period. We will start fresh with a new testing period and you will need to take 3 new vision tests in order to obtain your Eyeglass Numbers.</string>
+    <string name="testStartText">We highly recommend you watch the tutorial and take the practice test before you start the Vision Test</string>
+    <string name="gettingStartText">Getting Started</string>
+    <string name="attachDeviceText">Setup Miniscope</string>
+    <string name="circleImageText">Circle Image</string>
+    <string name="testPreperationText">Test Preperation</string>
+    <string name="removeGlassOrContactText">For accurate results, please remove your glasses or contacts</string>
+    <string name="wearGlassOrContactQText">Have you removed your glasses or contacts?</string>
+    <string name="screenProtectorQText">Do you have screen protector on this phone?</string>
+    <string name="yes1Text">Yes</string>
+    <string name="no1Text">No</string>
+    <string name="pracDescText">Tap the "+" or "-" buttons to move the red and the green lines until they are completely overlapped, then tap "Next"</string>
+    <string name="practiceCheckLineText">With the minscope attached, look for the red and green vertical lines. Make sure the eyecup of the miniscope is set to position 1.\n\nIf you are having trouble, relax and take your time. It helps to be in a darkened room and make sure your screen is set to maximum brightness.\n\nIf you can see the lines you are ready to take a practice test. Tap next.\n\nIf you tried and can\'t see the lines please contact support@eyeque.com</string>
+
+    <!-- Button text -->
+    <string name="saveButtonText">SAVE</string>
+    <string name="logoutButtonText">LOGOUT</string>
+    <string name="tutorialButtonText">TUTORIAL</string>
+    <string name="quickTestButtonText">PRACTICE</string>
+    <string name="fullTestButtonText">TEST</string>
+    <string name="startTestButtonText">START TEST</string>
+    <string name="buySubscriptionText">BUY</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+</resources>

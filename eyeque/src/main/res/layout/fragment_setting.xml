@@ -1,0 +1,60 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:id="@+id/fragmentSetting"
+    tools:context="com.eyeque.eyeque.SettingFragment"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:id="@+id/settingForm"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <WebView
+        android:id="@+id/bannerWebView"
+        android:layout_width="fill_parent"
+        android:layout_height="190dp"
+        android:scaleType="fitXY">
+    </WebView>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/resultScrollView">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFF"
+            >
+
+            <ListView
+                android:id="@+id/settingListView"
+                android:layout_width="fill_parent"
+                android:layout_height="350dp"
+                android:drawSelectorOnTop="false"
+                android:headerDividersEnabled="true" />
+
+            <Button
+                android:id="@+id/logoutButton"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_below="@+id/settingListView"
+                android:layout_marginTop="10dp"
+                android:text="@string/logoutButtonText"
+                android:textStyle="bold"
+                android:background="@android:color/holo_blue_dark"
+                android:textColor="#FFFFFF" />
+
+        </RelativeLayout>
+    </ScrollView>
+    </LinearLayout>
+</FrameLayout>
+
+

@@ -1,0 +1,636 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragmentDashboard"
+    tools:context="com.eyeque.eyeque.DashboardFragment"
+    android:background="#F9F7F9">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/resultScrollView">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F9F7F9"
+            android:fitsSystemWindows="true"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/avatarLayout"
+                android:orientation="vertical"
+                android:background="#1DADF3" >
+
+                <!--
+                <ImageView
+                    android:id="@+id/avatarImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop = "30dp"
+                    android:src="@drawable/male_face"
+                    />
+                    -->
+
+                <TextView
+                    android:id="@+id/avatarName"
+                    android:layout_width="match_parent"
+                    android:layout_height="230dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="left"
+                    android:textColor="@color/white"
+                    android:text="Welcome"
+                    android:textSize="20dp" />
+
+            </LinearLayout>
+
+            <!-- TODO: Update blank fragment layout -->
+            <TextView
+                android:id="@+id/visionRecordTitle"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/avatarLayout"
+                android:gravity="center_vertical"
+                android:text="@string/eyeglassNumberText"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:textColor="#1DADF3"
+                android:paddingStart="15dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/scoreLayout"
+                android:layout_below="@+id/visionRecordTitle"
+                android:orientation="vertical"
+                android:background="#FFFFFF" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="0dp"
+                    android:id="@+id/egPanelLayout"
+                    android:orientation="vertical"
+                    android:background="#FFFFFF" >
+                </LinearLayout>
+                <!--
+                <TextView
+                    android:id="@+id/scoreText"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Your test score: 115"
+                    android:textSize="16dp" />
+
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_gravity="center"
+                    android:id="@+id/progessSeekBar"
+                    android:max="100"
+                    android:clickable="false"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp" />
+
+                <TextView
+                    android:id="@+id/eyeglassNumberDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:text="Your new eyeglass number is available"
+                    android:textSize="16dp"
+                    android:gravity="center"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Button
+                    android:id="@+id/newEyeglassNumber"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Get new eyeglass number"
+                    android:textStyle="bold"
+                    android:background="@android:color/holo_orange_dark"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginRight="70dp"
+                    android:textColor="#FFFFFF" />
+                    -->
+
+                <TableLayout
+                    android:id="@+id/resultTableLayout"
+                    android:layout_marginTop = "10dp"
+                    android:layout_marginBottom="10dp"
+                    android:stretchColumns="*"
+                    android:background="#FFFFFF"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" >
+<!---
+                    <TableRow
+                        android:id="@+id/tableResultTime"
+                        android:layout_width="0dp"
+                        android:paddingTop="12dp"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@+id/testTimeView"
+                            android:text="2016-06-20 15:37"
+                            android:layout_column="0"
+                            android:layout_span="4"
+                            android:textSize="12dp"
+                            android:gravity="center"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableHeaderRow"
+                        android:layout_width="0dp"
+                        android:paddingTop="5dp"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@+id/sphTextView"
+                            android:text="SPHERICAL"
+                            android:textStyle="bold"
+                            android:textSize="14dp"
+                            android:gravity="center"
+                            android:layout_column="1"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <TextView
+                            android:id="@+id/cylTextView"
+                            android:text="CYLINDRICAL"
+                            android:textStyle="bold"
+                            android:textSize="14dp"
+                            android:gravity="center"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <TextView
+                            android:id="@+id/axisTextView"
+                            android:text="AXIS"
+                            android:textStyle="bold"
+                            android:textSize="14dp"
+                            android:gravity="center"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableOdRow"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@+id/odTitleTextView"
+                            android:text="RIGHT (O.D.)"
+                            android:textStyle="bold"
+                            android:textSize="14dp"
+                            android:gravity="center"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <TextView
+                            android:id="@+id/odSphTextView"
+                            android:text="-2.50"
+                            android:gravity="center"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <TextView
+                            android:id="@+id/odCylTextView"
+                            android:text="-1.00"
+                            android:gravity="center"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <TextView
+                            android:id="@+id/odAxisTextView"
+                            android:text="180"
+                            android:gravity="center"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                    </TableRow>
+
+
+                    <TableRow
+                        android:id="@+id/tableOsRow"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@+id/osTitleTextView"
+                            android:text="LEFT (O.S.)"
+                            android:textSize="14dp"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <TextView
+                            android:id="@+id/osSphTextView"
+                            android:text="-3.00"
+                            android:gravity="center"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <TextView
+                            android:id="@+id/osCylTextView"
+                            android:text="-0.50"
+                            android:gravity="center"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <TextView
+                            android:id="@+id/osAxisTextView"
+                            android:text="10"
+                            android:gravity="center"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                    </TableRow>
+
+                    -->
+                </TableLayout>
+
+                <!--
+                <ImageButton
+                    android:id="@+id/expandButton"
+                    android:layout_width="40dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:background="#FFFFFF"
+                    android:scaleType="fitXY" >
+                </ImageButton>
+                -->
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/visionSnapshotTitle"
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:gravity="center_vertical"
+                android:text="@string/visionSummaryText"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:textColor="#1DADF3"
+                android:paddingStart="15dip"
+                android:layout_below="@+id/scoreLayout"
+                android:layout_alignParentStart="true" />
+
+            <LinearLayout android:background="#FFFFFF"
+                android:id="@+id/visionSummaryLayout"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/visionSnapshotTitle">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/confidenceLevelOs"
+                    android:gravity="center"
+                    android:text=""
+                    android:textSize="18dp"
+                    android:layout_weight="1"
+                    android:textColor="#0F0F0F" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/confidenceLevelOd"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:textColor="#0F0F0F"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <WebView
+                android:id="@+id/visionSummaryWebView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_below="@id/visionSummaryLayout"
+                android:color="#FFFFFF"
+                android:scaleType="fitXY">
+            </WebView>
+
+            <!--
+            <LinearLayout android:background="#FFFFFF"
+                android:id="@+id/snapshotLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/visionSnapshotTitle"
+                android:orientation="vertical">
+
+            <LinearLayout android:background="#FFFFFF"
+                android:id="@+id/summary"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                android:id="@+id/leftText"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="LEFT\nNEARSIGHTEDNESS: LOW\nASTIGMATISM: LOW"
+                android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/rightText"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="RIGHT\nNEARSIGHTEDNESS: LOW\nASTIGMATISM: LOW"
+                    android:textSize="12dp" />
+
+            </LinearLayout>
+                <TextView
+                    android:id="@+id/snapshotSummary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:gravity="center"
+                    android:text="You have low nearsightedness, low astigmstism on both the left eye and the right eye"
+                    android:textSize="15dp"
+                    android:layout_alignParentStart="true"
+                    android:background="@drawable/text_border"/>
+
+
+
+                <TextView
+                    android:id="@+id/farsightnessTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="FARSIGHTEDNESS"
+                    android:textSize="12dp"
+                    android:layout_alignParentStart="true" />
+
+                <LinearLayout android:background="#FFFFFF"
+                    android:id="@+id/labelLayout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/leftTitle"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:textStyle="bold"
+                        android:gravity="right"
+                        android:text="LEFT  "
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/rightTitle"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:layout_gravity="right"
+                        android:textStyle="bold"
+                        android:text="  RIGHT"
+
+
+                </LinearLayout>
+
+                <LinearLayout android:background="#FFFFFF"
+                    android:id="@+id/chartLayout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/astigmatismLeftTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="200dp"
+                        android:paddingTop="20dp"
+                        android:gravity="center"
+                        android:text="ASTIGMATISM"
+                        android:rotation="-90"
+                        android:textSize="12dp" />
+
+                    <ImageView
+                        android:id="@+id/visionMap"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:src="@drawable/vision_map_orange"/>
+
+                    <TextView
+                        android:id="@+id/astigmatismRightTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="200dp"
+                        android:paddingTop="20dp"
+                        android:text="ASTIGMATISM"
+                        android:rotation="-90"
+                        android:textSize="12dp"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/nearsightnessTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:text="NEARSIGHTEDNESS"
+                    android:textSize="12dp"
+                    android:layout_alignParentStart="true" />
+
+                <LinearLayout android:background="#FFFFFF"
+                    android:id="@+id/legendLayout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/empty1Text"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text=""
+                        android:textSize="10dp" />
+
+                    <ImageView
+                        android:id="@+id/lowLegend"
+                        android:layout_width="wrap_content"
+                        android:paddingTop = "5dp"
+                        android:paddingBottom = "5dp"
+                        android:layout_height="20dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:src="@drawable/square_green"/>
+
+                    <TextView
+                        android:id="@+id/lowText"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingTop = "3dp"
+                        android:layout_height="20dp"
+                        android:gravity="left"
+                        android:text="LOW"
+                        android:textSize="10dp" />
+
+                    <ImageView
+                        android:id="@+id/moderateLegend"
+                        android:layout_width="wrap_content"
+                        android:paddingTop = "5dp"
+                        android:paddingBottom = "5dp"
+                        android:layout_height="20dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:src="@drawable/square_yellow"/>
+
+                    <TextView
+                        android:id="@+id/moderateText"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingTop = "3dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:text="MODERATE"
+                        android:textSize="10dp" />
+
+                    <ImageView
+                        android:id="@+id/highLegend"
+                        android:layout_width="wrap_content"
+                        android:paddingTop = "5dp"
+                        android:paddingBottom = "5dp"
+                        android:layout_height="20dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:src="@drawable/square_orange"/>
+
+                    <TextView
+                        android:id="@+id/highText"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingTop = "3dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:text="HIGH"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:id="@+id/empty2Text"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text=""
+                        android:textSize="10dp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/trackingDataTitle"
+                android:layout_below="@id/visionSummaryLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:gravity="center_vertical"
+                android:text="@string/trackingDataText"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:textColor="#1DADF3"
+                android:paddingStart="15dip"
+                android:enabled="false"/>
+
+            <TextView
+                android:id="@+id/trackingDataOdTitle"
+                android:layout_below="@id/trackingDataTitle"
+                android:layout_width="match_parent"
+                android:background="#FFFFFF"
+                android:layout_height="80dip"
+                android:text="SPHERICAL EQUIVALENT (RIGHT O.D.)"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:gravity="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:enabled="false" />
+
+            <LinearLayout android:background="#FFFFFF"
+                android:id="@+id/trackingDataOdLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/trackingDataOdTitle"
+                android:enabled="false" >
+                <WebView
+                    android:id="@+id/trackingDataOdWebView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:color="#FFFFFF"
+                    android:scaleType="fitXY"
+                    android:enabled="false">
+                </WebView>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/trackingDataOsTitle"
+                android:layout_below="@id/trackingDataOdLayout"
+                android:layout_width="match_parent"
+                android:background="#FFFFFF"
+                android:layout_height="80dip"
+                android:text="SPHERICAL EQUIVALENT (LEFT O.S.)"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:gravity="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:enabled="false" />
+
+            <LinearLayout android:background="#FFFFFF"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/trackingDataOsTitle"
+                android:enabled="false" >
+                <WebView
+                    android:id="@+id/trackingDataOsWebView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="50dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:color="#FFFFFF"
+                    android:scaleType="fitXY"
+                    android:enabled="false">
+                </WebView>
+            </LinearLayout>
+            -->
+        </RelativeLayout>
+    </ScrollView>
+</FrameLayout>

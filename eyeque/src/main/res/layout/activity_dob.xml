@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.eyeque.eyeque.NameActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop = "15dp"
+        android:text="@string/dobHeaderTextString"
+        android:id="@+id/dobHeaderTextView"
+        android:layout_below="@+id/bannerWebView"
+        android:textColor="@color/background_material_dark"
+        android:textSize="20dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop = "15dp"
+        android:id="@+id/dobHeaderDivView"
+        android:layout_below="@+id/dobHeaderTextView"
+        android:background="@android:color/darker_gray"/>
+
+    <ScrollView
+        android:id="@+id/dobScrollView"
+        android:layout_below="@+id/dobHeaderDivView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/dobView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop = "20dp"
+            android:text="@string/dobTitleTextString"
+            android:id="@+id/dobTitleTextView"
+            android:textColor="#046EEA"
+            android:textSize="20dp"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:id="@+id/dobEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop = "30dp"
+            android:layout_below="@+id/dobTitleTextView"
+            android:inputType="date"
+            android:hint="Date of Birth"
+            android:textColorHint="@android:color/darker_gray"
+            android:ems="10"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:textSize="30dp"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:id="@+id/dobNextButton"
+            android:layout_width="170dip"
+            android:layout_height="50dip"
+            android:layout_marginTop="80dp"
+            android:layout_marginBottom="20dp"
+            android:layout_below="@+id/dobEditText"
+            android:text="@string/nextButtonTextString"
+            android:textAllCaps="false"
+            android:gravity="center"
+            android:background="?attr/selectableItemBackground"
+            android:textColor="#046EEA"
+            android:textSize="25dp"
+            android:textStyle="normal"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

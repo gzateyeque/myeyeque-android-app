@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/tutorialFrameLayout"
+    tools:context="com.eyeque.eyeque.TutorialFragment"
+    android:background="#F9F7F9">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/tutorialScrollView">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FFFFFF"
+                android:fitsSystemWindows="true"
+            >
+
+            <com.eyeque.eyeque.PatternView
+                android:layout_width="fill_parent"
+                android:layout_height="300dp"
+                android:id="@+id/drawView"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <Button
+                android:id="@+id/exitButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/drawView"
+                android:background="?attr/selectableItemBackground"
+                android:text="@string/exitTextString"
+                android:textAllCaps="false"
+                android:textColor="@color/background_material_dark"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop = "10dp"
+                android:layout_below="@+id/drawView"
+                android:text="@string/attachDeviceText"
+                android:id="@+id/tutorialHeaderTextView"
+                android:textColor="@color/background_material_dark"
+                android:textSize="20dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop = "10dp"
+                android:layout_below="@+id/tutorialHeaderTextView"
+                android:id="@+id/tutorialDivider"
+                android:background="@android:color/darker_gray"/>
+
+            <ScrollView
+                android:id="@+id/attachDeviceScrollView"
+                android:layout_below="@+id/tutorialDivider"
+                android:scrollbars="none"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:id="@+id/attachDeviceView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/attachDeviceImageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="300dp"
+                        android:layout_marginTop = "15dp"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/attach_device" />
+
+                    <Button
+                        android:id="@+id/attachDeviceContinueButton"
+                        style="?android:textAppearanceSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/attachDeviceImageView"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:text="@string/contButtonTextString"
+                        android:textStyle="bold"
+                        android:background="@android:color/holo_blue_dark"
+                        android:textColor="#FFFFFF" />
+
+                </RelativeLayout>
+            </ScrollView>
+        </RelativeLayout>
+    </ScrollView>
+</FrameLayout>

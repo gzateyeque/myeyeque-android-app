@@ -1,0 +1,26 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragmentDashboard1"
+    tools:context="com.eyeque.eyeque.Dashboard1Fragment"
+    android:background="#F9F7F9">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/shopScrollView">
+
+                <WebView
+                    android:id="@+id/shopWebView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:color="#FFFFFF"
+                    android:scaleType="fitXY">
+                </WebView>
+    </ScrollView>
+</FrameLayout>

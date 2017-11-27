@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/tutorialFrameLayout"
+    tools:context="com.eyeque.eyeque.TutorialFragment"
+    android:background="#F9F7F9">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/tutorialScrollView">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FFFFFF"
+                android:fitsSystemWindows="true">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="250dp"
+                android:id="@+id/panelTextView"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:text="Welcome"
+                android:textSize="30dp"
+                android:background="#1DADF3"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop = "10dp"
+                android:layout_below="@+id/panelTextView"
+                android:text="@string/gettingStartText"
+                android:id="@+id/tutorialHeaderTextView"
+                android:textColor="@color/background_material_dark"
+                android:textSize="20dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop = "10dp"
+                android:layout_below="@+id/tutorialHeaderTextView"
+                android:id="@+id/tutorialDivider"
+                android:background="@android:color/darker_gray"/>
+
+            <ScrollView
+                android:id="@+id/attachDeviceScrollView"
+                android:layout_below="@+id/tutorialDivider"
+                android:scrollbars="none"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:id="@+id/attachDeviceView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/testStartText"
+                        android:id="@+id/testStartText"
+                        android:textColor="#373839"
+                        android:textSize="16dp"/>
+
+                    <Button
+                        android:id="@+id/tutorialButton"
+                        style="?android:textAppearanceSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_below="@+id/testStartText"
+                        android:text="@string/tutorialButtonText"
+                        android:textStyle="bold"
+                        android:background="@android:color/holo_orange_light"
+                        android:textColor="#FFFFFF" />
+
+                    <Button
+                        android:id="@+id/playModeButton"
+                        style="?android:textAppearanceSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_below="@+id/tutorialButton"
+                        android:text="@string/quickTestButtonText"
+                        android:textStyle="bold"
+                        android:background="@android:color/holo_blue_dark"
+                        android:textColor="#ffffff" />
+
+                    <Button
+                        android:id="@+id/fullTestButton"
+                        style="?android:textAppearanceSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/playModeButton"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:text="@string/fullTestButtonText"
+                        android:textStyle="bold"
+                        android:background="@android:color/holo_green_light"
+                        android:textColor="#ffffff" />
+
+                </RelativeLayout>
+            </ScrollView>
+        </RelativeLayout>
+    </ScrollView>
+</FrameLayout>

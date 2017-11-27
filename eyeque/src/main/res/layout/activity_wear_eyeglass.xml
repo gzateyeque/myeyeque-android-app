@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.eyeque.eyeque.WearEyeglassActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop = "15dp"
+        android:text="@string/wearEyeglassHeaderTextString"
+        android:id="@+id/weareyeglassHeaderTextView"
+        android:textColor="@color/background_material_dark"
+        android:textSize="20dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop = "15dp"
+        android:id="@+id/weareyeglassHeaderDivView"
+        android:layout_below="@+id/weareyeglassHeaderTextView"
+        android:background="@android:color/darker_gray"/>
+
+    <ScrollView
+        android:id="@+id/nameScrollView"
+        android:layout_below="@+id/weareyeglassHeaderDivView"
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/weareyeglassLayoutView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop = "20dp"
+            android:gravity="center"
+            android:text="@string/wearEyeglassTitleTextString"
+            android:id="@+id/wearEyeglassTTitleTextView"
+            android:textColor="#046EEA"
+            android:textSize="20dp"
+            android:layout_centerHorizontal="true" />
+
+            <LinearLayout
+                android:id="@+id/LinearLayout"
+                android:layout_below="@+id/wearEyeglassTTitleTextView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content">
+
+                <CheckBox
+                    android:id="@+id/wearEyeglassYesCheckbox"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:onClick="wearEyeglassYesClicked" >
+                </CheckBox>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:text="Yes"
+                    android:id="@+id/wearEyeglassYesTextView"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15dp"
+                    android:layout_centerVertical="true" >
+                </TextView>
+                <CheckBox
+                    android:id="@+id/wearEyeglassNoCheckbox"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:onClick="wearEyeglassNoClicked" >
+                </CheckBox>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:text="No"
+                    android:id="@+id/wearEyeglassNoTextView"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15dp"
+                    android:layout_centerVertical="true" >
+                </TextView>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/LinearLayout"
+                android:layout_marginTop = "20dp"
+                android:gravity="center"
+                android:text="Do you wear reading glasses?"
+                android:id="@+id/readingGlassTTitleTextView"
+                android:textColor="#046EEA"
+                android:textSize="20dp"
+                android:layout_centerHorizontal="true" />
+
+            <LinearLayout
+                android:id="@+id/readingGlassesLinearLayout"
+                android:layout_below="@+id/readingGlassTTitleTextView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content">
+
+                <CheckBox
+                    android:id="@+id/readingGlassYesCheckbox"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:onClick="readingGlassesYesClicked" >
+                </CheckBox>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:text="Yes"
+                    android:id="@+id/readingGlassYesTextView"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15dp"
+                    android:layout_centerVertical="true" >
+                </TextView>
+                <CheckBox
+                    android:id="@+id/readingGlassNoCheckbox"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:onClick="readingGlassesNoClicked" >
+                </CheckBox>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:text="No"
+                    android:id="@+id/readingGlassNoTextView"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15dp"
+                    android:layout_centerVertical="true" >
+                </TextView>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/readingGlassesLinearLayout"
+                android:layout_marginTop = "20dp"
+                android:gravity="center"
+                android:text="@string/readingGlassValueTitleTextString"
+                android:id="@+id/readingGlassesValueTitleTextView"
+                android:textColor="#046EEA"
+                android:textSize="20dp"
+                android:layout_centerHorizontal="true" />
+
+            <EditText
+                android:id="@+id/readingGlassValueEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop = "5dp"
+                android:layout_below="@+id/readingGlassesValueTitleTextView"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:gravity="center"
+                android:focusableInTouchMode="false"
+                android:textSize="30dp"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/readingGlassValueEditText"
+                android:layout_marginTop = "20dp"
+                android:gravity="center"
+                android:text="@string/uploadPrescriptionTitleTextString"
+                android:id="@+id/uploadPrescriptionTitleTextView"
+                android:textColor="#046EEA"
+                android:textSize="20dp"
+                android:layout_centerHorizontal="true" />
+
+            <LinearLayout
+                android:id="@+id/uploadPrescriptionLinearLayout"
+                android:layout_below="@+id/uploadPrescriptionTitleTextView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content">
+
+                <CheckBox
+                    android:id="@+id/uploadPrescriptionYesCheckbox"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:onClick="uploadPrescriptionYesClicked" >
+                </CheckBox>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:text="Yes"
+                    android:id="@+id/uploadPrescriptionYesTextView"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15dp"
+                    android:layout_centerVertical="true" >
+                </TextView>
+                <CheckBox
+                    android:id="@+id/uploadPrescriptionNoCheckbox"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:onClick="uploadPrescriptionNoClicked" >
+                </CheckBox>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:text="No"
+                    android:id="@+id/uploadPrescriptionNoTextView"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15dp"
+                    android:layout_centerVertical="true" >
+                </TextView>
+            </LinearLayout>
+
+        <Button
+            android:id="@+id/wearEyeglassNextButton"
+            android:layout_width="170dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:layout_below="@+id/uploadPrescriptionLinearLayout"
+            android:text="@string/nextButtonTextString"
+            android:textAllCaps="false"
+            android:gravity="center"
+            android:background="?attr/selectableItemBackground"
+            android:textColor="#046EEA"
+            android:textSize="25dp"
+            android:textStyle="normal"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

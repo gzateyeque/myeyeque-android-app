@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorLayoutBase"
+    android:fitsSystemWindows="true"
+    tools:context="com.eyeque.eyeque.StartActivity">
+
+    <include layout="@layout/content_start" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/startUpView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#000000"
+        android:height="320dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop = "10dp"
+        android:text="@string/startTitleTextString"
+        android:id="@+id/startTitleTextView"
+        android:layout_below="@+id/startUpView"
+        android:textColor="#3F51B5"
+        android:textSize="25dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/startTestButton"
+        android:text="@string/startTestButtonTextString"
+        android:textAllCaps="false"
+        android:background="@drawable/myroundbutton"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_height="45dip"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="20dp"
+        android:id="@+id/deviceButton"
+        android:textAllCaps="false"
+        android:gravity="left|center_vertical"
+        android:background="#FFFFFF"
+        android:textColor="#3F51B5"
+        android:textSize="15dp"
+        android:text="Select Device                                                            >"
+        android:layout_below="@+id/startTitleTextView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_height="45dip"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="1dp"
+        android:paddingLeft="20dp"
+        android:id="@+id/subjectButton"
+        android:textAllCaps="false"
+        android:gravity="left|center_vertical"
+        android:background="#FFFFFF"
+        android:textColor="#3F51B5"
+        android:textSize="15dp"
+        android:text="Select Subject                                                           >"
+        android:layout_below="@+id/deviceButton"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+
+    <RelativeLayout
+        style="@style/GenericProgressBackground"
+        android:id="@+id/loadingPanel"
+        android:visibility="invisible"
+        >
+        <ProgressBar
+            style="@style/GenericProgressIndicator" />
+    </RelativeLayout>
+
+</RelativeLayout>

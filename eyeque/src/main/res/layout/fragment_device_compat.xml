@@ -1,0 +1,66 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragmentTest2"
+    tools:context="com.eyeque.eyeque.Test2Fragment"
+    android:background="#F9F7F9">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/resultScrollView">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F9F7F9"
+            android:fitsSystemWindows="true"
+            >
+
+            <WebView
+                android:id="@+id/deviceCompatWebView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scaleType="fitXY">
+            </WebView>
+
+            <!--
+            <TextView
+                android:id="@+id/deviceCompatTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:text="DEVICE COMPATIBILITY"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:textColor="#1DADF3"
+                android:paddingStart="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop = "20dp"
+                android:text="  Sorry, this phone is currently not supported by EyeQue. We work hard to continue adding more supprting Android devices. Please check back later if your device is currently not supported."
+                android:id="@+id/compatDeviceTextView"
+                android:layout_below="@+id/deviceCompatTitle"
+                android:textColor="@color/background_material_dark"
+                android:textSize="14dp"/>
+
+            <ImageView
+                android:id="@+id/compatDeviceImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="350dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/compatDeviceTextView"
+                android:src="@drawable/compat_device_list" />
+            -->
+        </RelativeLayout>
+    </ScrollView>
+</FrameLayout>

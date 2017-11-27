@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.eyeque.eyeque.DeviceCompatActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop = "15dp"
+        android:text="@string/deviceCompatHeaderTextString"
+        android:id="@+id/deviceCompatHeaderTextView"
+        android:textColor="@color/background_material_dark"
+        android:textSize="20dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop = "15dp"
+        android:id="@+id/deviceCompatHeaderDivView"
+        android:background="@android:color/darker_gray"/>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/deviceCompatScrollView"
+        android:layout_below="@+id/deviceCompatHeaderDivView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/deviceCompatView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <WebView
+                    android:id="@+id/deviceCompatWebView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="450dp"
+                    android:scaleType="fitXY">
+                </WebView>
+
+                <Button
+                    android:id="@+id/deviceCompatDiagButton"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/deviceCompatWebView"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:text="SEND DIAGNOSTICS"
+                    android:textStyle="bold"
+                    android:background="@android:color/holo_green_light"
+                    android:textColor="#FFFFFF" />
+
+                <LinearLayout
+                    android:id="@+id/LinearLayout"
+                    android:layout_height="fill_parent"
+                    android:layout_width="fill_parent"
+                    android:layout_below="@+id/deviceCompatDiagButton"
+                    android:layout_marginTop="5dp"
+                    android:layout_alignParentBottom="true">
+
+                    <Button
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="5dp"
+                        android:id="@+id/deviceCompatRetryButton"
+                        android:layout_weight="1"
+                        android:text="RETRY"
+                        android:textStyle="bold"
+                        android:background="@android:color/holo_blue_dark"
+                        android:textColor="#FFFFFF" />
+
+                    <Button
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="15dp"
+                        android:id="@+id/deviceCompatExitButton"
+                        android:layout_weight="1"
+                        android:text="EXIT"
+                        android:textStyle="bold"
+                        android:background="@android:color/holo_blue_dark"
+                        android:textColor="#FFFFFF"
+                        android:layout_alignParentEnd="true" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

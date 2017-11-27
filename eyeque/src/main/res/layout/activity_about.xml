@@ -1,0 +1,158 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.eyeque.eyeque.AboutActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop = "15dp"
+        android:text="About"
+        android:id="@+id/aboutHeaderTextView"
+        android:textColor="@color/background_material_dark"
+        android:textSize="20dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop = "15dp"
+        android:id="@+id/aboutHeaderDivView"
+        android:layout_below="@+id/aboutHeaderTextView"
+        android:background="@android:color/darker_gray"/>
+
+    <ScrollView
+        android:id="@+id/aboutScrollView"
+        android:layout_below="@+id/aboutHeaderDivView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/aboutView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop = "10dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="100dp"
+                android:src="@drawable/eyeque_logo"
+                android:id="@+id/LogoImageView"
+                 />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop = "10dp"
+                android:text="myEyeQue Android App"
+                android:id="@+id/appTextStringView"
+                android:layout_below="@+id/LogoImageView"
+                android:textSize="22dp"
+                android:layout_centerHorizontal="true" >
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop = "10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Version 1.0.1"
+                android:id="@+id/verStringTextView"
+                android:layout_below="@+id/appTextStringView"
+                android:textSize="16dp"
+                android:layout_centerHorizontal="true" >
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop = "10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Rate the App on Play Store"
+                android:id="@+id/rateAppTextStringView"
+                android:layout_below="@+id/verStringTextView"
+                android:textColor="@android:color/holo_blue_light"
+                android:textSize="16dp"
+                android:layout_centerHorizontal="true" >
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop = "50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Visit EyeQue.com for more information"
+                android:id="@+id/visitWebTextStringView"
+                android:layout_below="@+id/rateAppTextStringView"
+                android:textSize="16dp"
+                android:layout_centerHorizontal="true" >
+            </TextView>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop = "10dp"
+                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/visitWebTextStringView"
+                android:src="@drawable/like_us_on_facebook"
+                android:id="@+id/likeOnFacebook"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop = "80dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Copyright &#169; 2017 EyeQue Corp. All Rights Reserved"
+                android:id="@+id/copyrightTextStringView"
+                android:layout_below="@+id/likeOnFacebook"
+                android:textSize="13dp"
+                android:layout_centerHorizontal="true" >
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/termsOfServiceButton"
+                android:text="Terms of Service"
+                android:textColor="@android:color/holo_blue_light"
+                android:background="?attr/selectableItemBackground"
+                android:textAllCaps="false"
+                android:textSize="15dp"
+                android:layout_below="@+id/copyrightTextStringView"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="50dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/privatePolicyButton"
+                android:text="Private Policy"
+                android:textColor="@android:color/holo_blue_light"
+                android:background="?attr/selectableItemBackground"
+                android:textAllCaps="false"
+                android:textSize="15dp"
+                android:layout_below="@+id/copyrightTextStringView"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="50dp"/>
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
+

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/abc_input_method_navigation_guard"
+    android:weightSum="1"
+    android:soundEffectsEnabled="true" >
+
+    <com.eyeque.eyeque.PatternView
+        android:layout_width="fill_parent"
+        android:layout_height="300dp"
+        android:id="@+id/drawView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/exitButton"
+        android:text="@string/exitTextString"
+        android:textColor="#FFFFFF"
+        android:background="?attr/selectableItemBackground"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        android:layout_below="@+id/drawView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop = "15dp"
+        android:text="@string/testHeaderTextString"
+        android:id="@+id/testHeaderTextView"
+        android:layout_below="@+id/drawView"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"/>
+
+    <Button
+        android:layout_width="150dip"
+        android:layout_height="120dip"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:gravity="right"
+        android:id="@+id/contButton"
+        android:text="@string/nextTextString"
+        android:textColor="#FFFFFF"
+        android:background="?attr/selectableItemBackground"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        android:layout_below="@+id/drawView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_marginTop = "15dp"
+        android:id="@+id/testHeaderDivView"
+        android:layout_below="@+id/testHeaderTextView"
+        android:background="#646464"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/powerText"
+        android:text="@string/powerTextString"
+        android:textColor="#FFFFFF"
+        android:layout_below="@+id/testHeaderDivView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/angleText"
+        android:text="@string/angleTextString"
+        android:layout_below="@+id/testHeaderDivView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/distText"
+        android:text="@string/distTextString"
+        android:textColor="#FFFFFF"
+        android:layout_below="@+id/testHeaderDivView"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/eyeLeftText"
+            android:text="L"
+            android:enabled="false"
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="@color/bb_darkBackgroundColor"
+            android:textSize="16dp"
+            android:layout_below="@+id/testHeaderDivView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="65dp"
+            android:layout_marginTop="5dp"/>
+
+        <ImageView
+            android:id="@+id/eyeImage"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_below="@+id/testHeaderDivView"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@drawable/eye_right"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/eyeRightText"
+            android:text="R"
+            android:enabled="false"
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp"
+            android:layout_below="@+id/testHeaderDivView"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="65dp"
+            android:layout_marginTop="5dp"/>
+
+    <Switch
+        android:id="@+id/accormSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:checked="true"
+        android:text="@string/circleImageText"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/eyeRightText" />
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/alignSeekBar"
+        android:max="60"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:splitTrack="false"
+        android:layout_below="@+id/powerText" />
+
+    <LinearLayout
+        android:id="@+id/LinearLayout02"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:layout_below="@+id/accormSwitch"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentBottom="true">
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/closerButton"
+            android:layout_weight="1"
+            android:text="@string/closerButtonTextString"
+            android:background="@color/bb_darkBackgroundColor"
+            android:hapticFeedbackEnabled="true"
+            android:textColor="#C8C8C8"
+            android:textSize="70dp" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/furtherButton"
+            android:layout_weight="1"
+            android:text="@string/furtherButtonTextString"
+            android:background="@color/bb_darkBackgroundColor"
+            android:hapticFeedbackEnabled="true"
+            android:textColor="#C8C8C8"
+            android:textSize="60dp"
+            android:layout_alignParentEnd="true" />
+    </LinearLayout>
+</RelativeLayout>

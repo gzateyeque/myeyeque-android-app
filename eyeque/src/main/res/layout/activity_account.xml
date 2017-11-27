@@ -1,0 +1,359 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.eyeque.eyeque.AccountActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop = "15dp"
+        android:text="@string/accountHeaderTextString"
+        android:id="@+id/accountHeaderTextView"
+        android:textColor="@color/background_material_dark"
+        android:textSize="20dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop = "15dp"
+        android:id="@+id/nameHeaderDivView"
+        android:layout_below="@+id/accountHeaderTextView"
+        android:background="@android:color/darker_gray"/>
+
+    <!-- Login progress -->
+    <ProgressBar
+        android:id="@+id/loading_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:id="@+id/account_form"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/accountLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/email"
+                    android:hint="@string/prompt_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/firstName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/firstNameText"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/lastName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/lastNameText"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/genderLinearLayout"
+                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="1dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/genderText"
+                    android:id="@+id/genderTextView"
+                    android:textColor="@color/background_material_dark"
+                    android:textSize="16dp"/>
+
+                <CheckBox
+                    android:id="@+id/maleCheckbox"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="2dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:onClick="maleClicked" >
+                </CheckBox>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/maleText"
+                    android:id="@+id/maleTextView"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15dp"
+                    android:layout_centerHorizontal="true" >
+                </TextView>
+                <CheckBox
+                    android:id="@+id/femaleCheckbox"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="2dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:onClick="femaleClicked" >
+                </CheckBox>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/femaleText"
+                    android:id="@+id/femaleTextView"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15dp"
+                    android:layout_centerHorizontal="true" >
+                </TextView>
+                <CheckBox
+                    android:id="@+id/noPrefCheckbox"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="2dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:onClick="noPrefClicked" >
+                </CheckBox>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/notSetText"
+                    android:id="@+id/noPrefTextView"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15dp"
+                    android:layout_centerHorizontal="true" >
+                </TextView>
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/brithYear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/birthYearText"
+                    android:imeActionId="@+id/login"
+                    android:imeActionLabel="@string/action_sign_in_short"
+                    android:imeOptions="actionDone"
+                    android:windowSoftInputMode="stateHidden"
+                    android:inputType="date"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop = "5dp"
+                android:layout_marginLeft = "5dp"
+                android:gravity="left"
+                android:text="@string/wearEyeglassTitleTextString"
+                android:id="@+id/wearEyeglassTitleTextView"
+                android:textColor="@color/background_material_dark"
+                android:textSize="16dp" />
+
+            <LinearLayout
+                android:id="@+id/LinearLayout"
+                android:layout_below="@+id/wearEyeglassTTitleTextView"
+                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content">
+
+                <CheckBox
+                    android:id="@+id/wearEyeglassYesCheckbox"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:onClick="wearEyeglassYesClicked" >
+                </CheckBox>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:text="Yes"
+                    android:id="@+id/wearEyeglassYesTextView"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15dp"
+                    android:layout_centerVertical="true" >
+                </TextView>
+                <CheckBox
+                    android:id="@+id/wearEyeglassNoCheckbox"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:onClick="wearEyeglassNoClicked" >
+                </CheckBox>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:text="No"
+                    android:id="@+id/wearEyeglassNoTextView"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15dp"
+                    android:layout_centerVertical="true" >
+                </TextView>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:gravity="left"
+                android:text="Do you wear reading glasses?"
+                android:id="@+id/readingGlassTitleTextView"
+                android:textColor="@color/background_material_dark"
+                android:textSize="16dp" />
+
+            <LinearLayout
+                android:id="@+id/readingGlassesLinearLayout"
+                android:layout_below="@+id/readingGlassTTitleTextView"
+                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content">
+
+                <CheckBox
+                    android:id="@+id/readingGlassYesCheckbox"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:onClick="readingGlassesYesClicked" >
+                </CheckBox>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:text="Yes"
+                    android:id="@+id/readingGlassYesTextView"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15dp"
+                    android:layout_centerVertical="true" >
+                </TextView>
+                <CheckBox
+                    android:id="@+id/readingGlassNoCheckbox"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:onClick="readingGlassesNoClicked" >
+                </CheckBox>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:text="No"
+                    android:id="@+id/readingGlassNoTextView"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15dp"
+                    android:layout_centerVertical="true" >
+                </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="30dp"
+                    android:gravity="left"
+                    android:text="Value:"
+                    android:id="@+id/readingGlassValueTextView"
+                    android:textColor="@color/background_material_dark"
+                    android:textSize="16dp"
+                    android:layout_centerVertical="true" />
+                <EditText
+                    android:id="@+id/readingGlassValueEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginTop = "0dp"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:focusableInTouchMode="false"
+                    android:textSize="16dp"
+                    android:layout_centerVertical="true" />
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/country"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/regionText"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/account_save_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="@string/saveButtonText"
+                android:textStyle="bold"
+                android:background="@android:color/holo_blue_dark"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+

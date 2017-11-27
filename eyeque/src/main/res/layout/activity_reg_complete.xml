@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.eyeque.eyeque.RegCompActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop = "15dp"
+        android:text="@string/regCompHeaderTextString"
+        android:id="@+id/regCompHeaderTextView"
+        android:layout_below="@+id/bannerWebView"
+        android:textColor="@color/background_material_dark"
+        android:textSize="20dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop = "15dp"
+        android:id="@+id/regCompHeaderDivView"
+        android:layout_below="@+id/regCompHeaderTextView"
+        android:background="@android:color/darker_gray"/>
+
+    <ScrollView
+        android:id="@+id/regCompScrollView"
+        android:layout_below="@+id/regCompHeaderDivView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/regCompView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop = "20dp"
+            android:layout_marginLeft = "20dp"
+            android:layout_marginRight = "20dp"
+            android:text="@string/regCompTextString"
+            android:id="@+id/regCompTitleTextView"
+            android:textColor="#046EEA"
+            android:textSize="16dp"
+            android:layout_centerHorizontal="true" />
+
+
+        <Button
+            android:id="@+id/regCompNextButton"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_below="@+id/regCompTitleTextView"
+            android:text="Continue"
+            android:textStyle="bold"
+            android:background="@android:color/holo_blue_dark"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/resendConfirmEmailTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop = "10dp"
+            android:layout_marginBottom = "20dp"
+            android:gravity="center_horizontal"
+            android:text="@string/resendConfirmEmailTextString"
+            android:textColor="#046EEA"
+            android:textSize="15dp"
+            android:layout_below="@+id/regCompNextButton"
+            android:layout_alignParentStart="true" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

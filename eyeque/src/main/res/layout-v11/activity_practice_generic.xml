@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/abc_input_method_navigation_guard"
+    android:orientation="vertical"
+    android:soundEffectsEnabled="true"
+    android:weightSum="1">
+
+    <com.eyeque.eyeque.PatternView
+        android:id="@+id/drawView"
+        android:layout_width="fill_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
+
+    <Button
+        android:id="@+id/exitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/drawView"
+        android:layout_marginTop="5dp"
+        android:background="?attr/selectableItemBackground"
+        android:text="@string/exitTextString"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/practiceHeaderTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/drawView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text=""
+        android:textColor="#FFFFFF"
+        android:textSize="20dp" />
+
+    <View
+        android:id="@+id/testHeaderDivView"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_below="@+id/practiceHeaderTextView"
+        android:layout_marginTop="15dp"
+        android:background="#646464" />
+
+
+    <!--Button
+        android:id="@+id/eyeLeftText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/testHeaderDivView"
+        android:layout_marginLeft="65dp"
+        android:layout_marginTop="5dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:enabled="false"
+        android:text=""
+        android:textColor="@color/bb_darkBackgroundColor"
+        android:textSize="16dp" />
+
+    <ImageView
+        android:id="@+id/eyeImage"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@+id/testHeaderDivView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:src="@drawable/eye_right" />
+
+    <Button
+        android:id="@+id/eyeRightText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/testHeaderDivView"
+        android:layout_marginRight="65dp"
+        android:layout_marginTop="5dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:enabled="false"
+        android:text=""
+        android:textColor="#FFFFFF"
+        android:textSize="16dp" /-->
+
+    <ScrollView
+        android:id="@+id/attachDeviceScrollView"
+        android:layout_below="@+id/testHeaderDivView"
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/practiceGenericView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/practiceDescText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:text="Congratulations! You are now ready to take the vision test or retake the practice test."
+                android:textSize="16dp"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/practiceContinueButton"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/practiceDescText"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:text="Done"
+                android:textStyle="bold"
+                android:background="@android:color/holo_blue_dark"
+                android:textColor="#FFFFFF" />
+
+            <SeekBar
+                android:id="@+id/alignSeekBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/practiceContinueButton"
+                android:layout_marginTop="10dp"
+                android:max="60"
+                android:splitTrack="false" />
+
+            <LinearLayout
+                android:id="@+id/LinearLayout02"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/alignSeekBar"
+                android:layout_marginTop="10dp">
+
+                <Button
+                    android:id="@+id/closerButton"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/bb_darkBackgroundColor"
+                    android:hapticFeedbackEnabled="true"
+                    android:text="@string/closerButtonTextString"
+                    android:textColor="#C8C8C8"
+                    android:textSize="70dp" />
+
+                <Button
+                    android:id="@+id/furtherButton"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_weight="1"
+                    android:background="@color/bb_darkBackgroundColor"
+                    android:hapticFeedbackEnabled="true"
+                    android:text="@string/furtherButtonTextString"
+                    android:textColor="#C8C8C8"
+                    android:textSize="60dp" />
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

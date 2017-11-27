@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.eyeque.eyeque.GenderActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop = "15dp"
+        android:text="@string/genderHeaderTextString"
+        android:id="@+id/genderHeaderTextView"
+        android:layout_below="@+id/bannerWebView"
+        android:textColor="@color/background_material_dark"
+        android:textSize="20dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop = "15dp"
+        android:id="@+id/genderHeaderDivView"
+        android:layout_below="@+id/genderHeaderTextView"
+        android:background="@android:color/darker_gray"/>
+
+    <ScrollView
+        android:id="@+id/nameScrollView"
+        android:layout_below="@+id/genderHeaderDivView"
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/nameView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop = "20dp"
+                android:text="@string/genderTitleTextString"
+                android:id="@+id/genderTitleTextView"
+                android:textColor="#046EEA"
+                android:textSize="20dp"
+                android:layout_centerHorizontal="true" />
+
+            <LinearLayout
+                android:id="@+id/LinearLayout"
+                android:layout_below="@+id/genderTitleTextView"
+                android:layout_marginTop="20dp"
+                android:layout_height="50dp"
+                android:layout_width="wrap_content">
+
+                <CheckBox
+                    android:id="@+id/maleCheckbox"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:onClick="maleYesClicked" >
+                </CheckBox>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/maleText"
+                    android:id="@+id/maleYesTextView"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15dp"
+                    android:layout_centerHorizontal="true" >
+                </TextView>
+                <CheckBox
+                    android:id="@+id/femaleCheckbox"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:onClick="femaleYesClicked" >
+                </CheckBox>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/femaleText"
+                    android:id="@+id/glassOnNoTextView"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15dp"
+                    android:layout_centerHorizontal="true" >
+                </TextView>
+                <CheckBox
+                    android:id="@+id/notSetCheckbox"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:onClick="notSetYesClicked" >
+                </CheckBox>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/notSetText"
+                    android:id="@+id/notSetTextView"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15dp"
+                    android:layout_centerHorizontal="true" >
+
+                </TextView>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/genderNextButton"
+                android:layout_width="170dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="50dp"
+                android:layout_below="@+id/LinearLayout"
+                android:text="@string/nextButtonTextString"
+                android:textAllCaps="false"
+                android:gravity="center"
+                android:background="?attr/selectableItemBackground"
+                android:textColor="#046EEA"
+                android:textSize="25dp"
+                android:textStyle="normal"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>
