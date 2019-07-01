@@ -367,7 +367,7 @@ public class SmEmailRegActivity extends AppCompatActivity implements LoaderCallb
                     Intent serialIntent = new Intent(getBaseContext(), SerialActivity.class);
                     startActivity(serialIntent);
                     finish();
-                    finish();
+                    // finish();
                 }
             }, new Response.ErrorListener() {
                 @Override

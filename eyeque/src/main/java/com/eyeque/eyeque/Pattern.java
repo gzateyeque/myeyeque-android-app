@@ -596,7 +596,8 @@ public class Pattern {
                     else
                         newStartDist = SingletonDataHolder.lineWidth + 20;
                 else
-                    newStartDist = (int) (rightDistValueList[patternIndex-1] + SingletonDataHolder.disOffset);
+                    // newStartDist = (int) (rightDistValueList[patternIndex-1] + SingletonDataHolder.disOffset);
+                    newStartDist = (int) (rightDistValueList[patternIndex-1] + 15);
                 if (newStartDist < MAX_DISTANCE_DEVICE_5)
                     lineSpace = newStartDist;
                 else
@@ -608,7 +609,8 @@ public class Pattern {
                 if (SingletonDataHolder.noDevice)
                     newStartDist = 20;
                 else
-                    newStartDist = (int) (leftDistValueList[patternIndex-1] + SingletonDataHolder.disOffset);
+                    // newStartDist = (int) (leftDistValueList[patternIndex-1] + SingletonDataHolder.disOffset);
+                    newStartDist = (int) (rightDistValueList[patternIndex-1] + 15);
                 if (newStartDist < MAX_DISTANCE_DEVICE_5)
                     lineSpace = newStartDist;
                 else

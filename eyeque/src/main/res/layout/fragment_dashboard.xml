@@ -7,23 +7,22 @@
     android:background="#F9F7F9">
 
     <ScrollView
+        android:id="@+id/resultScrollView"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/resultScrollView">
+        android:layout_height="fill_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#F9F7F9"
-            android:fitsSystemWindows="true"
-            >
+            android:fitsSystemWindows="true">
 
             <LinearLayout
+                android:id="@+id/avatarLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/avatarLayout"
-                android:orientation="vertical"
-                android:background="#1DADF3" >
+                android:background="#1DADF3"
+                android:orientation="vertical">
 
                 <!--
                 <ImageView
@@ -39,47 +38,110 @@
                     android:id="@+id/avatarName"
                     android:layout_width="match_parent"
                     android:layout_height="230dp"
-                    android:layout_marginTop="15dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="15dp"
                     android:gravity="left"
-                    android:textColor="@color/white"
                     android:text="Welcome"
+                    android:textColor="@color/white"
                     android:textSize="20dp" />
 
             </LinearLayout>
 
-            <!-- TODO: Update blank fragment layout -->
-            <TextView
-                android:id="@+id/visionRecordTitle"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@id/avatarLayout"
-                android:gravity="center_vertical"
-                android:text="@string/eyeglassNumberText"
-                android:textStyle="bold"
-                android:textSize="16dp"
-                android:textColor="#1DADF3"
-                android:paddingStart="15dp" />
-
             <LinearLayout
+                android:id="@+id/statusLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/avatarLayout"
+                android:background="#FFFFFF">
+
+                <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp">
+
+                    <ImageView
+                        android:id="@+id/pieStateImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical | center_horizontal"
+                        android:src="@drawable/pie_ongoing" />
+
+                    <TextView
+                        android:id="@+id/pieTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="12"
+                        android:gravity="center_vertical | center_horizontal"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/pieDescTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:gravity="center_vertical"
+                    android:textColor="#1DADF3"
+                    android:textSize="16dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/eyeglassNumberLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/statusLayout">
+
+            <!-- TODO: Update blank fragment layout -->
+                <!-- TODO: Update blank fragment layout -->
+                <TextView
+                    android:id="@+id/visionRecordTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/statusLayout"
+                    android:gravity="center_vertical"
+                    android:paddingStart="15dp"
+                    android:layout_weight="1"
+                    android:text="@string/eyeglassNumberText"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/egnInfoImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:gravity="center_vertical"
+                    android:layout_weight="5"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:src="@drawable/info" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/scoreLayout"
-                android:layout_below="@+id/visionRecordTitle"
-                android:orientation="vertical"
-                android:background="#FFFFFF" >
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/eyeglassNumberLayout"
+                android:background="#FFFFFF"
+                android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/egPanelLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="0dp"
-                    android:id="@+id/egPanelLayout"
-                    android:orientation="vertical"
-                    android:background="#FFFFFF" >
-                </LinearLayout>
+                    android:layout_marginTop="10dp"
+                    android:background="#FFFFFF"
+                    android:orientation="vertical"></LinearLayout>
                 <!--
                 <TextView
                     android:id="@+id/scoreText"
@@ -131,13 +193,13 @@
 
                 <TableLayout
                     android:id="@+id/resultTableLayout"
-                    android:layout_marginTop = "10dp"
-                    android:layout_marginBottom="10dp"
-                    android:stretchColumns="*"
-                    android:background="#FFFFFF"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" >
-<!---
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#FFFFFF"
+                    android:stretchColumns="*">
+                    <!---
                     <TableRow
                         android:id="@+id/tableResultTime"
                         android:layout_width="0dp"
@@ -268,8 +330,35 @@
                     android:scaleType="fitXY" >
                 </ImageButton>
                 -->
+
+                <Button
+                    android:id="@+id/buyEyeglassesButton"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@android:color/holo_green_light"
+                    android:text="@string/buyEyeglassesButton"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/emailEyeglassNumberButton"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:text="@string/emailEyeglassNumberButton"
+                    android:textStyle="bold"
+                    android:background="@android:color/holo_orange_light"
+                    android:textColor="#FFFFFF" />
+
             </LinearLayout>
 
+            <!--
             <TextView
                 android:id="@+id/visionSnapshotTitle"
                 android:layout_width="match_parent"
@@ -325,312 +414,8 @@
                 android:color="#FFFFFF"
                 android:scaleType="fitXY">
             </WebView>
-
-            <!--
-            <LinearLayout android:background="#FFFFFF"
-                android:id="@+id/snapshotLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/visionSnapshotTitle"
-                android:orientation="vertical">
-
-            <LinearLayout android:background="#FFFFFF"
-                android:id="@+id/summary"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="20dp"
-                android:orientation="horizontal">
-
-                <TextView
-                android:id="@+id/leftText"
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:text="LEFT\nNEARSIGHTEDNESS: LOW\nASTIGMATISM: LOW"
-                android:textSize="12dp" />
-
-                <TextView
-                    android:id="@+id/rightText"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:text="RIGHT\nNEARSIGHTEDNESS: LOW\nASTIGMATISM: LOW"
-                    android:textSize="12dp" />
-
-            </LinearLayout>
-                <TextView
-                    android:id="@+id/snapshotSummary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:gravity="center"
-                    android:text="You have low nearsightedness, low astigmstism on both the left eye and the right eye"
-                    android:textSize="15dp"
-                    android:layout_alignParentStart="true"
-                    android:background="@drawable/text_border"/>
-
-
-
-                <TextView
-                    android:id="@+id/farsightnessTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text="FARSIGHTEDNESS"
-                    android:textSize="12dp"
-                    android:layout_alignParentStart="true" />
-
-                <LinearLayout android:background="#FFFFFF"
-                    android:id="@+id/labelLayout"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-
-                    <TextView
-                        android:id="@+id/leftTitle"
-                        android:layout_width="0dp"
-                        android:layout_weight="2"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textStyle="bold"
-                        android:gravity="right"
-                        android:text="LEFT  "
-                        android:textSize="14dp" />
-
-                    <TextView
-                        android:id="@+id/rightTitle"
-                        android:layout_width="0dp"
-                        android:layout_weight="2"
-                        android:layout_height="wrap_content"
-                        android:gravity="left"
-                        android:layout_gravity="right"
-                        android:textStyle="bold"
-                        android:text="  RIGHT"
-
-
-                </LinearLayout>
-
-                <LinearLayout android:background="#FFFFFF"
-                    android:id="@+id/chartLayout"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/astigmatismLeftTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_height="200dp"
-                        android:paddingTop="20dp"
-                        android:gravity="center"
-                        android:text="ASTIGMATISM"
-                        android:rotation="-90"
-                        android:textSize="12dp" />
-
-                    <ImageView
-                        android:id="@+id/visionMap"
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        android:src="@drawable/vision_map_orange"/>
-
-                    <TextView
-                        android:id="@+id/astigmatismRightTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_height="200dp"
-                        android:paddingTop="20dp"
-                        android:text="ASTIGMATISM"
-                        android:rotation="-90"
-                        android:textSize="12dp"
-                        android:gravity="center" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/nearsightnessTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center"
-                    android:text="NEARSIGHTEDNESS"
-                    android:textSize="12dp"
-                    android:layout_alignParentStart="true" />
-
-                <LinearLayout android:background="#FFFFFF"
-                    android:id="@+id/legendLayout"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/empty1Text"
-                        android:layout_width="wrap_content"
-                        android:layout_weight="2"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text=""
-                        android:textSize="10dp" />
-
-                    <ImageView
-                        android:id="@+id/lowLegend"
-                        android:layout_width="wrap_content"
-                        android:paddingTop = "5dp"
-                        android:paddingBottom = "5dp"
-                        android:layout_height="20dp"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        android:src="@drawable/square_green"/>
-
-                    <TextView
-                        android:id="@+id/lowText"
-                        android:layout_width="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingTop = "3dp"
-                        android:layout_height="20dp"
-                        android:gravity="left"
-                        android:text="LOW"
-                        android:textSize="10dp" />
-
-                    <ImageView
-                        android:id="@+id/moderateLegend"
-                        android:layout_width="wrap_content"
-                        android:paddingTop = "5dp"
-                        android:paddingBottom = "5dp"
-                        android:layout_height="20dp"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        android:src="@drawable/square_yellow"/>
-
-                    <TextView
-                        android:id="@+id/moderateText"
-                        android:layout_width="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingTop = "3dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="left"
-                        android:text="MODERATE"
-                        android:textSize="10dp" />
-
-                    <ImageView
-                        android:id="@+id/highLegend"
-                        android:layout_width="wrap_content"
-                        android:paddingTop = "5dp"
-                        android:paddingBottom = "5dp"
-                        android:layout_height="20dp"
-                        android:layout_weight="1"
-                        android:background="@color/white"
-                        android:src="@drawable/square_orange"/>
-
-                    <TextView
-                        android:id="@+id/highText"
-                        android:layout_width="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingTop = "3dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="left"
-                        android:text="HIGH"
-                        android:textSize="10dp" />
-
-                    <TextView
-                        android:id="@+id/empty2Text"
-                        android:layout_width="wrap_content"
-                        android:layout_weight="2"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text=""
-                        android:textSize="10dp" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-
-            <TextView
-                android:id="@+id/trackingDataTitle"
-                android:layout_below="@id/visionSummaryLayout"
-                android:layout_width="match_parent"
-                android:layout_height="50dip"
-                android:gravity="center_vertical"
-                android:text="@string/trackingDataText"
-                android:textStyle="bold"
-                android:textSize="16dp"
-                android:textColor="#1DADF3"
-                android:paddingStart="15dip"
-                android:enabled="false"/>
-
-            <TextView
-                android:id="@+id/trackingDataOdTitle"
-                android:layout_below="@id/trackingDataTitle"
-                android:layout_width="match_parent"
-                android:background="#FFFFFF"
-                android:layout_height="80dip"
-                android:text="SPHERICAL EQUIVALENT (RIGHT O.D.)"
-                android:textStyle="bold"
-                android:textSize="14dp"
-                android:gravity="center"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:enabled="false" />
-
-            <LinearLayout android:background="#FFFFFF"
-                android:id="@+id/trackingDataOdLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/trackingDataOdTitle"
-                android:enabled="false" >
-                <WebView
-                    android:id="@+id/trackingDataOdWebView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginBottom="10dp"
-                    android:color="#FFFFFF"
-                    android:scaleType="fitXY"
-                    android:enabled="false">
-                </WebView>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/trackingDataOsTitle"
-                android:layout_below="@id/trackingDataOdLayout"
-                android:layout_width="match_parent"
-                android:background="#FFFFFF"
-                android:layout_height="80dip"
-                android:text="SPHERICAL EQUIVALENT (LEFT O.S.)"
-                android:textStyle="bold"
-                android:textSize="14dp"
-                android:gravity="center"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:enabled="false" />
-
-            <LinearLayout android:background="#FFFFFF"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/trackingDataOsTitle"
-                android:enabled="false" >
-                <WebView
-                    android:id="@+id/trackingDataOsWebView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="50dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:color="#FFFFFF"
-                    android:scaleType="fitXY"
-                    android:enabled="false">
-                </WebView>
-            </LinearLayout>
             -->
+
         </RelativeLayout>
     </ScrollView>
 </FrameLayout>

@@ -235,7 +235,7 @@ public class Dashboard1Fragment extends Fragment {
                         SingletonDataHolder.eyeglassNumPurchasable = eyeglassResult.getBoolean("purchasable");
                         SingletonDataHolder.eyeglassNumCount = eyeglassNumList.length();
 
-                        Log.i("*****PD******", Integer.toString(SingletonDataHolder.pupillaryDistance));
+                        Log.i("*****PD******", Double.toString(SingletonDataHolder.pupillaryDistance));
                         Log.i("*** Purchasable ***", Boolean.toString(SingletonDataHolder.eyeglassNumPurchasable));
 
                         SingletonDataHolder.eyeglassNumberList = new SingletonDataHolder.EyeglassNumber[SingletonDataHolder.eyeglassNumCount];
@@ -760,9 +760,9 @@ public class Dashboard1Fragment extends Fragment {
             TextView pdTextView = new TextView(thisContext);
             if (SingletonDataHolder.pupillaryDistance > 0)
                 if (SingletonDataHolder.lang.equals("zh"))
-                    pdTextView.setText("瞳距: " + Integer.toString(SingletonDataHolder.pupillaryDistance));
+                    pdTextView.setText("瞳距: " + Double.toString(SingletonDataHolder.pupillaryDistance));
                 else
-                    pdTextView.setText("PD: " + Integer.toString(SingletonDataHolder.pupillaryDistance));
+                    pdTextView.setText("PD: " + Double.toString(SingletonDataHolder.pupillaryDistance));
             else
                 pdTextView.setText("PD: --");
             pdTextView.setTextColor(Color.BLACK);

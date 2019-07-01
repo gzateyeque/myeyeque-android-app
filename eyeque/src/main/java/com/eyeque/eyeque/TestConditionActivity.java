@@ -1,8 +1,10 @@
 package com.eyeque.eyeque;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -13,6 +15,8 @@ import android.widget.Toast;
 import com.eyeque.eyeque.R;
 import static com.eyeque.eyeque.R.id.glassRemovedNoCheckbox;
 import static com.eyeque.eyeque.R.id.glassRemovedYesCheckbox;
+// import static com.eyeque.eyeque.R.id.regularLensNoCheckbox;
+// import static com.eyeque.eyeque.R.id.regularLensYesCheckbox;
 import static com.eyeque.eyeque.R.id.screenProtectorOnNoCheckbox;
 import static com.eyeque.eyeque.R.id.screenProtectorOnYesCheckbox;
 
@@ -39,6 +43,11 @@ public class TestConditionActivity extends AppCompatActivity {
     private CheckBox screenProtectorOnYesCheckBox;
     private CheckBox screenProtectorOnNoCheckBox;
 
+    private boolean regularLensYesChecked = false;
+    private boolean regularLensNoChecked = false;
+    private CheckBox regularLensYesCheckBox;
+    private CheckBox regularLensNoCheckBox;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +59,16 @@ public class TestConditionActivity extends AppCompatActivity {
         // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         setContentView(R.layout.activity_test_condition);
+
+        // Dynamically set the box center position based om the screen size
+        SingletonDataHolder.phoneDisplay = android.os.Build.DISPLAY;
+        Display display = getWindowManager(). getDefaultDisplay();
+        Point size = new Point();
+        display. getSize(size);
+        int width = size. x;
+        int height = size. y;
+        SingletonDataHolder.centerX = width / 2;
+        // SingletonDataHolder.centerY = Math.round((float) SingletonDataHolder.centerY * (float) SingletonDataHolder.phonePpi / 520.0f);
 
         patternView = (PatternView) findViewById(R.id.drawView);
         // Draw the device mounting line. Hard code for now.
@@ -91,6 +110,22 @@ public class TestConditionActivity extends AppCompatActivity {
         glassRemovedNoCheckBox = (CheckBox) findViewById(glassRemovedNoCheckbox);
         screenProtectorOnYesCheckBox = (CheckBox) findViewById(screenProtectorOnYesCheckbox);
         screenProtectorOnNoCheckBox = (CheckBox) findViewById(screenProtectorOnNoCheckbox);
+        // regularLensYesCheckBox = (CheckBox) findViewById(regularLensYesCheckbox);
+        // regularLensNoCheckBox = (CheckBox) findViewById(regularLensNoCheckbox);
+
+        /****
+        if (SingletonDataHolder.deviceName.equals("EQ101")) {
+            regularLensYesCheckBox.setChecked(true);
+            regularLensYesChecked = true;
+            regularLensNoCheckBox.setChecked(false);
+            regularLensNoChecked = false;
+        } else {
+            regularLensYesCheckBox.setChecked(false);
+            regularLensYesChecked = false;
+            regularLensNoCheckBox.setChecked(true);
+            regularLensNoChecked = true;
+        }
+         ****/
      }
 
     public void glassRemovedYesClicked(View v) {
@@ -143,6 +178,35 @@ public class TestConditionActivity extends AppCompatActivity {
         }
         else
             screenProtectorOnNoChecked = false;
+
+    }
+
+    public void regularLensYesClicked(View v) {
+        //code to check if this checkbox is checked!
+        CheckBox checkBox = (CheckBox) v;
+        if (checkBox.isChecked()) {
+            regularLensYesChecked = true;
+            regularLensNoChecked = false;
+            regularLensNoCheckBox.setChecked(false);
+            regularLensNoCheckBox.setSelected(false);
+            SingletonDataHolder.deviceName = "EQ101";
+        }
+        else
+            regularLensNoChecked = false;
+    }
+
+    public void regularLensNoClicked(View v) {
+        //code to check if this checkbox is checked!
+        CheckBox checkBox = (CheckBox) v;
+        if (checkBox.isChecked()) {
+            regularLensYesChecked = false;
+            regularLensNoChecked = true;
+            regularLensYesCheckBox.setChecked(false);
+            regularLensYesCheckBox.setSelected(false);
+            SingletonDataHolder.deviceName = "EQ101_MARK";
+        }
+        else
+            regularLensYesChecked = false;
 
     }
 

@@ -18,8 +18,8 @@ import com.eyeque.eyeque.R;
 
 import static com.eyeque.eyeque.R.id.readingGlassNoCheckbox;
 import static com.eyeque.eyeque.R.id.readingGlassYesCheckbox;
-import static com.eyeque.eyeque.R.id.uploadPrescriptionNoCheckbox;
-import static com.eyeque.eyeque.R.id.uploadPrescriptionYesCheckbox;
+// import static com.eyeque.eyeque.R.id.uploadPrescriptionNoCheckbox;
+// import static com.eyeque.eyeque.R.id.uploadPrescriptionYesCheckbox;
 import static com.eyeque.eyeque.R.id.wearEyeglassNoCheckbox;
 import static com.eyeque.eyeque.R.id.wearEyeglassYesCheckbox;
 
@@ -45,10 +45,12 @@ public class WearEyeglassActivity extends AppCompatActivity {
     private boolean readingGlassesYesChecked = false;
     private boolean readingGlassesNoChecked = false;
 
+    /*** Removed in v1.6
     private CheckBox uploadPrescriptionYesCheckBox;
     private CheckBox uploadPrescriptionNoCheckBox;
     private boolean uploadPrescriptionYesChecked = false;
     private boolean uploadPrescriptionNoChecked = false;
+     ***/
 
     private EditText readingGlassesValueEt;
 
@@ -70,8 +72,8 @@ public class WearEyeglassActivity extends AppCompatActivity {
         readingGlassesYesCheckBox = (CheckBox) findViewById(readingGlassYesCheckbox);
         readingGlassesNoCheckBox = (CheckBox) findViewById(readingGlassNoCheckbox);
 
-        uploadPrescriptionYesCheckBox = (CheckBox) findViewById(uploadPrescriptionYesCheckbox);
-        uploadPrescriptionNoCheckBox = (CheckBox) findViewById(uploadPrescriptionNoCheckbox);
+        // uploadPrescriptionYesCheckBox = (CheckBox) findViewById(uploadPrescriptionYesCheckbox);
+        // uploadPrescriptionNoCheckBox = (CheckBox) findViewById(uploadPrescriptionNoCheckbox);
 
         readingGlassesValueEt = (EditText) findViewById(R.id.readingGlassValueEditText);
         readingGlassesValueEt.setText(SingletonDataHolder.profileReadingGlassesValue);
@@ -88,8 +90,8 @@ public class WearEyeglassActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if ((!wearEyeglassYesChecked && !wearEyeglassNoChecked)
-                    || (!readingGlassesYesChecked && !readingGlassesNoChecked)
-                    || (!uploadPrescriptionYesChecked && !uploadPrescriptionNoChecked))
+                    || (!readingGlassesYesChecked && !readingGlassesNoChecked))
+                    // || (!uploadPrescriptionYesChecked && !uploadPrescriptionNoChecked))
                     Toast.makeText(WearEyeglassActivity.this, "Please provide the answer", Toast.LENGTH_SHORT).show();
                 else {
                     if (wearEyeglassYesChecked)
@@ -100,10 +102,12 @@ public class WearEyeglassActivity extends AppCompatActivity {
                         SingletonDataHolder.profileWearReadingGlasses = true;
                     else
                         SingletonDataHolder.profileWearReadingGlasses = false;
+                    /***
                     if (uploadPrescriptionYesChecked)
                         SingletonDataHolder.profileUploadPrescription = true;
                     else
                         SingletonDataHolder.profileUploadPrescription = false;
+                     ***/
                     Intent countryIntent = new Intent(getBaseContext(), CountryActivity.class);
                     startActivity(countryIntent);
                 }
@@ -159,6 +163,7 @@ public class WearEyeglassActivity extends AppCompatActivity {
             readingGlassesNoChecked = false;
     }
 
+    /*** Removed in v1.6
     public void uploadPrescriptionYesClicked(View v) {
         //code to check if this checkbox is checked!
         CheckBox checkBox = (CheckBox) v;
@@ -180,8 +185,9 @@ public class WearEyeglassActivity extends AppCompatActivity {
             uploadPrescriptionYesCheckBox.setChecked(false);
             uploadPrescriptionYesCheckBox.setSelected(false);
         } else
-            uploadPrescriptionNoChecked = false;
+        uploadPrescriptionNoChecked = false;
     }
+     ***/
 
     @Override
     public void onResume() {

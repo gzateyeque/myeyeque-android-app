@@ -54,6 +54,7 @@ public class DiagnosticsActivity extends AppCompatActivity {
         else
             diagText += "Internet Connection = " + "OFF\n\n";
         diagText += "Device Parameters:" + "\n";
+        diagText += "\u2022  Phone Type = " + SingletonDataHolder.phoneType + "\n";
         diagText += "\u2022  Manufacturer = " + SingletonDataHolder.phoneManufacturer + "\n";
         diagText += "\u2022  Brand = " + SingletonDataHolder.phoneBrand + "\n";
         diagText += "\u2022  Model = " + SingletonDataHolder.phoneModel + "\n";
@@ -68,8 +69,8 @@ public class DiagnosticsActivity extends AppCompatActivity {
         diagText += "\u2022  HeightPixels = " + metrics.heightPixels + "\n";
         diagText += "\u2022  Xdpi = " + metrics.xdpi + "\n";
         diagText += "\u2022  Ydpi = " + metrics.ydpi + "\n";
-        diagText += "\u2022  Density:" + metrics.density + "\n\n";
-
+        diagText += "\u2022  Density = " + metrics.density + "\n";
+        diagText += "\u2022  ScaleDensity = " + metrics.scaledDensity + "\n\n";
 
         diagText += "System Parameters:" + "\n";
         // diagText += "\u2022 Token = " + SingletonDataHolder.token + "\n";

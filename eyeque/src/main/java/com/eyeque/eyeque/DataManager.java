@@ -1,11 +1,11 @@
-package com.amazonaws.androidtest;
+package com.eyeque.eyeque;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 public class DataManager {
 
-    private static final String PREF_NAME = "com.eyeque.pushdemo.pushkey";
+    private static final String PREF_NAME = "com.eyeque.eyeque.pushkey";
 
     private String endpoint;
     private static String KEY_ENDPOINT = "endpoint";
@@ -13,7 +13,7 @@ public class DataManager {
     private static DataManager sInstance;
     private final SharedPreferences sharedPreferences;
 
-    private DataManager (Context context) {
+    private DataManager(Context context) {
         sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         load();
     }

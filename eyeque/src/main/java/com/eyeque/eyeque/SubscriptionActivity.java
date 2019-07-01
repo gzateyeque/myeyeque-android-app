@@ -1,5 +1,8 @@
 package com.eyeque.eyeque;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -25,7 +29,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -45,11 +49,17 @@ import java.util.Map;
 public class SubscriptionActivity extends AppCompatActivity {
 
     private static final String TAG = "Subscription";
+    private EditText subscriptionType;
     private EditText subscriptionStatus;
     private EditText expirationDate;
+    private TextView learnMoreMembershipTv;
+    private Button buyButton;
+    private boolean showBuyButton = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         Window window = this.getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -63,38 +73,100 @@ public class SubscriptionActivity extends AppCompatActivity {
         GetUserSubscription();
         GetBuySubscriptionData();
 
+        buyButton = (Button) findViewById(R.id.subscription_buy_button);
 
         // Set up the account form.
+        subscriptionType = (EditText) findViewById(R.id.subscriptionType);
         subscriptionStatus = (EditText) findViewById(R.id.subscriptionStatus);
         expirationDate = (EditText) findViewById(R.id.subscriptionExpiration);
-        if (SingletonDataHolder.subscriptionStatus) {
-            subscriptionStatus.setText("Active");
-            expirationDate.setText(SingletonDataHolder.subscriptionExpDate);
-        }
-        else {
-            if ((SingletonDataHolder.subscriptionExpDate).matches("1900-01-01")) {
-                subscriptionStatus.setText("Unsubscribed");
-                expirationDate.setText("--");
-            }
-            else {
-                subscriptionStatus.setText("Expired");
-                expirationDate.setText(SingletonDataHolder.subscriptionExpDate);
-            }
-        }
-        // subscriptionStatus.setEnabled(false);
+        learnMoreMembershipTv = (TextView) findViewById(R.id.learnMembershipTextView);
 
-        Button buyButton = (Button) findViewById(R.id.subscription_buy_button);
-        if ((SingletonDataHolder.subscriptionExpDate).matches("") || SingletonDataHolder.subscriptionExpDate == null) {
-            expirationDate.setVisibility(View.GONE);
-            buyButton.setVisibility(View.GONE);
-        } else {
+        switch (SingletonDataHolder.subscriptionStatus) {
+            case 0:
+                subscriptionType.setText("All Access Membership");
+                subscriptionStatus.setText("Active");
+                expirationDate.setVisibility(View.GONE);
+                buyButton.setVisibility(View.GONE);
+                break;
+            case 1:
+                subscriptionType.setText("All Access Membership");
+                subscriptionStatus.setText("Active");
+                expirationDate.setText(SingletonDataHolder.subscriptionExpDate);
+                try {
+                    Log.i("**** DIFF ****", SingletonDataHolder.subscriptionExpDate);
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    Date expirationDate = format.parse(SingletonDataHolder.subscriptionExpDate);
+                    Date now = new Date();
+                    Log.i("**** DIFF ****", DateFormat.getDateInstance().format(now));
+                    Log.i("**** DIFF ****", DateFormat.getDateInstance().format(expirationDate));
+                    long diff = expirationDate.getTime() - now.getTime();
+                    Log.i("**** DIFF ****", Long.toString(diff));
+                    // if ((diff/ (24*60*60*1000)) <= 30) {
+                        buyButton.setVisibility(View.VISIBLE);
+                        buyButton.setText("Renew");
+                    // }
+                    // else {
+                        // buyButton.setVisibility(View.INVISIBLE);
+                        // showBuyButton = false;
+                    // }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(SubscriptionActivity.this, "Date Parse Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case 2:
+                subscriptionType.setText("Basic");
+                subscriptionStatus.setVisibility(View.GONE);
+                subscriptionStatus.setText("Expired");
+                buyButton.setText("Upgrade to All Access Membership");
+                expirationDate.setText(SingletonDataHolder.subscriptionExpDate);
+                expirationDate.setVisibility(View.GONE);
+                break;
+            case 3:
+                subscriptionType.setText("Basic");
+                subscriptionStatus.setVisibility(View.GONE);
+                subscriptionStatus.setText("Unsubscribed");
+                buyButton.setText("Upgrade to All Access Membership");
+                expirationDate.setText(SingletonDataHolder.subscriptionExpDate);
+                expirationDate.setVisibility(View.GONE);
+                break;
+            default:
+                break;
+        }
+
+        learnMoreMembershipTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse(Constants.UrlMembershipInfo);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+
+        if (showBuyButton) {
             buyButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Uri uri =  Uri.parse(SingletonDataHolder.subscriptionBuyLink
-                            + "&token=" + SingletonDataHolder.token);
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(SubscriptionActivity.this);
+                    // Setting Dialog Message
+                    alertDialog.setTitle("Information");
+                    alertDialog.setMessage("You are going to leave the EyeQue PVT app where you will "
+                            + "be taken to the EyeQue store. Then you can renew or upgrade to All "
+                            + "Access Membership. After the renew or upgrade, you can come back the app to start using "
+                            + "the full functionality of the EyeQue PVT app.");
+                    // Setting Positive "Buy" Button
+                    alertDialog.setPositiveButton("Continue",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Uri uri =  Uri.parse(SingletonDataHolder.subscriptionBuyLink
+                                            + "&token=" + SingletonDataHolder.token);
+                                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
+                    // Showing Alert Dialog
+                    alertDialog.show();
                 }
             });
         }
@@ -186,35 +258,11 @@ public class SubscriptionActivity extends AppCompatActivity {
                         // String sphericalStep;
                         Log.i("*** GetBuySubs ***", string);
                         JSONObject jsonObj = new JSONObject(string);
-                        int id = jsonObj.getInt("id");
+                        SingletonDataHolder.subscriptionStatus = jsonObj.getInt("status");
                         String attrValue = jsonObj.getString("expiration_date");
-                        if ((attrValue).matches("") || attrValue == null) {
-                            if (id == 0) {
-                                Log.i("*** SUBSCRIPTION ***", SingletonDataHolder.subscriptionExpDate);
-                                SingletonDataHolder.subscriptionStatus = true;
-                                SingletonDataHolder.subscriptionExpDate = "";
-                            }
-                            else {
-                                Log.i("*** SUBSCRIPTION ***", SingletonDataHolder.subscriptionExpDate);
-                                SingletonDataHolder.subscriptionStatus = false;
-                                SingletonDataHolder.subscriptionExpDate = "";
-                            }
-                        } else {
-                            String str = attrValue;
-                            String[] strgs = str.split(" ");
-                            SingletonDataHolder.subscriptionExpDate = strgs[0];
-                            SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
-                            Date now = new Date();
-                            try {
-                                Date expirationDate = format.parse(attrValue);
-                                if (expirationDate.before(now))
-                                    SingletonDataHolder.subscriptionStatus = false;
-                                else
-                                    SingletonDataHolder.subscriptionStatus = true;
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
+                        String str = attrValue;
+                        String[] strgs = str.split(" ");
+                        SingletonDataHolder.subscriptionExpDate = strgs[0];
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Toast.makeText(SubscriptionActivity.this, "Subscription Parse Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -262,21 +310,8 @@ public class SubscriptionActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         GetUserSubscription();
-        if (SingletonDataHolder.subscriptionStatus) {
-            subscriptionStatus.setText("Active");
-            expirationDate.setText(SingletonDataHolder.subscriptionExpDate);
-        }
-        else {
-            if ((SingletonDataHolder.subscriptionExpDate).matches("1900-01-01")) {
-                subscriptionStatus.setText("Unsubscribed");
-                expirationDate.setText("--");
-            }
-            else {
-                subscriptionStatus.setText("Expired");
-                expirationDate.setText(SingletonDataHolder.subscriptionExpDate);
-            }
-        }
     }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

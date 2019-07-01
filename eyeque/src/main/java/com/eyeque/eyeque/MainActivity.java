@@ -5,19 +5,25 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.provider.Settings;
+import android.content.ContentResolver;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Switch;
@@ -87,6 +93,8 @@ public class MainActivity extends Activity {
     private static Button contButton;
     private static Button exitButton;
     private static Switch accomodationSwitch;
+    private boolean onOff = true;
+    private RelativeLayout background;
     private static boolean showPower = false;
 
     // Tag for log message
@@ -97,6 +105,7 @@ public class MainActivity extends Activity {
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         Window window = this.getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -105,8 +114,31 @@ public class MainActivity extends Activity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-
         setContentView(R.layout.activity_main);
+
+        /***
+        //Get the content resolver
+        cResolver = getContentResolver();
+        //Set the system brightness using the brightness variable value
+        Settings.System.putInt(cResolver, Settings.System.SCREEN_BRIGHTNESS, 255);
+         ***/
+
+        Window win = getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        winParams.screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_FULL;
+        win.setAttributes(winParams);
+
+        // Dynamically set the box center position based om the screen size
+        SingletonDataHolder.phoneDisplay = android.os.Build.DISPLAY;
+        Display display = getWindowManager(). getDefaultDisplay();
+        Point size = new Point();
+        display. getSize(size);
+        int width = size. x;
+        int height = size. y;
+        SingletonDataHolder.centerX = width / 2;
+        // SingletonDataHolder.centerY = Math.round((float) SingletonDataHolder.centerY * (float) SingletonDataHolder.phonePpi / 520.0f);
+
+        background = (RelativeLayout) findViewById(R.id.mainActivity);
 
         subjectId = getIntent().getIntExtra("subjectId", 0);
         deviceId = getIntent().getIntExtra("deviceId", 0);
@@ -516,10 +548,30 @@ public class MainActivity extends Activity {
                             if (deviceId == 4)
                                 mp.setDataSource(getApplicationContext(),
                                         Uri.parse("android.resource://com.eyeque.eyeque/" + R.raw.mm9));
-                            if (pattern.getWhichEye())
+                            if (pattern.getWhichEye()) {
                                 mp.setDataSource(getApplicationContext(),
                                         Uri.parse("android.resource://com.eyeque.eyeque/" + R.raw.fr_last));
 
+                                // Flash the screen
+                                new CountDownTimer(5000, 500) {
+                                    @Override
+                                    public void onTick(long millisUntilFinished) {
+                                        if (onOff) {
+                                            background.setBackgroundColor(Color.GRAY);
+                                            onOff = false;
+                                        } else {
+                                            background.setBackgroundColor(Color.BLACK);
+                                            onOff = true;
+                                            // do something after 1s
+                                        }
+                                    }
+                                    @Override
+                                    public void onFinish () {
+                                        background.setBackgroundColor(Color.BLACK);
+                                    }
+                                }.start();
+
+                            }
                             else
                                 mp.setDataSource(getApplicationContext(),
                                         Uri.parse("android.resource://com.eyeque.eyeque/" + R.raw.fl_last));

@@ -98,7 +98,7 @@ public class SettingFragment extends Fragment {
         final ListView settingListView = (ListView) rootView.findViewById(R.id.settingListView);
         if (SingletonDataHolder.lang.equals("zh")) {
             listItems.add("帐号");
-            // listItems.add("订阅");
+            listItems.add("h会员");
             listItems.add("购买");
             listItems.add("常见问题");
             listItems.add("博客");
@@ -108,7 +108,7 @@ public class SettingFragment extends Fragment {
         }
         else {
             listItems.add("Account");
-            // listItems.add("Subscription");
+            listItems.add("Membership");
             listItems.add("Shop");
             listItems.add("FAQ");
             listItems.add("Blog");
@@ -129,35 +129,35 @@ public class SettingFragment extends Fragment {
                         intent = new Intent(getActivity(), AccountActivity.class);
                         startActivity(intent);
                         break;
-                    // case 1:
-                        // intent = new Intent(getActivity(), SubscriptionActivity.class);
-                        // startActivity(intent);
-                        // break;
                     case 1:
+                        intent = new Intent(getActivity(), SubscriptionActivity.class);
+                        startActivity(intent);
+                        break;
+                    case 2:
                         uri = Uri.parse(Constants.UrlBuyDevice);
                         intent = new Intent(Intent.ACTION_VIEW, uri);
                         startActivity(intent);
                         break;
-                    case 2:
+                    case 3:
                         uri = Uri.parse(Constants.UrlFaq);
                         intent = new Intent(Intent.ACTION_VIEW, uri);
                         startActivity(intent);
                         break;
-                    case 3:
+                    case 4:
                         uri = Uri.parse(Constants.UrlBlog);
                         intent = new Intent(Intent.ACTION_VIEW, uri);
                         startActivity(intent);
                         break;
-                    case 4:
+                    case 5:
                         uri = Uri.parse(Constants.UrlSupport);
                         intent = new Intent(Intent.ACTION_VIEW, uri);
                         startActivity(intent);
                         break;
-                    case 5:
+                    case 6:
                         intent = new Intent(getActivity(), DiagnosticsActivity.class);
                         startActivity(intent);
                         break;
-                    case 6:
+                    case 7:
                         intent = new Intent(getActivity(), AboutActivity.class);
                         startActivity(intent);
                         break;
@@ -227,8 +227,6 @@ public class SettingFragment extends Fragment {
                 SingletonDataHolder.lastName = "";
                 SingletonDataHolder.gender = 0;
                 SingletonDataHolder.birthYear = 0;
-                SingletonDataHolder.subscriptionStatus = false;
-                SingletonDataHolder.subscriptionExpDate = "";
                 SingletonDataHolder.profileReadingGlassesValue = "";
                 getActivity().getFragmentManager().popBackStack();
                 Intent i = new Intent(getActivity(), LoginActivity.class);

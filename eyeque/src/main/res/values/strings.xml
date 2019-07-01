@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EyeQue</string>
+    <string name="app_name">PVT</string>
     <string name="facebook_app_id">596991780466384</string>
     <string name="startTestButtonTextString">Start Test</string>
     <string name="startButtonTextString">Enter</string>
@@ -13,7 +13,7 @@
     <string name="nameTitleTextString">What\&#39;s your name&#63;</string>
     <string name="serialHeaderTextString">Setup (1/6)</string>
     <string name="serialTitleTextString">Enter your miniscope\&#39;s serial number?</string>
-    <string name="serialNumberDescTextString">The miniscope serial number is located inside of the box of the Personal Vision Tracker. In order to complete the setup process and to unlock the myEyeQue PVT App, you will need that serial number. If you don\'t have a serial number, you can come back later to complete the setup process.</string>
+    <string name="serialNumberDescTextString">The miniscope serial number is located inside of the box of the Personal Vision Tracker. If you don\'t have a serial number, you can come back later to complete the setup process.</string>
     <string name="serialOrderTextString">Don\&#39;t have a device? Order now</string>
     <string name="genderHeaderTextString">Setup (2/6)</string>
     <string name="genderTitleTextString">What\&#39;s your gender&#63;</string>
@@ -33,8 +33,9 @@
     <string name="smemailHeaderTextString">EyeQue Email Link</string>
     <string name="accountHeaderTextString">Account</string>
     <string name="diagnosticsHeaderTextString">Diagnostics</string>
-    <string name="subscriptionHeaderTextString">Subscription</string>
+    <string name="subscriptionHeaderTextString">Membership</string>
     <string name="regCompHeaderTextString">Registration Complete</string>
+    <string name="learnAboutMembership">To learn moe about EyeQue\'s membership service, click here</string>
 
     <string name="powerTextString">Power: TBC</string>
     <string name="angleTextString">Angle: 0&#xb0;"</string>
@@ -107,6 +108,15 @@
     <string name="eyeglassNumberText">EYEGLASS NUMBERS</string>
     <string name="visionSummaryText">VISION SUMMARY</string>
     <string name="trackingDataText">TRACKING DATA</string>
+    <string name="buyEyeglassesButton">ORDER GLASSES</string>
+    <string name="emailEyeglassNumberButton">EMAIL YOUR RESULT</string>
+    <string name="userReportButton">ACCESS USER REPORT</string>
+    <string name="pieDescNewStart">You must take 3 tests to unlock your new set of EyeGlass Numbers.</string>
+    <string name="pieDescFirstTest">You must take 2 more tests to unlock your EyeGlass Numbers.</string>
+    <string name="pieDescSecondTest">You must take 1 more test to unlock your EyeGlass Numbers.</string>
+    <string name="pieDescThirdTest">You have achieved your new set of EyeGlass Numbers!</string>
+    <string name="pieDescOngoingTest">Your EyeGlass Numbers (EGNs) have been updated.</string>
+    <string name="pieDescOngoingTestForFUsers">Complete another eye test to update EGNs or contact support.</string>
 
     <!-- Strings related to the Account -->
     <string name="regText">Don\'t have an account, register now</string>
@@ -118,17 +128,20 @@
     <string name="notSetText">No Preference</string>
     <string name="birthYearText">Birth Year</string>
     <string name="regionText">Region</string>
+    <string name="subscriptionTypeText">Membership Type</string>
     <string name="subscriptionStatusText">Status</string>
     <string name="subscriptionExpirationDate">Expiration</string>
     <string name="resendConfirmEmailTextString">Resend confirmation email</string>
     <string name="regCompTextString">Congratulations; you have finished the first step in registering your device. In order to finish your registration, you will receive a confirmation email. Please go to the confirmation email and click the "Confirm Your Account" button. Once your email is confirmed, then you can log into your EyeQue account.</string>
+
     <!-- Strings related to the Test  -->
     <string name="avatarNewStart">#name,\n\nWelcome to EyeQue.\n\nReady to get started? Tap the test icon to watch the tutorial, take a practice test or begin your vision test.</string>
     <string name="avatarFirstTest">Nice work #name.\n\nProgress: You have completed 1 vision test.\n\nYou need to take 2 more tests to obtain your EyeGlass Numbers.</string>
     <string name="avatarSecondTest">#name,\n\nProgress: You have completed 2 vision tests.\n\nAlmost there! You need to take 1 more test to obtain your EyeGlass Numbers.</string>
     <string name="avatarThirdTest">#name,\n\nProgress: You have completed 3 vision tests.\n\nCongratulations; below are your EyeGlass Numbers. You can take more vision tests to refine these numbers and improve the confidence level of your results.</string>
-    <string name="avatarOngoingTest">#name,\n\nProgress: You have completed #numOfTests vision tests.\n\nYour updated EyeGlass Numbers are below.</string>
-    <string name="avatarInSixMonthTest">#name,\n\nWelcome Back\n\nIt’s been 6 or more months since the beginning of your last vision testing period. We will start fresh with a new testing period and you will need to take 3 new vision tests in order to obtain your Eyeglass Numbers.</string>
+    <string name="avatarOngoingTestForFUsers">#name,\n\nIn your 6 months testing period, you have taken  #numOfTests vision tests.\n\nYour Eyeglass Numbers are not reliable due to the inconsistency of your test results. Please contact customer support to review your test.</string>
+    <string name="avatarOngoingTest">#name,\n\nIn your 6 months testing period, you have taken #numOfTests vision tests.\n\nYour updated EyeGlass Numbers are below.</string>
+    <string name="avatarInSixMonthTest">#name,\n\nWelcome back! It’s time to renew your EGNs. Your 6 month EGN period has expired. It’s time to renew your EGNs.\nVision can change frequently.</string>
     <string name="testStartText">We highly recommend you watch the tutorial and take the practice test before you start the Vision Test</string>
     <string name="gettingStartText">Getting Started</string>
     <string name="attachDeviceText">Setup Miniscope</string>
@@ -141,6 +154,13 @@
     <string name="no1Text">No</string>
     <string name="pracDescText">Tap the "+" or "-" buttons to move the red and the green lines until they are completely overlapped, then tap "Next"</string>
     <string name="practiceCheckLineText">With the minscope attached, look for the red and green vertical lines. Make sure the eyecup of the miniscope is set to position 1.\n\nIf you are having trouble, relax and take your time. It helps to be in a darkened room and make sure your screen is set to maximum brightness.\n\nIf you can see the lines you are ready to take a practice test. Tap next.\n\nIf you tried and can\'t see the lines please contact support@eyeque.com</string>
+    <string name="discardTextString">Feel like you made a mistake? Just discard your test and begin another test!</string>
+    <string name="testCompleted1stTestEver">Congratulations on completing your first EyeQue test!\nTake two more tests to achieve your EyeGlass Numbers.</string>
+    <string name="testCompleted2ndTestEver">Save this test and you are almost there! Take one more test to get your EyeGlass Numbers.</string>
+    <string name="testCompleted3rdTestEver">You did it! Your EyeGlass Numbers are just a click away! Hit save.</string>
+    <string name="testCompletedOngoingTest">Save this test to get your updated EyeGlass Numbers.</string>
+    <string name="testCompleted1stRecurringTest">Complete and save two more tests to achieve your updated EyeGlass Numbers.</string>
+    <string name="testCompleted2ndRecurringTest">Complete and save one more tests to achieve your updated EyeGlass Numbers.</string>
 
     <!-- Button text -->
     <string name="saveButtonText">SAVE</string>
@@ -149,7 +169,12 @@
     <string name="quickTestButtonText">PRACTICE</string>
     <string name="fullTestButtonText">TEST</string>
     <string name="startTestButtonText">START TEST</string>
-    <string name="buySubscriptionText">BUY</string>
+    <string name="buySubscriptionText">Upgrade to All Access Membership</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Notification channel management -->
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="default_notification_channel_name" translatable="true">News</string>
+    <string name="log_token">Log Token</string>
+    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
+
 </resources>

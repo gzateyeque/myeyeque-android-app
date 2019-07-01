@@ -145,16 +145,21 @@ public class TutorialFragment extends Fragment {
         fullTestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // GetUserSubscription();
+                GetUserSubscription();
                 SingletonDataHolder.testMode = 0;
                 SingletonDataHolder.noDevice = false;
-                if (SingletonDataHolder.subscriptionFlag && !SingletonDataHolder.subscriptionStatus) {
+                if (SingletonDataHolder.subscriptionStatus > 1) {
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
                     // Setting Dialog Message
-                    alertDialog.setTitle("This operation requires subscription");
+                    alertDialog.setTitle("All Access Membership required");
                     alertDialog.setMessage("You can purchase the $" + SingletonDataHolder.subscriptionAnnualPrice
-                            + " annual subscription to get an unlimited full tests and eyeglass numbers");
-
+                            + " annual All Access Membership from the EyeQue store. "
+                            + "As an EyeQue All Access Member you will be able to take vision tests, "
+                            + "generate new Eyeglass Numbers, receive discounts and promotions, as well as other benefits "
+                            + "(see www.eyeque.com/membership for details).\n\nIf you click the Buy button, "
+                            + "you will be taken out of the EyeQue PVT 8 app to the EyeQue store.  After purchasing "
+                            + "an All Access Membership, you can come back the app to start using the full functionality "
+                            + "of the EyeQue PVT app.");
                     // Setting Positive "Buy" Button
                     alertDialog.setPositiveButton("Buy",
                             new DialogInterface.OnClickListener() {
@@ -175,6 +180,8 @@ public class TutorialFragment extends Fragment {
                     // Showing Alert Dialog
                     alertDialog.show();
                 } else {
+                    // Intent i = new Intent(getActivity(), AttachDeviceActivity.class);
+                    // startActivity(i);
                     if (SingletonDataHolder.correctDisplaySetting) {
                         SingletonDataHolder.testMode = 0;
                         Intent i = new Intent(getActivity(), AttachDeviceActivity.class);
@@ -186,8 +193,8 @@ public class TutorialFragment extends Fragment {
         });
 
         // Get the subscription dataset from the backend
-        // GetBuySubscriptionData();
-        // GetUserSubscription();
+        GetBuySubscriptionData();
+        GetUserSubscription();
 
         // Inflate the layout for this fragment
         // return inflater.inflate(R.layout.fragment_dashboard, container, false);
@@ -293,27 +300,11 @@ public class TutorialFragment extends Fragment {
                         // String sphericalStep;
                         Log.i("*** GetBuySubs ***", string);
                         JSONObject jsonObj = new JSONObject(string);
+                        SingletonDataHolder.subscriptionStatus = jsonObj.getInt("status");
                         String attrValue = jsonObj.getString("expiration_date");
-                        if ((attrValue).matches("") || attrValue == null) {
-                            Log.i("*** SUBSCRIPTION ***", SingletonDataHolder.subscriptionExpDate);
-                            SingletonDataHolder.subscriptionStatus = true;
-                            SingletonDataHolder.subscriptionExpDate = "";
-                        } else {
-                            String str = attrValue;
-                            String[] strgs = str.split(" ");
-                            SingletonDataHolder.subscriptionExpDate = strgs[0];
-                            SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
-                            Date now = new Date();
-                            try {
-                                Date expirationDate = format.parse(attrValue);
-                                if (expirationDate.before(now))
-                                    SingletonDataHolder.subscriptionStatus = false;
-                                else
-                                    SingletonDataHolder.subscriptionStatus = true;
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
+                        String str = attrValue;
+                        String[] strgs = str.split(" ");
+                        SingletonDataHolder.subscriptionExpDate = strgs[0];
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Toast.makeText(getActivity(), "Subscription Parse Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -367,13 +358,13 @@ public class TutorialFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        // GetUserSubscription();
+        GetUserSubscription();
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        // GetUserSubscription();
+        GetUserSubscription();
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {

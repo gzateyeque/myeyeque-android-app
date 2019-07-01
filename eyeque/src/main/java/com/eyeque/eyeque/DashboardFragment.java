@@ -1,9 +1,13 @@
 package com.eyeque.eyeque;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,12 +20,14 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.text.format.Time;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -45,6 +51,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.Locale;
+import java.text.ParseException;
 
 /**
  *
@@ -54,7 +61,7 @@ import java.util.Locale;
  * Created:         2016/07/17
  * Author:          George Zhao
  *
- * Copyright (c) 2016 EyeQue Corp
+ * Copyright (c) 2017 EyeQue Corp
  */
 public class DashboardFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -75,12 +82,10 @@ public class DashboardFragment extends Fragment {
     private ImageButton eyeglassNumListExpandIv;
     private TableLayout eyeglassTableLayout;
     private WebView visionSummarydWebView;
-    // private WebView trackingDataOdWebView;
-    // private WebView trackingDataOsWebView;
     private TableRow pdTblRow;
     private TableRow gradeTblRow;
     private TableRow dateTblRow;
-    private TableRow herderTableRow;
+    private TableRow headerTableRow;
     private TableRow odTableRow;
     private TableRow osTableRow;
     private Boolean eyeglassNumListToggle = false;
@@ -88,6 +93,12 @@ public class DashboardFragment extends Fragment {
     private TextView avatarNameTv;
     private TextView confOdTv;
     private TextView confOsTv;
+    private Button buyEyeglassesButton;
+    private Button emailEyeglassNumberResult;
+    private TextView pieTv;
+    private TextView pieDescTv;
+    private ImageView pieStateIv;
+    private ImageView egnInfoIv;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -124,6 +135,7 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         int color;
+
         View rootView = inflater.inflate(R.layout.fragment_dashboard, container, false);
         SingletonDataHolder.lang = Locale.getDefault().getLanguage();
 
@@ -139,6 +151,18 @@ public class DashboardFragment extends Fragment {
          ***/
 
         avatarNameTv = (TextView) rootView.findViewById(R.id.avatarName);
+        pieTv = (TextView) rootView.findViewById(R.id.pieTextView);
+        pieDescTv = (TextView) rootView.findViewById(R.id.pieDescTextView);
+        pieStateIv = (ImageView) rootView.findViewById(R.id.pieStateImageView);
+        egnInfoIv = (ImageView) rootView.findViewById(R.id.egnInfoImageView);
+        egnInfoIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse(Constants.UrlEngInfo);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
 
         Log.i("****** LANG ******", SingletonDataHolder.lang);
         if (SingletonDataHolder.lang.equals("zh"))
@@ -148,14 +172,6 @@ public class DashboardFragment extends Fragment {
             avatarNameTv.setText("Welcome, "
                 + SingletonDataHolder.firstName);
 
-        /***
-        final ImageView avatarImage = (ImageView) rootView.findViewById(R.id.avatarImageView);
-        if (SingletonDataHolder.gender == 1)
-            avatarImage.setImageResource(R.drawable.male_face);
-        else
-            avatarImage.setImageResource(R.drawable.female_face);
-         ***/
-        // GetDahsboardInfo();
 
         // Progress bar
         scoreLayout = (LinearLayout) rootView.findViewById(R.id.egPanelLayout);
@@ -167,294 +183,131 @@ public class DashboardFragment extends Fragment {
          eyeglassNumListExpandIv = (ImageButton) rootView.findViewById(R.id.expandButton);
          ***/
         eyeglassTableLayout=(TableLayout) rootView.findViewById(R.id.resultTableLayout);
-        confOdTv = (TextView) rootView.findViewById(R.id.confidenceLevelOd);
-        confOsTv = (TextView) rootView.findViewById(R.id.confidenceLevelOs);
-
-        /****
-        eyeglassNumListExpandIv.setOnClickListener(new View.OnClickListener() {
+        // confOdTv = (TextView) rootView.findViewById(R.id.confidenceLevelOd);
+        // confOsTv = (TextView) rootView.findViewById(R.id.confidenceLevelOs);
+        buyEyeglassesButton = (Button) rootView.findViewById(R.id.buyEyeglassesButton);
+        emailEyeglassNumberResult = (Button) rootView.findViewById(R.id.emailEyeglassNumberButton);
+        buyEyeglassesButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                eyeglassNumListToggle = !eyeglassNumListToggle;
-                loadEyeglassNumber();
+            public void onClick(View view) {
+                // DEBUG: SingletonDataHolder.confLevelOd = "Low";
+                if ((SingletonDataHolder.confLevelOd.equals("High") || SingletonDataHolder.confLevelOd.equals("Good"))
+                    && (SingletonDataHolder.confLevelOs.equals("High") || SingletonDataHolder.confLevelOs.equals("Good"))) {
+                    // DEBUG Pupillary Distance
+                    // SingletonDataHolder.pupillaryDistance = 0;
+                    if (SingletonDataHolder.pupillaryDistance == 0) {
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                                getActivity());
+
+                        // Setting Dialog Title
+                        alertDialog.setTitle("Information");
+                        // Setting Dialog Message
+                        alertDialog.setMessage("Make sure you have your PD (pupillary distance) measurement to order glasses.");
+                        // Setting  "Yes" Btn
+                        alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                Uri uri = Uri.parse(Constants.UrlBuyEyeglasses);
+                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                startActivity(intent);
+                            }
+                        });
+                        alertDialog.show();
+                    } else {
+                        Uri uri = Uri.parse(Constants.UrlBuyEyeglasses);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        startActivity(intent);
+                    }
+                } else {
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                            getActivity());
+
+                    // Setting Dialog Title
+                    alertDialog.setTitle("Warning");
+                    // Setting Dialog Message
+                    alertDialog.setMessage("Your results are not consistent enough to order glasses.\n\nConnect with Customer Support for further information.");
+                    // Setting  "Yes" Btn
+                    alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    // Setting Negative "NO" Btn
+                    alertDialog.setNegativeButton("Contact Customer Service",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                    String emailText = "";
+                                    Intent i = new Intent(Intent.ACTION_SEND);
+                                    i.setType("message/rfc822");
+                                    i.putExtra(Intent.EXTRA_EMAIL, new String[]{"support@eyeque.com"});
+                                    i.putExtra(Intent.EXTRA_SUBJECT, "Customer Service EGN Review");
+                                    emailText += "I'd like to be contacted about my EyeQue EyeGlass Numbers...";
+                                    i.putExtra(Intent.EXTRA_TEXT, emailText);
+                                    try {
+                                        startActivity(Intent.createChooser(i, "Send mail..."));
+                                    } catch (android.content.ActivityNotFoundException ex) {
+                                        Toast.makeText(getActivity().getApplication(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }
+                            });
+                    alertDialog.show();
+                }
             }
         });
-         ****/
 
-        // Populate EyeGlass record
-        /**
-        int numRow = 1;
-        for (int i = 0; i < numRow; i++) {
-
-            // Add datetime of the eyeglass number
-            TableRow dateTblRow = new TableRow(thisContext);
-            dateTblRow.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-            TextView dataTextView = new TextView(thisContext);
-            dataTextView.setText("2016-06-20 15:37");
-            //textview.getTextColors(R.color.)
-            dataTextView.setTextColor(Color.BLACK);
-
-            TableRow.LayoutParams dateTextViewParams = new TableRow.LayoutParams();
-            // dateTextViewParams.width = LayoutParams.MATCH_PARENT;
-            // dateTextViewParams.height = LayoutParams.WRAP_CONTENT;
-            dateTextViewParams.column = 0;
-            dateTextViewParams.span = 4;
-            dateTextViewParams.gravity = Gravity.CENTER;
-            dateTextViewParams.topMargin = 20;
-            dateTblRow.addView(dataTextView, dateTextViewParams);
-            eyeglassTableLayout.addView(dateTblRow);
-
-            // Add datetime of the eyeglass number
-            TableRow  herderTableRow = new TableRow(thisContext);
-            herderTableRow.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-
-            TextView sphTextView = new TextView(thisContext);
-            sphTextView.setTextColor(Color.BLACK);
-            sphTextView.setGravity(1);
-            sphTextView.setText("SPHERICAL");
-            sphTextView.setTextColor(Color.BLACK);
-            sphTextView.setTypeface(null, Typeface.BOLD);
-            TableRow.LayoutParams sphTextViewParams = new TableRow.LayoutParams();
-            sphTextViewParams.width = LayoutParams.MATCH_PARENT;
-            sphTextViewParams.height = LayoutParams.WRAP_CONTENT;
-            sphTextViewParams.column = 1;
-            sphTextViewParams.gravity = Gravity.CENTER;
-            herderTableRow.addView(sphTextView, sphTextViewParams);
-
-            TextView cylTextView = new TextView(thisContext);
-            cylTextView.setTextColor(Color.BLACK);
-            cylTextView.setGravity(1);
-            cylTextView.setText("CYLINDRICAL");
-            cylTextView.setLayoutParams(new TableRow.LayoutParams(2));
-            cylTextView.setTextColor(Color.BLACK);
-            cylTextView.setTypeface(null, Typeface.BOLD);
-            herderTableRow.addView(cylTextView);
-
-            TextView axisTextView = new TextView(thisContext);
-            axisTextView.setTextColor(Color.BLACK);
-            axisTextView.setGravity(1);
-            axisTextView.setText("AXIS");
-            axisTextView.setLayoutParams(new TableRow.LayoutParams(3));
-            axisTextView.setTextColor(Color.BLACK);
-            axisTextView.setTypeface(null, Typeface.BOLD);
-            herderTableRow.addView(axisTextView);
-            eyeglassTableLayout.addView(herderTableRow, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-
-
-            //Add OD Values of eyeglass number
-            TableRow  odTableRow = new TableRow(thisContext);
-            odTableRow.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-
-            TextView odHeaderTextView = new TextView(thisContext);
-            odHeaderTextView.setTextColor(Color.BLACK);
-            odHeaderTextView.setGravity(1);
-            odHeaderTextView.setText("OD (Right)");
-            odHeaderTextView.setTextColor(Color.BLACK);
-            odHeaderTextView.setTypeface(null, Typeface.BOLD);
-            TableRow.LayoutParams odHeaderTextViewParams = new TableRow.LayoutParams();
-            odHeaderTextViewParams.width = LayoutParams.MATCH_PARENT;
-            odHeaderTextViewParams.height = LayoutParams.WRAP_CONTENT;
-            odHeaderTextViewParams.column = 0;
-            odHeaderTextViewParams.gravity = Gravity.CENTER;
-            odTableRow.addView(odHeaderTextView, odHeaderTextViewParams);
-
-            TextView odSphTextView = new TextView(thisContext);
-            odSphTextView.setTextColor(Color.BLACK);
-            odSphTextView.setGravity(1);
-            odSphTextView.setText("-2.25");
-            odSphTextView.setTextColor(Color.BLACK);
-            odSphTextView.setTypeface(null, Typeface.BOLD);
-            TableRow.LayoutParams odSphTextViewParams = new TableRow.LayoutParams();
-            odSphTextViewParams.width = LayoutParams.MATCH_PARENT;
-            odSphTextViewParams.height = LayoutParams.WRAP_CONTENT;
-            odSphTextViewParams.column = 1;
-            odSphTextViewParams.gravity = Gravity.CENTER;
-            odTableRow.addView(odSphTextView, odSphTextViewParams);
-
-
-            TextView odCylTextView = new TextView(thisContext);
-            odCylTextView.setTextColor(Color.BLACK);
-            odCylTextView.setGravity(1);
-            odCylTextView.setText("-0.50");
-            odCylTextView.setLayoutParams(new TableRow.LayoutParams(2));
-            odCylTextView.setTextColor(Color.BLACK);
-            odCylTextView.setTypeface(null, Typeface.BOLD);
-            TableRow.LayoutParams odCylTextViewParams = new TableRow.LayoutParams();
-            odCylTextViewParams.width = LayoutParams.MATCH_PARENT;
-            odCylTextViewParams.height = LayoutParams.WRAP_CONTENT;
-            odCylTextViewParams.column = 2;
-            odCylTextViewParams.gravity = Gravity.CENTER;
-            odTableRow.addView(odCylTextView, odCylTextViewParams);
-
-            TextView odAxisTextView = new TextView(thisContext);
-            odAxisTextView.setTextColor(Color.BLACK);
-            odAxisTextView.setGravity(1);
-            odAxisTextView.setText("24");
-            odAxisTextView.setLayoutParams(new TableRow.LayoutParams(3));
-            odAxisTextView.setTextColor(Color.BLACK);
-            odAxisTextView.setTypeface(null, Typeface.BOLD);
-            TableRow.LayoutParams odAxisTextViewParams = new TableRow.LayoutParams();
-            odAxisTextViewParams.width = LayoutParams.MATCH_PARENT;
-            odAxisTextViewParams.height = LayoutParams.WRAP_CONTENT;
-            odAxisTextViewParams.column = 3;
-            odAxisTextViewParams.gravity = Gravity.CENTER;
-            odTableRow.addView(odAxisTextView, odAxisTextViewParams);
-
-            eyeglassTableLayout.addView(odTableRow, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-
-            // Add OS Values of eyeglass number
-            TableRow  osTableRow = new TableRow(thisContext);
-            // osTableRow.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-            TableRow.LayoutParams osTAbleRowParams = new TableRow.LayoutParams();
-            osTAbleRowParams.bottomMargin = 20;
-
-            TextView osHeaderTextView = new TextView(thisContext);
-            osHeaderTextView.setTextColor(Color.BLACK);
-            osHeaderTextView.setGravity(1);
-            osHeaderTextView.setText("OS (Left)");
-            osHeaderTextView.setTextColor(Color.BLACK);
-            osHeaderTextView.setTypeface(null, Typeface.BOLD);
-            TableRow.LayoutParams osHeaderTextViewParams = new TableRow.LayoutParams();
-            osHeaderTextViewParams.width = LayoutParams.MATCH_PARENT;
-            osHeaderTextViewParams.height = LayoutParams.WRAP_CONTENT;
-            osHeaderTextViewParams.column = 0;
-            osHeaderTextViewParams.gravity = Gravity.CENTER;
-            osTableRow.addView(osHeaderTextView, osHeaderTextViewParams);
-
-            TextView osSphTextView = new TextView(thisContext);
-            osSphTextView.setTextColor(Color.BLACK);
-            osSphTextView.setGravity(1);
-            osSphTextView.setText("-2.75");
-            osSphTextView.setTextColor(Color.BLACK);
-            osSphTextView.setTypeface(null, Typeface.BOLD);
-            TableRow.LayoutParams osSphTextViewParams = new TableRow.LayoutParams();
-            osSphTextViewParams.width = LayoutParams.MATCH_PARENT;
-            osSphTextViewParams.height = LayoutParams.WRAP_CONTENT;
-            osSphTextViewParams.column = 1;
-            osSphTextViewParams.gravity = Gravity.CENTER;
-            osTableRow.addView(osSphTextView, osSphTextViewParams);
-
-
-            TextView osCylTextView = new TextView(thisContext);
-            osCylTextView.setTextColor(Color.BLACK);
-            osCylTextView.setGravity(1);
-            osCylTextView.setText("-0.25");
-            osCylTextView.setLayoutParams(new TableRow.LayoutParams(2));
-            osCylTextView.setTextColor(Color.BLACK);
-            osCylTextView.setTypeface(null, Typeface.BOLD);
-            TableRow.LayoutParams osCylTextViewParams = new TableRow.LayoutParams();
-            osCylTextViewParams.width = LayoutParams.MATCH_PARENT;
-            osCylTextViewParams.height = LayoutParams.WRAP_CONTENT;
-            osCylTextViewParams.column = 2;
-            osCylTextViewParams.gravity = Gravity.CENTER;
-            osTableRow.addView(osCylTextView, osCylTextViewParams);
-
-            TextView osAxisTextView = new TextView(thisContext);
-            osAxisTextView.setTextColor(Color.BLACK);
-            osAxisTextView.setGravity(1);
-            osAxisTextView.setText("153");
-            osAxisTextView.setLayoutParams(new TableRow.LayoutParams(3));
-            osAxisTextView.setTextColor(Color.BLACK);
-            osAxisTextView.setTypeface(null, Typeface.BOLD);
-            TableRow.LayoutParams osAxisTextViewParams = new TableRow.LayoutParams();
-            osAxisTextViewParams.width = LayoutParams.MATCH_PARENT;
-            osAxisTextViewParams.height = LayoutParams.WRAP_CONTENT;
-            osAxisTextViewParams.column = 3;
-            osAxisTextViewParams.gravity = Gravity.CENTER;
-            osTableRow.addView(osAxisTextView, osAxisTextViewParams);
-
-            eyeglassTableLayout.addView(osTableRow, osTAbleRowParams);
-
-            if (i < numRow - 1) {
-                TextView divLine = new TextView(thisContext);
-                divLine.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, 1));
-                divLine.setBackgroundColor(Color.rgb(51, 51, 51));
-                eyeglassTableLayout.addView(divLine);
+        emailEyeglassNumberResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String emailText;
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("message/rfc822");
+                i.putExtra(Intent.EXTRA_SUBJECT, "My EyeQue EyeGlass Numbers");
+                emailText = "\n\n";
+                emailText = "                 " + SingletonDataHolder.egnDate + "\n\n";
+                emailText += "                    SPHERICAL CYLINDRICAL AXIS\n";
+                emailText += "O.D. (RIGHT)   ";
+                if (SingletonDataHolder.eyeglassNumberList[0].odSph > 0)
+                    emailText += String.format("+%.2f", SingletonDataHolder.eyeglassNumberList[0].odSph) + "              ";
+                else
+                    emailText += String.format("%.2f", SingletonDataHolder.eyeglassNumberList[0].odSph) + "               ";
+                if (SingletonDataHolder.eyeglassNumberList[0].odCyl == 0.00)
+                    emailText += "  --            ";
+                else
+                    emailText += String.format("%.2f", SingletonDataHolder.eyeglassNumberList[0].odCyl) + "             ";
+                if (SingletonDataHolder.eyeglassNumberList[0].odCyl == 0.00)
+                    emailText += "    --\n";
+                else
+                    emailText += Integer.toString(SingletonDataHolder.eyeglassNumberList[0].odAxis) + "\n";
+                emailText +=  "O.S. (LEFT)     ";
+                if (SingletonDataHolder.eyeglassNumberList[0].osSph > 0)
+                    emailText += String.format("+%.2f", SingletonDataHolder.eyeglassNumberList[0].osSph) + "             ";
+                else
+                    emailText += String.format("%.2f", SingletonDataHolder.eyeglassNumberList[0].osSph) + "             ";
+                if (SingletonDataHolder.eyeglassNumberList[0].osCyl == 0.00)
+                    emailText += "  --               ";
+                else
+                    emailText += String.format("%.2f", SingletonDataHolder.eyeglassNumberList[0].osCyl) + "            ";
+                if (SingletonDataHolder.eyeglassNumberList[0].osCyl == 0.00)
+                    emailText += "    --\n\n";
+                else
+                    emailText += Integer.toString(SingletonDataHolder.eyeglassNumberList[0].osAxis) + "\n\n";
+                emailText += "PD: " + Double.toString(SingletonDataHolder.pupillaryDistance);
+                emailText += "            NVADD: " + String.format("+%.2f",(SingletonDataHolder.nvadd)) + "\n\n";
+                emailText += "EGNs can be used to share with eye care provider and/or used to order glasses online.\n\n";
+                i.putExtra(Intent.EXTRA_TEXT, emailText);
+                try {
+                    startActivity(Intent.createChooser(i, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(getActivity().getApplication(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                }
             }
-        }
-
-         ***/
-
-        /***
-        BitmapFactory.Options myOptions = new BitmapFactory.Options();
-        myOptions.inDither = true;
-        myOptions.inScaled = false;
-        myOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;// important
-        myOptions.inPurgeable = true;
-
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.vision_map_orange3,myOptions);
-        Paint paint = new Paint();
-        paint.setAntiAlias(true);
-        color = Color.rgb(29, 173, 243);
-        // paint.setColor(Color.WHITE);
-        paint.setColor(color);
-
-        Bitmap workingBitmap = Bitmap.createBitmap(bitmap);
-        Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
-
-        Canvas canvas = new Canvas(mutableBitmap);
-        paint.setColor(Color.WHITE);
-        canvas.drawCircle(200, 310, 20, paint);
-        canvas.drawCircle(310, 285, 20, paint);
-        paint.setColor(color);
-        canvas.drawCircle(200, 310, 12, paint);
-        canvas.drawCircle(310, 285, 12, paint);
-         ***/
-
-
-        // Show vision summary webview
-        visionSummarydWebView = (WebView) rootView.findViewById(R.id.visionSummaryWebView);
-        visionSummarydWebView.getSettings().setLoadWithOverviewMode(true);
-        visionSummarydWebView.getSettings().setUseWideViewPort(true);
-        visionSummarydWebView.getSettings().setAppCachePath( thisContext.getCacheDir().getAbsolutePath() );
-        visionSummarydWebView.getSettings().setAllowFileAccess( true );
-        visionSummarydWebView.getSettings().setAppCacheEnabled( true );
-        visionSummarydWebView.getSettings().setJavaScriptEnabled( true );
-        visionSummarydWebView.getSettings().setCacheMode( WebSettings.LOAD_DEFAULT ); // load online by default
-
-        // Rendering tracking data
-        /****
-        trackingDataOdWebView = (WebView) rootView.findViewById(R.id.trackingDataOdWebView);
-        trackingDataOdWebView.getSettings().setLoadWithOverviewMode(true);
-        trackingDataOdWebView.getSettings().setUseWideViewPort(true);
-        trackingDataOdWebView.getSettings().setAppCachePath( thisContext.getCacheDir().getAbsolutePath() );
-        trackingDataOdWebView.getSettings().setAllowFileAccess( true );
-        trackingDataOdWebView.getSettings().setAppCacheEnabled( true );
-        trackingDataOdWebView.getSettings().setJavaScriptEnabled( true );
-        trackingDataOdWebView.getSettings().setCacheMode( WebSettings.LOAD_DEFAULT ); // load online by default
-
-        trackingDataOsWebView = (WebView) rootView.findViewById(R.id.trackingDataOsWebView);
-        trackingDataOsWebView.getSettings().setLoadWithOverviewMode(true);
-        trackingDataOsWebView.getSettings().setUseWideViewPort(true);
-        trackingDataOsWebView.getSettings().setAppCachePath( thisContext.getCacheDir().getAbsolutePath() );
-        trackingDataOsWebView.getSettings().setAllowFileAccess( true );
-        trackingDataOsWebView.getSettings().setAppCacheEnabled( true );
-        trackingDataOsWebView.getSettings().setJavaScriptEnabled( true );
-        trackingDataOsWebView.getSettings().setCacheMode( WebSettings.LOAD_DEFAULT ); // load online by default
-         ***/
+        });
 
         GetDahsboardSummary();
-        NetConnection conn = new NetConnection();
-        if (!conn.isConnected(thisContext)) {
-            visionSummarydWebView.getSettings().setCacheMode( WebSettings.LOAD_CACHE_ELSE_NETWORK );
-        }
-        /*** v1.4 removed tracking
-        if (!conn.isConnected(thisContext)) {
-            trackingDataOdWebView.getSettings().setCacheMode( WebSettings.LOAD_CACHE_ELSE_NETWORK );
-        }
-        if (!conn.isConnected(thisContext)) {
-            trackingDataOsWebView.getSettings().setCacheMode( WebSettings.LOAD_CACHE_ELSE_NETWORK );
-        }
-        // trackingDataOsWebView.loadUrl(SingletonDataHolder.urlOSTracking);
-         ***/
-
-        /***
-        newEyeglassNumberBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GetNewEyeglassNumber();
-            }
-        });
-        ***/
+        GetUserSubscription();
 
         return rootView;
     }
@@ -474,6 +327,34 @@ public class DashboardFragment extends Fragment {
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
+        }
+        if (SingletonDataHolder.showDashboardAppRating) {
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                    context);
+
+            // Setting Dialog Title
+            alertDialog.setTitle("Rate Our App");
+            // Setting Dialog Message
+            alertDialog.setMessage("Enjoying EyeQue PVT app? you can rate it in the App Store.");
+            // Setting  "Yes" Btn
+            alertDialog.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+                }
+            });
+
+            // Setting Negative "NO" Btn
+            alertDialog.setNegativeButton("Rate the App",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            Uri uri =  Uri.parse(Constants.UrlRateApp);
+                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(intent);
+                        }
+                    });
+            alertDialog.show();
+            SingletonDataHolder.showDashboardAppRating = false;
         }
     }
 
@@ -526,14 +407,14 @@ public class DashboardFragment extends Fragment {
                         // SingletonDataHolder.urlOSTracking = result.getString("url_spheos");
                         SingletonDataHolder.urlVisionSummary = result.getString("url_vision_summary");
                         SingletonDataHolder.urlVisionSummary = SingletonDataHolder.urlVisionSummary.replace("diagram", "piechart");
-                        SingletonDataHolder.pupillaryDistance = eyeglassResult.getInt("pd");
+                        SingletonDataHolder.pupillaryDistance = eyeglassResult.getDouble("pd");
                         SingletonDataHolder.nvadd = eyeglassResult.getDouble("nvadd");
                         SingletonDataHolder.currentTestScore = eyeglassResult.getInt("score");
                         SingletonDataHolder.freetrial = eyeglassResult.getInt("freetrial");
                         SingletonDataHolder.eyeglassNumPurchasable = eyeglassResult.getBoolean("purchasable");
                         SingletonDataHolder.eyeglassNumCount = eyeglassNumList.length();
 
-                        Log.i("*****PD******", Integer.toString(SingletonDataHolder.pupillaryDistance));
+                        Log.i("*****PD******", Double.toString(SingletonDataHolder.pupillaryDistance));
                         Log.i("*** Purchasable ***", Boolean.toString(SingletonDataHolder.eyeglassNumPurchasable));
 
                         SingletonDataHolder.eyeglassNumberList = new SingletonDataHolder.EyeglassNumber[SingletonDataHolder.eyeglassNumCount];
@@ -648,7 +529,7 @@ public class DashboardFragment extends Fragment {
                         else
                             SingletonDataHolder.firstTestDate = result.getString("first_test_at");
                         if (SingletonDataHolder.numOfTests > 0) {
-                            SingletonDataHolder.pupillaryDistance = result.getInt("pd");
+                            SingletonDataHolder.pupillaryDistance = result.getDouble("pd");
                             SingletonDataHolder.nvadd = result.getDouble("nvadd");
                             SingletonDataHolder.confLevelOd = result.getString("grade_od");
                             SingletonDataHolder.confLevelOs = result.getString("grade_os");
@@ -666,12 +547,14 @@ public class DashboardFragment extends Fragment {
                             SingletonDataHolder.eyeglassNumCount = 0;
                         // loadData();
                         loadEyeglassNumber();
+                        /***
                         if (SingletonDataHolder.numOfTests >= 3)  {
                             confOdTv.setText("Confidence: " + SingletonDataHolder.confLevelOd);
                             confOsTv.setText("Confidence: " + SingletonDataHolder.confLevelOs);
                             visionSummarydWebView.clearCache(true);
                             visionSummarydWebView.loadUrl(SingletonDataHolder.urlVisionSummary);
                         }
+                         ***/
                         /*** v1.4 removed tracking
                          trackingDataOdWebView.loadUrl(SingletonDataHolder.urlOdTracking);
                          trackingDataOsWebView.loadUrl(SingletonDataHolder.urlOSTracking);
@@ -712,12 +595,15 @@ public class DashboardFragment extends Fragment {
         else {
             // loadData();
             loadEyeglassNumber();
+
+            /*** Removed in v1.6
             if (SingletonDataHolder.numOfTests >= 3) {
                 confOdTv.setText("Confidence: " + SingletonDataHolder.confLevelOd);
                 confOsTv.setText("Confidence: " + SingletonDataHolder.confLevelOs);
                 visionSummarydWebView.clearCache(true);
                 visionSummarydWebView.loadUrl(SingletonDataHolder.urlVisionSummary);
             }
+             ***/
             /*** v1.4 removed tracking
              trackingDataOdWebView.loadUrl(SingletonDataHolder.urlOdTracking);
              trackingDataOsWebView.loadUrl(SingletonDataHolder.urlOSTracking);
@@ -881,6 +767,18 @@ public class DashboardFragment extends Fragment {
         String avatarString = "Welcome, " + SingletonDataHolder.firstName;
         avatarNameTv.setTextSize(18);
 
+        buyEyeglassesButton.setVisibility(View.INVISIBLE);
+        emailEyeglassNumberResult.setVisibility(View.INVISIBLE);
+        pieTv.setVisibility(View.INVISIBLE);
+        // DEBUG F Users
+        // SingletonDataHolder.confLevelOd = "Poor";
+        if ((SingletonDataHolder.confLevelOd.equals("High") || SingletonDataHolder.confLevelOd.equals("Good"))
+                && (SingletonDataHolder.confLevelOs.equals("High") || SingletonDataHolder.confLevelOs.equals("Good")))
+            buyEyeglassesButton.setBackgroundColor(thisContext.getResources().getColor(R.color.colorLtGreen));
+        else
+            buyEyeglassesButton.setBackgroundColor(Color.BLACK);
+
+        // DEBUG : try with different numbers of tests
         if (SingletonDataHolder.numOfTests == 0) {
             if (SingletonDataHolder.firstTestDate != "") {
                 try {
@@ -895,29 +793,63 @@ public class DashboardFragment extends Fragment {
                     Log.i("*** Num of Days ***", Long.toString(days));
                     if (days > 180) {
                         // avatarNameTv.setTextSize(14);
+                        SingletonDataHolder.recurringTestAfterValidPeriod = true;
                         avatarString = getResources().getString(R.string.avatarInSixMonthTest);
                         avatarString = avatarString.replace("#name", SingletonDataHolder.firstName);
+                        pieDescTv.setText(R.string.pieDescNewStart);
+                        pieStateIv.setImageResource(R.drawable.pie_state_none);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else {
-                avatarString = getResources().getString(R.string.avatarNewStart);
+                avatarString = thisContext.getResources().getString(R.string.avatarNewStart);
                 avatarString = avatarString.replace("#name", SingletonDataHolder.firstName);
+                pieDescTv.setText(R.string.pieDescNewStart);
+                pieStateIv.setImageResource(R.drawable.pie_state_none);
             }
         } else if (SingletonDataHolder.numOfTests == 1) {
-            avatarString = getResources().getString(R.string.avatarFirstTest);
+            avatarString = thisContext.getResources().getString(R.string.avatarFirstTest);
             avatarString = avatarString.replace("#name", SingletonDataHolder.firstName);
+            pieDescTv.setText(R.string.pieDescFirstTest);
+            pieStateIv.setImageResource(R.drawable.pie_state_1st);
         } else if (SingletonDataHolder.numOfTests == 2) {
-            avatarString = getResources().getString(R.string.avatarSecondTest);
+            avatarString = thisContext.getResources().getString(R.string.avatarSecondTest);
             avatarString = avatarString.replace("#name", SingletonDataHolder.firstName);
+            pieDescTv.setText(R.string.pieDescSecondTest);
+            pieStateIv.setImageResource(R.drawable.pie_state_2nd);
         } else if (SingletonDataHolder.numOfTests == 3) {
-            avatarString = getResources().getString(R.string.avatarThirdTest);
-            avatarString = avatarString.replace("#name", SingletonDataHolder.firstName);
+            buyEyeglassesButton.setVisibility(View.VISIBLE);
+            emailEyeglassNumberResult.setVisibility(View.VISIBLE);
+            if (SingletonDataHolder.confLevelOd.equals("Poor") || SingletonDataHolder.confLevelOs.equals("Poor")) {
+                avatarString = thisContext.getResources().getString(R.string.avatarOngoingTestForFUsers);
+                avatarString = avatarString.replace("#name", SingletonDataHolder.firstName);
+                avatarString = avatarString.replace("#numOfTests", Integer.toString(SingletonDataHolder.numOfTests));
+                pieDescTv.setText(R.string.pieDescOngoingTestForFUsers);
+            }
+            else {
+                avatarString = thisContext.getResources().getString(R.string.avatarThirdTest);
+                avatarString = avatarString.replace("#name", SingletonDataHolder.firstName);
+                pieDescTv.setText(R.string.pieDescThirdTest);
+            }
+            pieStateIv.setImageResource(R.drawable.pie_state_3rd);
         } else if (SingletonDataHolder.numOfTests > 3) {
-            avatarString = getResources().getString(R.string.avatarOngoingTest);
-            avatarString = avatarString.replace("#name", SingletonDataHolder.firstName);
-            avatarString = avatarString.replace("#numOfTests", Integer.toString(SingletonDataHolder.numOfTests));
+            if ((SingletonDataHolder.confLevelOd.equals("Poor") || SingletonDataHolder.confLevelOs.equals("Poor"))) {
+                avatarString = thisContext.getResources().getString(R.string.avatarOngoingTestForFUsers);
+                avatarString = avatarString.replace("#name", SingletonDataHolder.firstName);
+                avatarString = avatarString.replace("#numOfTests", Integer.toString(SingletonDataHolder.numOfTests));
+                pieDescTv.setText(R.string.pieDescOngoingTestForFUsers);
+            } else {
+                avatarString = thisContext.getResources().getString(R.string.avatarOngoingTest);
+                avatarString = avatarString.replace("#name", SingletonDataHolder.firstName);
+                avatarString = avatarString.replace("#numOfTests", Integer.toString(SingletonDataHolder.numOfTests));
+                pieDescTv.setText(R.string.pieDescOngoingTest);
+            }
+            buyEyeglassesButton.setVisibility(View.VISIBLE);
+            emailEyeglassNumberResult.setVisibility(View.VISIBLE);
+            pieTv.setVisibility(View.VISIBLE);
+            pieTv.setText(Integer.toString(SingletonDataHolder.numOfTests));
+            pieStateIv.setImageResource(R.drawable.pie_ongoing);
         }
         avatarNameTv.setText(avatarString);
 
@@ -933,7 +865,7 @@ public class DashboardFragment extends Fragment {
         if (osTableRow != null)
             eyeglassTableLayout.removeView(osTableRow);
         if (osTableRow != null)
-            eyeglassTableLayout.removeView(herderTableRow);
+            eyeglassTableLayout.removeView(headerTableRow);
          ***/
 
         for (int i = 0; i < SingletonDataHolder.eyeglassNumCount; i++) {
@@ -1001,19 +933,35 @@ public class DashboardFragment extends Fragment {
                 // dataTextView.setText(SingletonDataHolder.eyeglassNumberList[i].createdAt);
 
                 try {
+                    Log.i("*** EGNDate ***", SingletonDataHolder.eyeglassNumberList[i].createdAt);
+                    /*** Old format
                     SimpleDateFormat simpleDateFormat;
                     simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-                    simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+                    simpleDateFormat.setTimeZone(TimeZone.getTimeZone(Calendar.getInstance().getTimeZone().getID()));
                     Date myDate = simpleDateFormat.parse(SingletonDataHolder.eyeglassNumberList[i].createdAt);
+                     ***/
 
-                    Log.i("*** TZTZTZ ***", myDate.toString());
-                    dataTextView.setText(myDate.toString());
+                    // dataTextView.setText(myDate.toString());
+                    String dateStr = changeDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'",
+                            "yyyy-MM-dd hh:mm a", SingletonDataHolder.eyeglassNumberList[i].createdAt);
+                    Log.i("*** TZTZTZ ***", dateStr);
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm a", Locale.ENGLISH);
+                    df.setTimeZone(TimeZone.getTimeZone("UTC"));
+                    Date date = df.parse(dateStr);
+                    df.setTimeZone(TimeZone.getDefault());
+                    SingletonDataHolder.egnDate = df.format(date);
+                    if (SingletonDataHolder.confLevelOd.equals("Poor") || SingletonDataHolder.confLevelOs.equals("Poor"))
+                        dataTextView.setTextColor(Color.LTGRAY);
+                    else
+                        dataTextView.setTextColor(Color.BLACK);
+                    dataTextView.setText(SingletonDataHolder.egnDate);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                //textview.getTextColors(R.color.)
-                dataTextView.setTextColor(Color.BLACK);
+                if (SingletonDataHolder.confLevelOd.equals("Poor") || SingletonDataHolder.confLevelOs.equals("Poor"))
+                    dataTextView.setTextColor(Color.LTGRAY);
+                else
+                    dataTextView.setTextColor(Color.BLACK);
 
                 TableRow.LayoutParams dateTextViewParams = new TableRow.LayoutParams();
                 // dateTextViewParams.width = LayoutParams.MATCH_PARENT;
@@ -1026,8 +974,8 @@ public class DashboardFragment extends Fragment {
                 eyeglassTableLayout.addView(dateTblRow);
 
                 // Add datetime of the eyeglass number
-                herderTableRow = new TableRow(thisContext);
-                herderTableRow.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                headerTableRow = new TableRow(thisContext);
+                headerTableRow.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
                 TextView sphTextView = new TextView(thisContext);
                 sphTextView.setTextColor(Color.BLACK);
@@ -1036,39 +984,47 @@ public class DashboardFragment extends Fragment {
                     sphTextView.setText("球镜");
                 else
                     sphTextView.setText("SPHERICAL");
-                sphTextView.setTextColor(Color.BLACK);
+                if (SingletonDataHolder.confLevelOd.equals("Poor") || SingletonDataHolder.confLevelOs.equals("Poor"))
+                    sphTextView.setTextColor(Color.LTGRAY);
+                else
+                    sphTextView.setTextColor(Color.BLACK);
                 sphTextView.setTypeface(null, Typeface.BOLD);
                 TableRow.LayoutParams sphTextViewParams = new TableRow.LayoutParams();
                 sphTextViewParams.width = LayoutParams.MATCH_PARENT;
                 sphTextViewParams.height = LayoutParams.WRAP_CONTENT;
                 sphTextViewParams.column = 1;
                 sphTextViewParams.gravity = Gravity.CENTER;
-                herderTableRow.addView(sphTextView, sphTextViewParams);
+                headerTableRow.addView(sphTextView, sphTextViewParams);
 
                 TextView cylTextView = new TextView(thisContext);
-                cylTextView.setTextColor(Color.BLACK);
                 cylTextView.setGravity(1);
                 if (SingletonDataHolder.lang.equals("zh"))
                     cylTextView.setText("球镜");
                 else
                     cylTextView.setText("CYLINDRICAL");
                 cylTextView.setLayoutParams(new TableRow.LayoutParams(2));
-                cylTextView.setTextColor(Color.BLACK);
+                if (SingletonDataHolder.confLevelOd.equals("Poor") || SingletonDataHolder.confLevelOs.equals("Poor"))
+                    cylTextView.setTextColor(Color.LTGRAY);
+                else
+                    cylTextView.setTextColor(Color.BLACK);
                 cylTextView.setTypeface(null, Typeface.BOLD);
-                herderTableRow.addView(cylTextView);
+                headerTableRow.addView(cylTextView);
 
                 TextView axisTextView = new TextView(thisContext);
-                axisTextView.setTextColor(Color.BLACK);
                 axisTextView.setGravity(1);
+                axisTextView.setPadding(0, 0, 60, 0);
                 if (SingletonDataHolder.lang.equals("zh"))
                     axisTextView.setText("轴位");
                 else
                     axisTextView.setText("AXIS");
                 axisTextView.setLayoutParams(new TableRow.LayoutParams(3));
-                axisTextView.setTextColor(Color.BLACK);
+                if (SingletonDataHolder.confLevelOd.equals("Poor") || SingletonDataHolder.confLevelOs.equals("Poor"))
+                    axisTextView.setTextColor(Color.LTGRAY);
+                else
+                    axisTextView.setTextColor(Color.BLACK);
                 axisTextView.setTypeface(null, Typeface.BOLD);
-                herderTableRow.addView(axisTextView);
-                eyeglassTableLayout.addView(herderTableRow, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                headerTableRow.addView(axisTextView);
+                eyeglassTableLayout.addView(headerTableRow, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
                 //Add OD Values of eyeglass number
                 odTableRow = new TableRow(thisContext);
@@ -1081,7 +1037,10 @@ public class DashboardFragment extends Fragment {
                     odHeaderTextView.setText("右眼 (R)");
                 else
                     odHeaderTextView.setText("O.D. (RIGHT)");
-                odHeaderTextView.setTextColor(Color.BLACK);
+                if (SingletonDataHolder.confLevelOd.equals("Poor"))
+                    odHeaderTextView.setTextColor(Color.LTGRAY);
+                else
+                    odHeaderTextView.setTextColor(Color.BLACK);
                 odHeaderTextView.setTypeface(null, Typeface.BOLD);
                 odHeaderTextView.setPadding(60, 0, 0, 0);
                 TableRow.LayoutParams odHeaderTextViewParams = new TableRow.LayoutParams();
@@ -1092,13 +1051,15 @@ public class DashboardFragment extends Fragment {
                 odTableRow.addView(odHeaderTextView, odHeaderTextViewParams);
 
                 TextView odSphTextView = new TextView(thisContext);
-                odSphTextView.setTextColor(Color.BLACK);
                 odSphTextView.setGravity(1);
                 if (SingletonDataHolder.eyeglassNumberList[i].odSph > 0)
                     odSphTextView.setText(String.format("+%.2f", SingletonDataHolder.eyeglassNumberList[i].odSph));
                 else
                     odSphTextView.setText(String.format("%.2f", SingletonDataHolder.eyeglassNumberList[i].odSph));
-                odSphTextView.setTextColor(Color.BLACK);
+                if (SingletonDataHolder.confLevelOd.equals("Poor"))
+                    odSphTextView.setTextColor(Color.LTGRAY);
+                else
+                    odSphTextView.setTextColor(Color.BLACK);
                 odSphTextView.setTextSize(18);
                 // odSphTextView.setTypeface(null, Typeface.BOLD);
                 TableRow.LayoutParams odSphTextViewParams = new TableRow.LayoutParams();
@@ -1111,13 +1072,16 @@ public class DashboardFragment extends Fragment {
                 TextView odCylTextView = new TextView(thisContext);
                 odCylTextView.setTextColor(Color.BLACK);
                 odCylTextView.setGravity(1);
-                if (SingletonDataHolder.eyeglassNumberList[i].odCyl > -0.4)
+                if (SingletonDataHolder.eyeglassNumberList[i].odCyl == 0.00)
                     odCylTextView.setText("--");
                 else
                     odCylTextView.setText(String.format("%.2f", SingletonDataHolder.eyeglassNumberList[i].odCyl));
                 odCylTextView.setLayoutParams(new TableRow.LayoutParams(2));
                 odCylTextView.setTextSize(18);
-                odCylTextView.setTextColor(Color.BLACK);
+                if (SingletonDataHolder.confLevelOd.equals("Poor"))
+                    odCylTextView.setTextColor(Color.LTGRAY);
+                else
+                    odCylTextView.setTextColor(Color.BLACK);
                 // odCylTextView.setTypeface(null, Typeface.BOLD);
                 TableRow.LayoutParams odCylTextViewParams = new TableRow.LayoutParams();
                 odCylTextViewParams.width = LayoutParams.MATCH_PARENT;
@@ -1128,15 +1092,19 @@ public class DashboardFragment extends Fragment {
 
                 TextView odAxisTextView = new TextView(thisContext);
                 odAxisTextView.setTextColor(Color.BLACK);
-                odAxisTextView.setGravity(1);
+                odAxisTextView.setPadding(0, 0, 60, 0);
+                // odAxisTextView.setGravity(1);
                 Log.i("***--- AXIS ---***", Integer.toString(SingletonDataHolder.eyeglassNumberList[i].odAxis));
-                if (SingletonDataHolder.eyeglassNumberList[i].odCyl > -0.4)
+                if (SingletonDataHolder.eyeglassNumberList[i].odCyl == 0.00)
                     odAxisTextView.setText("--");
                 else
                     odAxisTextView.setText(Integer.toString(SingletonDataHolder.eyeglassNumberList[i].odAxis));
                 odAxisTextView.setLayoutParams(new TableRow.LayoutParams(3));
                 odAxisTextView.setTextSize(18);
-                odAxisTextView.setTextColor(Color.BLACK);
+                if (SingletonDataHolder.confLevelOd.equals("Poor"))
+                    odAxisTextView.setTextColor(Color.LTGRAY);
+                else
+                    odAxisTextView.setTextColor(Color.BLACK);
                 // odAxisTextView.setTypeface(null, Typeface.BOLD);
                 TableRow.LayoutParams odAxisTextViewParams = new TableRow.LayoutParams();
                 odAxisTextViewParams.width = LayoutParams.MATCH_PARENT;
@@ -1160,7 +1128,10 @@ public class DashboardFragment extends Fragment {
                     osHeaderTextView.setText("左眼 (L)");
                 else
                     osHeaderTextView.setText("O.S. (LEFT)");
-                osHeaderTextView.setTextColor(Color.BLACK);
+                if (SingletonDataHolder.confLevelOs.equals("Poor"))
+                    osHeaderTextView.setTextColor(Color.LTGRAY);
+                else
+                    osHeaderTextView.setTextColor(Color.BLACK);
                 osHeaderTextView.setTypeface(null, Typeface.BOLD);
                 osHeaderTextView.setPadding(60, 0, 0, 0);
                 TableRow.LayoutParams osHeaderTextViewParams = new TableRow.LayoutParams();
@@ -1177,7 +1148,10 @@ public class DashboardFragment extends Fragment {
                     osSphTextView.setText(String.format("+%.2f", SingletonDataHolder.eyeglassNumberList[i].osSph));
                 else
                     osSphTextView.setText(String.format("%.2f", SingletonDataHolder.eyeglassNumberList[i].osSph));
-                osSphTextView.setTextColor(Color.BLACK);
+                if (SingletonDataHolder.confLevelOs.equals("Poor"))
+                    osSphTextView.setTextColor(Color.LTGRAY);
+                else
+                    osSphTextView.setTextColor(Color.BLACK);
                 osSphTextView.setTextSize(18);
                 // osSphTextView.setTypeface(null, Typeface.BOLD);
                 TableRow.LayoutParams osSphTextViewParams = new TableRow.LayoutParams();
@@ -1190,12 +1164,15 @@ public class DashboardFragment extends Fragment {
                 TextView osCylTextView = new TextView(thisContext);
                 osCylTextView.setTextColor(Color.BLACK);
                 osCylTextView.setGravity(1);
-                if (SingletonDataHolder.eyeglassNumberList[i].osCyl > -0.4)
+                if (SingletonDataHolder.eyeglassNumberList[i].osCyl == 0.00)
                     osCylTextView.setText("--");
                 else
                     osCylTextView.setText(String.format("%.2f", SingletonDataHolder.eyeglassNumberList[i].osCyl));
                 osCylTextView.setLayoutParams(new TableRow.LayoutParams(2));
-                osCylTextView.setTextColor(Color.BLACK);
+                if (SingletonDataHolder.confLevelOs.equals("Poor"))
+                    osCylTextView.setTextColor(Color.LTGRAY);
+                else
+                    osCylTextView.setTextColor(Color.BLACK);
                 osCylTextView.setTextSize(18);
                 // osCylTextView.setTypeface(null, Typeface.BOLD);
                 TableRow.LayoutParams osCylTextViewParams = new TableRow.LayoutParams();
@@ -1207,13 +1184,17 @@ public class DashboardFragment extends Fragment {
 
                 TextView osAxisTextView = new TextView(thisContext);
                 osAxisTextView.setTextColor(Color.BLACK);
+                osAxisTextView.setPadding(0, 0, 60, 0);
                 osAxisTextView.setGravity(1);
-                if (SingletonDataHolder.eyeglassNumberList[i].osCyl > -0.4)
+                if (SingletonDataHolder.eyeglassNumberList[i].osCyl == 0.00)
                     osAxisTextView.setText("--");
                 else
                     osAxisTextView.setText(Integer.toString(SingletonDataHolder.eyeglassNumberList[i].osAxis));
                 osAxisTextView.setLayoutParams(new TableRow.LayoutParams(3));
-                osAxisTextView.setTextColor(Color.BLACK);
+                if (SingletonDataHolder.confLevelOs.equals("Poor"))
+                    osAxisTextView.setTextColor(Color.LTGRAY);
+                else
+                    osAxisTextView.setTextColor(Color.BLACK);
                 osAxisTextView.setTextSize(18);
                 // osAxisTextView.setTypeface(null, Typeface.BOLD);
                 TableRow.LayoutParams osAxisTextViewParams = new TableRow.LayoutParams();
@@ -1225,7 +1206,7 @@ public class DashboardFragment extends Fragment {
 
                 eyeglassTableLayout.addView(osTableRow, osTAbleRowParams);
 
-                /***
+                /****
                 if (i >= 0) {
                     TextView divLine = new TextView(thisContext);
                     divLine.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, 1));
@@ -1244,12 +1225,15 @@ public class DashboardFragment extends Fragment {
             TextView pdTextView = new TextView(thisContext);
             if (SingletonDataHolder.pupillaryDistance > 0)
                 if (SingletonDataHolder.lang.equals("zh"))
-                    pdTextView.setText("瞳距: " + Integer.toString(SingletonDataHolder.pupillaryDistance));
+                    pdTextView.setText("瞳距: " + Double.toString(SingletonDataHolder.pupillaryDistance));
                 else
-                    pdTextView.setText("PD: " + Integer.toString(SingletonDataHolder.pupillaryDistance));
+                    pdTextView.setText("PD: " + Double.toString(SingletonDataHolder.pupillaryDistance));
             else
                 pdTextView.setText("PD: --");
-            pdTextView.setTextColor(Color.BLACK);
+            if (SingletonDataHolder.confLevelOd.equals("Poor") || SingletonDataHolder.confLevelOs.equals("Poor"))
+                pdTextView.setTextColor(Color.LTGRAY);
+            else
+                pdTextView.setTextColor(Color.BLACK);
             pdTextView.setTextSize(16);
             TableRow.LayoutParams pdTextViewParams = new TableRow.LayoutParams();
             pdTextViewParams.column = 0;
@@ -1271,7 +1255,10 @@ public class DashboardFragment extends Fragment {
                     nvAddTextView.setText("下加光: " + String.format("+%.2f",(SingletonDataHolder.nvadd)));
                 else
                     nvAddTextView.setText("NVADD: " + String.format("+%.2f",(SingletonDataHolder.nvadd)));
-            nvAddTextView.setTextColor(Color.BLACK);
+            if (SingletonDataHolder.confLevelOd.equals("Poor") || SingletonDataHolder.confLevelOs.equals("Poor"))
+                nvAddTextView.setTextColor(Color.LTGRAY);
+            else
+                nvAddTextView.setTextColor(Color.BLACK);
             nvAddTextView.setTextSize(16);
             TableRow.LayoutParams nvAddTextViewParams = new TableRow.LayoutParams();
             nvAddTextViewParams.column = 2;
@@ -1371,4 +1358,147 @@ public class DashboardFragment extends Fragment {
             Toast.makeText(thisContext, "No Internet Connection", Toast.LENGTH_SHORT).show();
     }
 
+    public void GetUserSubscription() {
+
+        NetConnection conn = new NetConnection();
+        if (conn.isConnected(thisContext)) {
+
+            // Show a progress spinner, and kick off a background task to
+            // perform the user login attempt.
+            // showProgress(true);
+
+            RequestQueue queue = Volley.newRequestQueue(thisContext);
+            final String url = Constants.UrlUserSubscription;
+            final JSONObject params = new JSONObject();
+
+            StringRequest getRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String string) {
+                    // Parse response
+                    try {
+                        // String sphericalStep;
+                        Log.i("*** GetBuySubs ***", string);
+                        JSONObject jsonObj = new JSONObject(string);
+                        SingletonDataHolder.subscriptionStatus = jsonObj.getInt("status");
+                        String attrValue = jsonObj.getString("expiration_date");
+                        String str = attrValue;
+                        String[] strgs = str.split(" ");
+                        SingletonDataHolder.subscriptionExpDate = strgs[0];
+                        if (SingletonDataHolder.freshLogin) {
+                            if (SingletonDataHolder.subscriptionStatus <= 1) {
+                                // Show user the subscription dialog
+                                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                                // Setting Dialog Message
+                                alertDialog.setTitle("Subscription activated");
+                                alertDialog.setMessage("Congratulations, you now have an active EyeQue "
+                                        + "subscription for one year.  As an EyeQue subscriber you "
+                                        + "will be able to take vision tests, generate new EyeGlass Numbers, "
+                                        + "receive promotions, and other subscriber "
+                                        + "benefits (see www.eyeque.com/subscription for details).");
+                                // Setting  "Ok" Button
+                                alertDialog.setPositiveButton("Ok",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.cancel();
+                                            }
+                                        });
+                                // Showing Alert Dialog
+                                alertDialog.show();
+                            } else {
+                                AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(getActivity());
+                                // Setting Dialog Message
+                                alertDialog2.setTitle("Subscription required");
+                                alertDialog2.setMessage("A subscription is required to access all of the "
+                                        + "features of the myEyeQue app. The EyeQue annual subscription is "
+                                        + "$4.99 per year. As an EyeQue subscriber you will be able to take "
+                                        + "vision tests, generate new EyeGlass Numbers, receive discounts and "
+                                        + "promotions, as well as other benefits (see www.eyeque.com/subscription "
+                                        + "for details).\n\n"
+                                        + "If you click the Buy button, you will be taken out of the myEyeQue "
+                                        + "app to the EyeQue store.  After purchasing a subscription, you "
+                                        + "can come back to the app to use the full functionality of "
+                                        + "the myEyeQue app.");
+                                // Setting Positive "Buy" Button
+                                alertDialog2.setPositiveButton("Buy",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                Uri uri = Uri.parse(SingletonDataHolder.subscriptionBuyLink
+                                                        + "&token=" + SingletonDataHolder.token);
+                                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                                startActivity(intent);
+                                            }
+                                        });
+                                // Setting Negative "Cancel" Button
+                                alertDialog2.setNegativeButton("Cancel",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.cancel();
+                                            }
+                                        });
+                                // Showing Alert Dialog
+                                alertDialog2.show();
+                            }
+                            SingletonDataHolder.freshLogin = false;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getActivity(), "Subscription Parse Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("Error.Response", error.toString());
+                    SingletonDataHolder.deviceApiRespData = error.toString();
+                    // Toast.makeText(AgreementActivity.this, "Subscription Parse Error", Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                public byte[] getBody() throws AuthFailureError {
+                    Log.i("JSON data", params.toString());
+                    return params.toString().getBytes();
+                }
+
+                @Override
+                public String getBodyContentType() {
+                    return "application/json";
+                }
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    String authString = "Bearer " + SingletonDataHolder.token;
+                    headers.put("Content-Type", "application/json;charset=UTF-8");
+                    headers.put("Authorization", authString);
+                    Log.i("$$$---HEADER---$$$", headers.toString());
+                    return headers;
+                }
+            };
+            RetryPolicy policy = new DefaultRetryPolicy(Constants.NETCONN_TIMEOUT_VALUE, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+            getRequest.setRetryPolicy(policy);
+            queue.add(getRequest);
+        }
+        else
+            Toast.makeText(thisContext, "Please connect to the Internet", Toast.LENGTH_SHORT).show();
+    }
+
+    private String changeDateFormat(String currentFormat,String requiredFormat,String dateString){
+        String result="";
+        if (dateString == null || dateString.equals("")){
+            return result;
+        }
+        SimpleDateFormat formatterOld = new SimpleDateFormat(currentFormat, Locale.getDefault());
+        SimpleDateFormat formatterNew = new SimpleDateFormat(requiredFormat, Locale.getDefault());
+
+        Date date=null;
+        try {
+            date = formatterOld.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (date != null) {
+            result = formatterNew.format(date);
+        }
+        return result;
+    }
 }

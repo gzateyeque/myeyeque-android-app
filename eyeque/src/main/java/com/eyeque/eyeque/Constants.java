@@ -20,14 +20,14 @@ public final class Constants {
      * Restful API URL Addresses
      *****************************************************************************/
     // Development Server
-    // public final static String BuildNumber = "1.4.0 Dev";
+    // public final static String BuildNumber = "1.6.3 Dev";
     // public static String ApiRestfulBaseURL = "http://apidev.eyeque.com/";
     // public static String UserdataRestfulBaseURL = "http://apidev.eyeque.com:8987/";
     // public static final String WebSiteBaseURL = "http://wwwdev.eyeque.com/";
     // public static final String WebSiteMobileBaseURL = "http://wwwdev.eyeque.com/m/";
 
     // Production Server
-    public final static String BuildNumber = "1.4.0";
+    public final static String BuildNumber = "1.6.7";
     public static String ApiRestfulBaseURL = "https://store.eyeque.com/";
     public static String UserdataRestfulBaseURL = "https://store.eyeque.com:8987/";
     public static final String WebSiteBaseURL = "http://www.eyeque.com/";
@@ -47,11 +47,12 @@ public final class Constants {
     public static final String UrlTermsOfService = WebSiteBaseURL + "terms_of_service";
     public static final String UrlPrivacyPolicy = WebSiteBaseURL + "privacy_policy";
     public static final String UrlBuyDevice = WebSiteBaseURL + "shop";
-    public static final String UrlFaq =  WebSiteBaseURL + "faq";
+    public static final String UrlFaq =  WebSiteBaseURL + "support/#personal-vision-tracker";
     public static final String UrlBlog =  WebSiteBaseURL + "blog";
     public static final String UrlLikeUsOnFacebook = "https://m.facebook.com/EyeQueCorp/";
-    public static final String UrlSupport =  WebSiteBaseURL + "support";
+    public static final String UrlSupport =  WebSiteBaseURL + "support/#personal-vision-tracker";
     public static final String UrlRateApp = "https://play.google.com/store/apps/details?id=com.eyeque.eyeque";
+    public static final String UrlMembershipInfo = "https://www.eyeque.com/membership";
 
     // Restful API Call URL - Data Exchange
     public static final String UrlTrackingDataOd = UserdataRestfulBaseURL + "index.html?hash=default&column=sphEOD";
@@ -74,7 +75,10 @@ public final class Constants {
     public static final String UrlDashboard = ApiRestfulBaseURL + "index.php/rest/eyecloud/api/V2/getdashboardinfo";
     public static final String UrlDashboardSummary = ApiRestfulBaseURL + "index.php/rest/eyecloud/api/V2/getdashboardsummary";
     public static final String UrlPurchaseEyeglassNumber = ApiRestfulBaseURL + "index.php/rest/eyecloud/api/V2/purchaseeyeglassnumbers";
-
+    // public static final String UrlBuyEyeglasses = ApiRestfulBaseURL + "customer/account/autologin?redirect=buyeyeglasses/options/form&token=";
+    public static final String UrlBuyEyeglasses = "https://store.eyeque.com/buyeyeglasses";
+    public static final String UrlEngInfo = "https://eyeque.zendesk.com/hc/en-us/articles/360008814074#egn-keys-table";
+    public static final String UrlPushNotif = ApiRestfulBaseURL + "index.php/rest/eyecloud/api/V3/snsTokens";
 
     /*****************************************************************************
      * System level constants

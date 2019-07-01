@@ -26,6 +26,7 @@ public class SingletonDataHolder {
     public static int loginType = 1;
     public static Boolean newRegUser = false;
     public static String token = "";
+    public static String firebaseToken = "";
     public static int userId = 0;
     public static String email = "";
     public static String firstName = "";
@@ -42,7 +43,7 @@ public class SingletonDataHolder {
     public static String country = "";
     public static String country_selected = "";
     public static ArrayList<String> countryListItems = new ArrayList<String>();
-    public static boolean accommodationOn = true;
+    public static boolean accommodationOn = false;
     public static int screenProtect = 0;
     public static int wearGlasses = 0;
     public static String urlOdTracking = "";
@@ -50,16 +51,19 @@ public class SingletonDataHolder {
     public static String urlVisionSummary = "";
     public static int currentTestScore = 0;
     public static int freetrial = 0;
-    public static int pupillaryDistance = 0;
+    public static double pupillaryDistance = 0;
+    public static String egnDate ="";
     public static double nvadd = 0.0;
     public static String gradeOd = "High";
     public static String gradeOs = "High";
     public static Boolean eyeglassNumPurchasable= false;
-    public static Boolean subscriptionStatus = false;
+    public static int subscriptionStatus = 0;
     public static String subscriptionExpDate = "";
     public static int subscriptionSubId = 0;
-    public static String subscriptionAnnualPrice = "";
+    public static String subscriptionAnnualPrice = "4.99";
     public static String subscriptionBuyLink = "";
+    public static boolean freshLogin = false;
+    public static boolean showDashboardAppRating = false;
 
     // Eyeglass Number
     public static class EyeglassNumber {
@@ -87,6 +91,7 @@ public class SingletonDataHolder {
     public static String firstTestDate;
     public static String confLevelOd = "";
     public static String confLevelOs = "";
+    public static boolean recurringTestAfterValidPeriod = false;
 
     // Session method
     // public static int getLoginType() { return loginType; }
@@ -123,6 +128,8 @@ public class SingletonDataHolder {
     public static String phoneHardware = "";
     public static String phoneSerialNum = "";
     public static String phoneDisplay = "";
+    public static double phoneWidth = 500;
+    public static double phoneHeight = 500;
     public static int phonePpi = 577;
     public static int phoneDpi = 577;
     public static String deviceApiRespData;
@@ -130,6 +137,7 @@ public class SingletonDataHolder {
     public static String userApiRespData;
     public static boolean correctDisplaySetting = true;
     public static String deviceName = "EQ101";
+    // public static String deviceName = "EQ101_MARK";
     public static double deviceWidth = 2.0f;
     public static double deviceHeight = 1.375f;
 

@@ -3,10 +3,12 @@ package com.eyeque.eyeque;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -46,6 +48,16 @@ public class AttachDeviceActivity extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         setContentView(R.layout.activity_attach_device);
 
+        // Dynamically set the box center position based om the screen size
+        SingletonDataHolder.phoneDisplay = android.os.Build.DISPLAY;
+        Display display = getWindowManager(). getDefaultDisplay();
+        Point size = new Point();
+        display. getSize(size);
+        int width = size. x;
+        int height = size. y;
+        SingletonDataHolder.centerX = width / 2;
+        // SingletonDataHolder.centerY = Math.round((float) SingletonDataHolder.centerY * (float) SingletonDataHolder.phonePpi / 520.0f);
+
         deviceId = 3;
         SingletonDataHolder.accommodationOn = false;
         patternView = (PatternView) findViewById(R.id.drawView);
@@ -83,7 +95,7 @@ public class AttachDeviceActivity extends AppCompatActivity {
                         practiceGenericIntent.putExtra("deviceId", 3);
                         startActivity(practiceGenericIntent);
                     } else {
-                        SingletonDataHolder.accommodationOn = true;
+                        // SingletonDataHolder.accommodationOn = true;
                         Intent testCondIntent = new Intent(getBaseContext(), TestConditionActivity.class);
                         testCondIntent.putExtra("deviceId", 3);
                         startActivity(testCondIntent);

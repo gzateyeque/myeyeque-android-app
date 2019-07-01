@@ -1,4 +1,4 @@
-package com.amazonaws.androidtest;
+package com.eyeque.eyeque;
 
 import android.util.Log;
 

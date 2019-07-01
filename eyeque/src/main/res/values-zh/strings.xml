@@ -35,6 +35,7 @@
     <string name="diagnosticsHeaderTextString">Diagnostics</string>
     <string name="subscriptionHeaderTextString">Subscription</string>
     <string name="regCompHeaderTextString">Registration Complete</string>
+    <string name="learnAboutMembership">To learn moe about EyeQue\'s membership service, click here</string>
 
     <string name="powerTextString">Power: TBC</string>
     <string name="angleTextString">Angle: 0&#xb0;"</string>
@@ -152,4 +153,9 @@
     <string name="buySubscriptionText">BUY</string>
 
     <!-- TODO: Remove or change this placeholder text -->
+    <!-- Notification channel management -->
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="default_notification_channel_name" translatable="true">News</string>
+    <string name="log_token">Log Token</string>
+    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
 </resources>

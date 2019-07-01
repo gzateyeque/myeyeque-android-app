@@ -10,7 +10,7 @@
 
     <com.eyeque.eyeque.PatternView
         android:layout_width="fill_parent"
-        android:layout_height="300dp"
+        android:layout_height="269dp"
         android:id="@+id/drawView"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -22,7 +22,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop = "10dp"
         android:layout_below="@+id/drawView"
-        android:text="Test Completion"
+        android:text="Test Completed"
         android:id="@+id/testCompleteHeaderTextView"
         android:textColor="@color/background_material_dark"
         android:textSize="20dp"/>
@@ -49,7 +49,7 @@
             android:layout_marginTop="10dp"
             android:orientation="vertical">
 
-            <TableLayout
+            <!--TableLayout
                 android:id="@+id/resultTableLayout"
                 android:layout_marginTop = "10dp"
                 android:stretchColumns="*"
@@ -76,7 +76,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="left"
                         android:layout_column="2"
-                        android:src="@drawable/info"
+                        android:src="@drawable/info_small"
                         android:id="@+id/sphInfoImageView"/>
 
                     <TextView
@@ -94,7 +94,7 @@
                         android:gravity="left"
                         android:layout_column="4"
                         android:paddingRight="5dp"
-                        android:src="@drawable/info"
+                        android:src="@drawable/info_small"
                         android:id="@+id/cylInfoImageView"/>
 
                 </TableRow>
@@ -163,33 +163,55 @@
 
                 </TableRow>
 
-            </TableLayout>
+            </TableLayout-->
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text=""
+                android:id="@+id/saveTestTextView"
+                android:textColor="#000000"
+                android:textSize="18dp"/>
+
+            <Button
+                android:id="@+id/saveTestButton"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:text="Save Test"
+                android:background="@android:color/holo_blue_dark"
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:layout_marginTop="30dp"
-                android:text="Discard this test"
-                android:id="@+id/dontUseTextView"
-                android:onClick="onClick"
-                android:clickable="true"
-                android:textColor="#046EEA"
-                android:textSize="15dp"/>
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="@string/discardTextString"
+                android:id="@+id/discardTestTextView"
+                android:textColor="#000000"
+                android:textSize="18dp"/>
 
             <Button
-                android:id="@+id/uploadButton"
+                android:id="@+id/discardButton"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="30dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:text="Save this test"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:text="Discard Test"
                 android:textStyle="bold"
-                android:background="@android:color/holo_blue_dark"
+                android:background="@android:color/holo_red_dark"
                 android:textColor="#FFFFFF" />
 
         </LinearLayout>

@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -62,7 +64,6 @@ public class ResultActivity extends Activity {
     private static double osAxis;
     private static String osSe;
     private static double osRmse;
-
     private static double[] angleList = {0, 0, 0, 0, 0, 0, 0, 0, 0};
     private static double[] leftPowerList = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
     private static double[] rightPowerList = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
@@ -92,6 +93,15 @@ public class ResultActivity extends Activity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         setContentView(R.layout.activity_result);
 
+        // Dynamically set the box center position based om the screen size
+        SingletonDataHolder.phoneDisplay = android.os.Build.DISPLAY;
+        Display display = getWindowManager(). getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+        SingletonDataHolder.centerX = width / 2;
+        // SingletonDataHolder.centerY = Math.round((float) SingletonDataHolder.centerY * (float) SingletonDataHolder.phonePpi / 520.0f);
         subjectId = getIntent().getIntExtra("subjectId", 0);
         deviceId = getIntent().getIntExtra("deviceId", 0);
         serverId = getIntent().getIntExtra("serverId", 0);
@@ -123,14 +133,16 @@ public class ResultActivity extends Activity {
         odCyl = getIntent().getStringExtra("ODCYL");
         osCyl = getIntent().getStringExtra("OSCYL");
 
-        Button uploadButton = (Button) findViewById(R.id.uploadButton);
+        Button saveTestButton = (Button) findViewById(R.id.saveTestButton);
         final TextView testCompleteHeaderTextView = (TextView) findViewById(R.id.testCompleteHeaderTextView);
+        testCompleteHeaderTextView.setText("Test Completed for " + SingletonDataHolder.firstName);
+
+        /*** Removed in v1.6
         final TextView odSpheTextView = (TextView) findViewById(R.id.odSpheTextView);
         final TextView osSpheTextView = (TextView) findViewById(R.id.osSpheTextView);
         final TextView odCylTextView = (TextView) findViewById(R.id.odCylTextView);
         final TextView osCylTextView = (TextView) findViewById(R.id.osCylTextView);
 
-        testCompleteHeaderTextView.setText("Test Complete for " + SingletonDataHolder.firstName);
         odSpheTextView.setText(odSph + "D");
         osSpheTextView.setText(osSph + "D");
         odCylTextView.setText(odCyl);
@@ -150,16 +162,6 @@ public class ResultActivity extends Activity {
                         LayoutParams.WRAP_CONTENT);
                 popupWindow.setFocusable(true);
                 popupWindow.setOutsideTouchable(true);
-                /** Comment out
-                 Button btnDismiss = (Button)popupView.findViewById(R.id.dismiss);
-                 btnDismiss.setOnClickListener(new Button.OnClickListener(){
-
-                @Override
-                public void onClick(View v) {
-                // TODO Auto-generated method stub
-                popupWindow.dismiss();
-                }});
-                 ***/
                 popupWindow.showAsDropDown(btnSphPopup, -300, 10, Gravity.CENTER);
             }});
 
@@ -177,18 +179,9 @@ public class ResultActivity extends Activity {
                         LayoutParams.WRAP_CONTENT);
                 popupWindow.setFocusable(true);
                 popupWindow.setOutsideTouchable(true);
-                /** Comment out
-                 Button btnDismiss = (Button)popupView.findViewById(R.id.dismiss);
-                 btnDismiss.setOnClickListener(new Button.OnClickListener(){
-
-                @Override
-                public void onClick(View v) {
-                // TODO Auto-generated method stub
-                popupWindow.dismiss();
-                }});
-                 ***/
                 popupWindow.showAsDropDown(btnCylPopup, -500, 10, Gravity.CENTER);
             }});
+        ***/
 
         // odSphTextView.setText(String.format("%.2f", odSph));
         // odCylTextView.setText(String.format("%.2f", odCyl));
@@ -197,7 +190,7 @@ public class ResultActivity extends Activity {
         // osCylTextView.setText(String.format("%.2f", osCyl));
         // osAxisTextView.setText(Integer.toString((int) osAxis));
 
-        /*
+        /*****
         angleList[0] = getIntent().getDoubleExtra("Angle-1", 0.00);
         angleList[1] = getIntent().getDoubleExtra("Angle-2", 0.00);
         angleList[2] = getIntent().getDoubleExtra("Angle-3", 0.00);
@@ -327,11 +320,36 @@ public class ResultActivity extends Activity {
             mStr = String.format("%.2f", rightPowerList[8]) + " " + String.format("%.1f", angleList[8]) + (char) 0x00B0;
             r9TextView.setText(mStr);
         }
-        */
+        *****/
+
+        TextView saveTestTv = (TextView) findViewById(R.id.saveTestTextView);
+
+        switch (SingletonDataHolder.numOfTests) {
+            case 0:
+                if (!SingletonDataHolder.recurringTestAfterValidPeriod)
+                    saveTestTv.setText(R.string.testCompleted1stTestEver);
+                else
+                    saveTestTv.setText(R.string.testCompleted1stRecurringTest);
+                break;
+            case 1:
+                if (!SingletonDataHolder.recurringTestAfterValidPeriod)
+                    saveTestTv.setText(R.string.testCompleted2ndTestEver);
+                else
+                    saveTestTv.setText(R.string.testCompleted2ndRecurringTest);
+                break;
+            case 2:
+                if (!SingletonDataHolder.recurringTestAfterValidPeriod)
+                    saveTestTv.setText(R.string.testCompleted3rdTestEver);
+                else
+                    saveTestTv.setText(R.string.testCompletedOngoingTest);
+            default:
+                saveTestTv.setText(R.string.testCompletedOngoingTest);
+                break;
+        }
 
         // Tap  Don't use textView
-        TextView dontUseThisTest = (TextView) findViewById(R.id.dontUseTextView);
-        dontUseThisTest.setOnClickListener(new View.OnClickListener() {
+        Button discardButton = (Button) findViewById(R.id.discardButton);
+        discardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(
@@ -366,7 +384,7 @@ public class ResultActivity extends Activity {
             }
         });
 
-        uploadButton.setOnClickListener(new View.OnClickListener() {
+        saveTestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Toast.makeText(ResultActivity.this, "Record Discarded", Toast.LENGTH_SHORT).show();
@@ -376,7 +394,7 @@ public class ResultActivity extends Activity {
         });
 
         /***
-        uploadButton.setOnClickListener(new View.OnClickListener() {
+         saveTestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isUploadComplete) {
@@ -537,6 +555,8 @@ public class ResultActivity extends Activity {
                     else
                         Toast.makeText(ResultActivity.this, "Test Discarded", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getBaseContext(), TopActivity.class);
+                    if (SingletonDataHolder.numOfTests == 2 && !SingletonDataHolder.recurringTestAfterValidPeriod)
+                        SingletonDataHolder.showDashboardAppRating = true;
                     startActivity(i);
                     finish();
                 }

@@ -14,6 +14,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -67,6 +68,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -81,6 +86,10 @@ import java.util.Map;
 import java.util.Locale;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -138,7 +147,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private static int signUpType = 1;   /* 1: Email 2: Social Media */
     private static AccessToken tok;
     private static int retVal = 0;
-    private static boolean showVer = false;
+    private static boolean showVer = true;
 
     // Record last clcik time to check the qick double tapping
     private long mLastClickTime = 0;
@@ -843,24 +852,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                     Log.i("***** COUNTRY *****", attrValue);
                                     SingletonDataHolder.country = attrValue;
                                 }
-                                // Retrieve User's subscription status
-                                if (attrName.matches("subscription_expiration")) {
-                                    Log.i("*** SUBSCRIPTION ***", attrValue);
-                                    String str = attrValue;
-                                    String[] strgs = str.split(" ");
-                                    SingletonDataHolder.subscriptionExpDate = strgs[0];
-                                    SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
-                                    Date now = new Date();
-                                    try {
-                                        Date expirationDate = format.parse(attrValue);
-                                        if (expirationDate.before(now))
-                                            SingletonDataHolder.subscriptionStatus = false;
-                                        else
-                                            SingletonDataHolder.subscriptionStatus = true;
-                                    } catch (Exception e) {
-                                            e.printStackTrace();
-                                    }
-                                }
                                 if (attrName.matches("wear_glasses_or_contacts")) {
                                     Log.i("***** WEAR EYEGLASS *****", attrValue);
                                     if (attrValue.compareToIgnoreCase("yes") == 0)
@@ -880,11 +871,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                     SingletonDataHolder.profileReadingGlassesValue = attrValue;
                                 }
                             }
-                            if ((SingletonDataHolder.subscriptionExpDate).matches("") || SingletonDataHolder.subscriptionExpDate == null) {
-                                Log.i("*** SUBSCRIPTION ***", SingletonDataHolder.subscriptionExpDate);
-                                SingletonDataHolder.subscriptionStatus = true;
-                                SingletonDataHolder.subscriptionExpDate = "";
-                            }
+
+                            // Register the firebase token in EyeCloud for push notification
+                            FirebaseInstanceId.getInstance().getInstanceId()
+                                    .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                            if (!task.isSuccessful()) {
+                                                Log.w("", "getInstanceId failed", task.getException());
+                                                return;
+                                            }
+
+                                            // Get new Instance ID token
+                                            SingletonDataHolder.firebaseToken = task.getResult().getToken();
+                                            if(SingletonDataHolder.firebaseToken != null) {
+                                                new LoginActivity.DataFetcher().execute(SingletonDataHolder.firebaseToken);
+                                                Log.i("***Token***", getString(R.string.msg_token_fmt, SingletonDataHolder.firebaseToken));
+                                            }
+                                        }
+                                    });
 
                             if (isOnBoardNeeded) {
                                 Intent nameIntent = new Intent(getBaseContext(), SerialActivity.class);
@@ -962,7 +967,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private void DbStoreToken() {
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(Constants.USER_ENTITY_VERSION_COLUMN, 1);
+        values.put(Constants.USER_ENTITY_VERSION_COLUMN, SingletonDataHolder.userId);
         values.put(Constants.USER_ENTITY_TOKEN_COLUMN, SingletonDataHolder.token);
 
         // Insert the new row, returning the primary key value of the new row
@@ -1084,6 +1089,62 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int IS_PRIMARY = 1;
     }
 
+    private void sendToEyecloud() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("subjectID", SingletonDataHolder.userId);
+            jsonObject.put("platform", "Android");
+            jsonObject.put("tokenValue", SingletonDataHolder.firebaseToken);
+            Log.i("***PS 0***", Integer.toString(SingletonDataHolder.userId));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        OkHttpClient client = new OkHttpClient();
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody formBody = RequestBody.create(JSON, jsonObject.toString());
+
+        Log.i("***PS***", Constants.UrlPushNotif);
+        okhttp3.Request request = new okhttp3.Request.Builder()
+                // .url("http://54.149.228.75:8080/eyecloud/api/V3/snsTokens")
+                .url(Constants.UrlPushNotif)
+                .addHeader("Authorization","Bearer " + SingletonDataHolder.token)
+                .addHeader("Content-Type","application/json")
+                .post(formBody)
+                .build();
+        try {
+            okhttp3.Response response = client.newCall(request).execute();
+            // System.out.println("Response: " + response.body().string());
+            Log.i("***PS 2***",response.body().string());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private class DataFetcher extends AsyncTask<String,Void,String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //Used to show the progress bar
+            // mProgressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // mProgressBar.setVisibility(View.GONE);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            // Here the code to execute something on the background
+            // thread is written. May call publishProgress() to publish
+            // progress to the main UI thread.
+            //Finally after finishing the task return the result in the
+            //form of an Integer
+            sendToEyecloud();
+            return null;
+        }
+    }
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.

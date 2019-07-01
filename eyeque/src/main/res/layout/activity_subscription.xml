@@ -51,6 +51,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <EditText
+                    android:id="@+id/subscriptionType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/subscriptionTypeText"
+                    android:inputType="text"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:maxLines="1"
+                    android:imeOptions="actionDone" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
                     android:id="@+id/subscriptionStatus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -91,6 +108,20 @@
                 android:textStyle="bold"
                 android:background="@android:color/holo_blue_dark"
                 android:textColor="#FFFFFF" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/learnAboutMembership"
+                android:id="@+id/learnMembershipTextView"
+                android:onClick="onClick"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:clickable="true"
+                android:layout_marginTop="16dp"
+                android:textColor="#046EEA"
+                android:textSize="15dp"/>
 
         </LinearLayout>
     </ScrollView>

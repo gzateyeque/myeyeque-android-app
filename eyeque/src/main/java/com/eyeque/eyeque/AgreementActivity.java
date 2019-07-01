@@ -143,7 +143,6 @@ public class AgreementActivity extends AppCompatActivity {
                     Toast.makeText(AgreementActivity.this, "Plesae consent the user agreement", Toast.LENGTH_SHORT).show();
                 else {
                     UpdateProfile();
-                    // GetUserSubscription();
                 }
             }
         });
@@ -261,6 +260,7 @@ public class AgreementActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    GetUserSubscription();
                     DbStoreToken();
                     Intent topIntent = new Intent(getBaseContext(), TopActivity.class);
                     startActivity(topIntent);
@@ -323,38 +323,14 @@ public class AgreementActivity extends AppCompatActivity {
                         // String sphericalStep;
                         Log.i("*** GetBuySubs ***", string);
                         JSONObject jsonObj = new JSONObject(string);
-                        int id = jsonObj.getInt("id");
+                        SingletonDataHolder.subscriptionStatus = jsonObj.getInt("status");
                         String attrValue = jsonObj.getString("expiration_date");
-                        if ((attrValue).matches("") || attrValue == null) {
-                            if (id == 0) {
-                                Log.i("*** SUBSCRIPTION ***", SingletonDataHolder.subscriptionExpDate);
-                                SingletonDataHolder.subscriptionStatus = true;
-                                SingletonDataHolder.subscriptionExpDate = "";
-                            }
-                            else {
-                                Log.i("*** SUBSCRIPTION ***", SingletonDataHolder.subscriptionExpDate);
-                                SingletonDataHolder.subscriptionStatus = false;
-                                SingletonDataHolder.subscriptionExpDate = "";
-                            }
-                        } else {
-                            String str = attrValue;
-                            String[] strgs = str.split(" ");
-                            SingletonDataHolder.subscriptionExpDate = strgs[0];
-                            SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
-                            Date now = new Date();
-                            try {
-                                Date expirationDate = format.parse(attrValue);
-                                if (expirationDate.before(now))
-                                    SingletonDataHolder.subscriptionStatus = false;
-                                else
-                                    SingletonDataHolder.subscriptionStatus = true;
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
+                        String str = attrValue;
+                        String[] strgs = str.split(" ");
+                        SingletonDataHolder.subscriptionExpDate = strgs[0];
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        // Toast.makeText(AgreementActivity.this, "Subscription Parse Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AgreementActivity.this, "Subscription Parse Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }, new Response.ErrorListener() {

@@ -34,7 +34,7 @@
             <ListView
                 android:id="@+id/settingListView"
                 android:layout_width="fill_parent"
-                android:layout_height="350dp"
+                android:layout_height="400dp"
                 android:drawSelectorOnTop="false"
                 android:headerDividersEnabled="true" />
 

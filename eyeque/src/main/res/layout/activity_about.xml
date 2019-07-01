@@ -39,7 +39,7 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="100dp"
                 android:layout_marginTop = "10dp"
                 android:layout_marginLeft="100dp"
                 android:layout_marginRight="100dp"
@@ -51,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop = "10dp"
-                android:text="myEyeQue Android App"
+                android:text="EyeQue PVT Android App"
                 android:id="@+id/appTextStringView"
                 android:layout_below="@+id/LogoImageView"
                 android:textSize="22dp"
@@ -115,7 +115,7 @@
                 android:layout_marginTop = "80dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:text="Copyright &#169; 2017 EyeQue Corp. All Rights Reserved"
+                android:text="Copyright &#169; 2019 EyeQue Corp. All Rights Reserved"
                 android:id="@+id/copyrightTextStringView"
                 android:layout_below="@+id/likeOnFacebook"
                 android:textSize="13dp"

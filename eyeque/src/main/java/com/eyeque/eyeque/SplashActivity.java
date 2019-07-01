@@ -2,17 +2,39 @@ package com.eyeque.eyeque;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Point;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.sns.AmazonSNSClient;
+import com.amazonaws.services.sns.model.CreatePlatformEndpointRequest;
+import com.amazonaws.services.sns.model.CreatePlatformEndpointResult;
+import com.amazonaws.services.sns.model.GetEndpointAttributesRequest;
+import com.amazonaws.services.sns.model.GetEndpointAttributesResult;
+import com.amazonaws.services.sns.model.InvalidParameterException;
+import com.amazonaws.services.sns.model.NotFoundException;
+import com.amazonaws.services.sns.model.SetEndpointAttributesRequest;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -23,6 +45,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.eyeque.eyeque.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +61,12 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 
 /**
  *
@@ -52,11 +84,11 @@ public class SplashActivity extends Activity {
     private boolean paused = false;
     private static SQLiteDatabase myDb = null;
     private static String dbToken;
+    private static int dbUserId;
     private boolean isOnBoardNeeded = true;
     private static boolean checkDeviceCompatibility = false;
     private static boolean networkConnStatus = false;
     private static boolean debug = true;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +110,17 @@ public class SplashActivity extends Activity {
         SingletonDataHolder.phoneHardware = android.os.Build.HARDWARE;
         SingletonDataHolder.phoneSerialNum = android.os.Build.SERIAL;
         SingletonDataHolder.phoneDisplay = android.os.Build.DISPLAY;
+
+        // Get the phone Dpi information
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        SingletonDataHolder.phoneDpi = (int) metrics.xdpi;
+        SingletonDataHolder.phoneDisplay = android.os.Build.DISPLAY;
+        Display display = getWindowManager(). getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        SingletonDataHolder.phoneWidth = size.x;
+        SingletonDataHolder.phoneHeight = size.y;
 
         Log.d("**** Phone Type ****", SingletonDataHolder.phoneBrand + " " + SingletonDataHolder.phoneModel);
 
@@ -105,6 +148,7 @@ public class SplashActivity extends Activity {
 
             String[] projection = {
                     Constants.USER_ENTITY_ID_COLUMN,
+                    Constants.USER_ENTITY_VERSION_COLUMN,
                     Constants.USER_ENTITY_TOKEN_COLUMN
             };
             // How you want the results sorted in the resulting Cursor
@@ -124,9 +168,12 @@ public class SplashActivity extends Activity {
                 cursor.moveToFirst();
                 dbToken = cursor.getString(
                         cursor.getColumnIndexOrThrow(Constants.USER_ENTITY_TOKEN_COLUMN));
+                dbUserId = cursor.getInt(
+                        cursor.getColumnIndexOrThrow(Constants.USER_ENTITY_VERSION_COLUMN));
 
                 if (dbToken != null && dbToken != "") {
                     SingletonDataHolder.token = dbToken;
+                    SingletonDataHolder.userId = dbUserId;
                     Log.d("### SP DB Token###", dbToken);
                     // Intent topIntent = new Intent(getBaseContext(), TopActivity.class);
                     // startActivity(topIntent);
@@ -142,16 +189,39 @@ public class SplashActivity extends Activity {
         final ImageView splashView = (ImageView) findViewById(R.id.splashImageView);
         splashView.setImageResource(R.drawable.eyeque_logo);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create channel to show notifications.
+            String channelId  = getString(R.string.default_notification_channel_id);
+            String channelName = getString(R.string.default_notification_channel_name);
+            NotificationManager notificationManager =
+                    getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(new NotificationChannel(channelId,
+                    channelName, NotificationManager.IMPORTANCE_LOW));
+        }
+
+        // [START handle_data_extras]
+        if (getIntent().getExtras() != null) {
+            for (String key : getIntent().getExtras().keySet()) {
+                Object value = getIntent().getExtras().get(key);
+                Log.d("", "Key: " + key + " Value: " + value);
+            }
+        }
+        // [END handle_data_extras]
+
+        DataManager.initializeInstance(getApplicationContext());
+
         Thread splashThread = new Thread() {
             public void run() {
                 try {
                     while (splashActive && ms < splashTime * 10) {
                         if (!paused)
                             ms += 100;
+                        /**
                         NetConnection conn = new NetConnection();
                         if (conn.isConnected(getApplicationContext()) && !checkDeviceCompatibility) {
                             CheckPhoneCompatibility();
                         }
+                         **/
                         if (ms > 500 && checkDeviceCompatibility)
                             splashActive = false;
                         sleep(100);
@@ -159,8 +229,27 @@ public class SplashActivity extends Activity {
                 } catch (Exception e) {
                 } finally {
                     if (checkDeviceCompatibility) {
-                        if (dbToken != null && dbToken != "")
+                        if (dbToken != null && dbToken != "") {
                             ValidateToken();
+                            // Get token
+                            FirebaseInstanceId.getInstance().getInstanceId()
+                                    .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                            if (!task.isSuccessful()) {
+                                                Log.w("", "getInstanceId failed", task.getException());
+                                                return;
+                                            }
+
+                                            // Get new Instance ID token
+                                            SingletonDataHolder.firebaseToken = task.getResult().getToken();
+                                            if(SingletonDataHolder.firebaseToken != null) {
+                                                new DataFetcher().execute(SingletonDataHolder.firebaseToken);
+                                                Log.i("***Token***", getString(R.string.msg_token_fmt, SingletonDataHolder.firebaseToken));
+                                            }
+                                        }
+                                    });
+                        }
                         else {
                             Intent startIntent = new Intent(SplashActivity.this, LoginActivity.class);
                             startActivity(startIntent);
@@ -200,6 +289,13 @@ public class SplashActivity extends Activity {
                 params.put("phoneBrand", SingletonDataHolder.phoneBrand);
                 params.put("phoneModel", SingletonDataHolder.phoneModel);
                 params.put("phoneType", "");
+                DisplayMetrics metrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(metrics);
+                params.put("widthPixel",  metrics.widthPixels);
+                params.put("heightPixel",  metrics.heightPixels);
+                params.put("xdpi", metrics.xdpi);
+                params.put("ydpi", metrics.ydpi);
+                params.put("scale", metrics.scaledDensity);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -222,6 +318,13 @@ public class SplashActivity extends Activity {
                         SingletonDataHolder.centerY = jsonObj.getInt("center_y");
                         SingletonDataHolder.lineLength = jsonObj.getInt("line_length");
                         SingletonDataHolder.lineWidth = jsonObj.getInt("line_width");
+
+                        // Overwrite with dynamic calculated setting
+                        SingletonDataHolder.centerX = (int) (SingletonDataHolder.phoneWidth / 2.0);
+                        SingletonDataHolder.centerY = (int) ((SingletonDataHolder.phoneDpi / 570.0) * 500.0);
+                        SingletonDataHolder.lineLength = (int) ((SingletonDataHolder.phoneDpi / 570.0) * 200.0);
+                        SingletonDataHolder.lineWidth = (int) ((SingletonDataHolder.phoneDpi / 570.0) * 40.0);
+
                         SingletonDataHolder.initDistance = jsonObj.getInt("initial_distance");
                         SingletonDataHolder.minDistance = jsonObj.getInt("min_distance");
                         SingletonDataHolder.maxDistance = jsonObj.getInt("max_distance");
@@ -250,7 +353,7 @@ public class SplashActivity extends Activity {
                         // Toast.makeText(SplashActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
-            }, new Response.ErrorListener() {
+            }, new com.android.volley.Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.d("Error.Response", error.toString());
@@ -300,7 +403,7 @@ public class SplashActivity extends Activity {
             String url = Constants.UrlUserProfile;
             final JSONObject params = new JSONObject();
 
-            StringRequest postRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            StringRequest postRequest = new StringRequest(Request.Method.GET, url, new com.android.volley.Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Log.i("*** JSON Rep ***", response);
@@ -342,12 +445,13 @@ public class SplashActivity extends Activity {
                                     Log.i("***** COUNTRY *****", attrValue);
                                     SingletonDataHolder.country = attrValue;
                                 }// Retrieve User's subscription status
+                                /*****
                                 if (attrName.matches("subscription_expiration")) {
                                     Log.i("*** SUBSCRIPTION ***", attrValue);
                                     String str = attrValue;
                                     String[] strgs = str.split(" ");
                                     SingletonDataHolder.subscriptionExpDate = strgs[0];
-                                    SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+                                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                                     Date now = new Date();
                                     try {
                                         Date expirationDate = format.parse(attrValue);
@@ -359,6 +463,7 @@ public class SplashActivity extends Activity {
                                         e.printStackTrace();
                                     }
                                 }
+                                 ******/
                                 if (attrName.matches("wear_glasses_or_contacts")) {
                                     Log.i("***** WEAR EYEGLASS *****", attrValue);
                                     if (attrValue.compareToIgnoreCase("yes") == 0)
@@ -378,15 +483,11 @@ public class SplashActivity extends Activity {
                                     SingletonDataHolder.profileReadingGlassesValue = attrValue;
                                 }
                             }
-                            if ((SingletonDataHolder.subscriptionExpDate).matches("") || SingletonDataHolder.subscriptionExpDate == null) {
-                                Log.i("*** SUBSCRIPTION ***", SingletonDataHolder.subscriptionExpDate);
-                                SingletonDataHolder.subscriptionStatus = true;
-                                SingletonDataHolder.subscriptionExpDate = "";
-                            }
                             if (isOnBoardNeeded) {
                                 Intent startIntent = new Intent(SplashActivity.this, LoginActivity.class);
                                 startActivity(startIntent);
                             } else {
+                                SingletonDataHolder.freshLogin = false;
                                 Intent topIntent = new Intent(getBaseContext(), TopActivity.class);
                                 startActivity(topIntent);
                             }
@@ -402,13 +503,8 @@ public class SplashActivity extends Activity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    // AccessToken tok;
-                    // tok = AccessToken.getCurrentAccessToken();
-                    // Log.d(TAG, tok.getUserId());
-                    // Pass authentication
-
                 }
-            }, new Response.ErrorListener() {
+            }, new com.android.volley.Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.d("Error.Response", error.toString());
@@ -447,6 +543,64 @@ public class SplashActivity extends Activity {
             Intent startIntent = new Intent(SplashActivity.this, LoginActivity.class);
             startActivity(startIntent);
             finish();
+        }
+    }
+
+    private void sendToEyecloud() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("subjectID", SingletonDataHolder.userId);
+            jsonObject.put("platform", "Android");
+            jsonObject.put("tokenValue", SingletonDataHolder.firebaseToken);
+            Log.i("***PS 0***", Integer.toString(SingletonDataHolder.userId));
+            Log.i("***PS 0***", SingletonDataHolder.firebaseToken);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        OkHttpClient client = new OkHttpClient();
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody formBody = RequestBody.create(JSON, jsonObject.toString());
+
+        Log.i("***PS***", Constants.UrlPushNotif);
+        okhttp3.Request request = new okhttp3.Request.Builder()
+                // .url("http://54.149.228.75:8080/eyecloud/api/V3/snsTokens")
+                .url(Constants.UrlPushNotif)
+                .addHeader("Authorization","Bearer " + SingletonDataHolder.token)
+                .addHeader("Content-Type","application/json")
+                .post(formBody)
+                .build();
+        try {
+            okhttp3.Response response = client.newCall(request).execute();
+            // System.out.println("Response: " + response.body().string());
+            Log.i("***PS 2***",response.body().string());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private class DataFetcher extends AsyncTask<String,Void,String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //Used to show the progress bar
+            // mProgressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // mProgressBar.setVisibility(View.GONE);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            // Here the code to execute something on the background
+            // thread is written. May call publishProgress() to publish
+            // progress to the main UI thread.
+            //Finally after finishing the task return the result in the
+            //form of an Integer
+            sendToEyecloud();
+            return null;
         }
     }
 }

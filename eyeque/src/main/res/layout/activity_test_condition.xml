@@ -10,7 +10,7 @@
 
     <com.eyeque.eyeque.PatternView
         android:layout_width="fill_parent"
-        android:layout_height="300dp"
+        android:layout_height="269dp"
         android:id="@+id/drawView"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -177,6 +177,67 @@
             </LinearLayout>
 
             <!--
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="left"
+                android:text="Please select the lenses type"
+                android:id="@+id/lensChoiceOnText"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14dp"/>
+
+            <LinearLayout>
+                android:id="@+id/LinearLayout03"
+                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="1dp">
+
+
+                <CheckBox
+                    android:id="@+id/regularLensYesCheckbox"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:onClick="regularLensYesClicked" >
+                </CheckBox>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Original PVT"
+                    android:id="@+id/regularLensYesTextView"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15dp"
+                    android:layout_centerHorizontal="true" >
+                </TextView>
+                <CheckBox
+                    android:id="@+id/regularLensNoCheckbox"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:onClick="regularLensNoClicked" >
+                </CheckBox>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ASPH PVT"
+                    android:id="@+id/regularLensNoTextView"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15dp"
+                    android:layout_centerHorizontal="true" >
+                </TextView>
+            </LinearLayout>
+
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/glassesOnOffSwitch"
                 android:layout_width="match_parent"

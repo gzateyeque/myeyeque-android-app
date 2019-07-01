@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -139,9 +140,15 @@ public class DeviceCompatActivity extends AppCompatActivity {
             try {
                 params.put("name", SingletonDataHolder.deviceName);
                 params.put("phoneBrand", SingletonDataHolder.phoneBrand);
-                // params.put("phoneModel", "LGLS992");
                 params.put("phoneModel", SingletonDataHolder.phoneModel);
                 params.put("phoneType", "");
+                DisplayMetrics metrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(metrics);
+                params.put("widthPixel",  metrics.widthPixels);
+                params.put("heightPixel",  metrics.heightPixels);
+                params.put("xdpi", metrics.xdpi);
+                params.put("ydpi", metrics.ydpi);
+                params.put("scale", metrics.scaledDensity);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -159,7 +166,7 @@ public class DeviceCompatActivity extends AppCompatActivity {
                         SingletonDataHolder.phonePpi = jsonObj.getInt("phone_ppi");
                         SingletonDataHolder.deviceHeight = jsonObj.getDouble("height");
                         SingletonDataHolder.deviceWidth = jsonObj.getDouble("width");
-                        SingletonDataHolder.centerX = jsonObj.getInt("center_x");
+                        // SingletonDataHolder.centerX = jsonObj.getInt("center_x");
                         SingletonDataHolder.centerY = jsonObj.getInt("center_y");
                         SingletonDataHolder.lineLength = jsonObj.getInt("line_length");
                         SingletonDataHolder.lineWidth = jsonObj.getInt("line_width");
